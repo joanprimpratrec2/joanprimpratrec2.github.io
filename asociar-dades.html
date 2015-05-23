@@ -45,6 +45,97 @@
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 23 de Maig de 2015</p>
 
+        <p>Que vol dir "asociar dades" i perque hauria de voler fer-ho amb les meves dades?.</p>
+
+        <p>La visualització de dades és un procès de "mapping" dades en una vista. Entren dades i surt una representació d'aquestes de manera visual. Potser els nombres més grans fan barres més altes, o categories especials es corresponen amb colors més brillants. Les regles per a establir aquesta relació entre dades i representació són les que tu vulguis.</p>
+
+        <p>Amb D3, s'asocien les dades d'entrada als elements del DOM. Asociar es com "enganxar" dades a un element específic, de manera que després els puguis fer servir per crear la seva representació seguint les regles que has determinat.</p>
+
+        <p>Sense l'associació de les dades, la única cosa que obtens és un llistat d'elements del DOM sense dades que no poden ser representats. Això no és el que ens interesa.</p>
+
+        <h2>Un associació</h2>
+
+        <p>A D3 es fa servir el mètode <code>selection.data()</code> per associar dades als elements del DOM. De totes maneres és necessari tenir dos components organitzats abans de poder associar les dades:</p>
+
+        <ol>
+          <li>Les dades</li>
+          <li>Una seleccció d'elements del DOM</li>
+        </ol>
+
+        <p>Anem a verue'ls un per un</p>
+
+        <h2>Dades</h2>
+
+        <p>D3 és força intel·ligent respecte a la gestió dels diferents tipus de dades i accepta qualsevol tipus d'arranjament de nombres, caracters i objectes (fins i tot si contenen altres arranjaments o parelles de clau/valor). Pot gestionar JSON (i GeoJSON) amb elegància, i  fins i tot té un mètode per ajudar-te a carregar arxius en format CSV.</p>
+
+        <p>Però, de moment, per fer-ho senzill, començarem amb un trist arranjament de nombres.</p>
+
+        <p>Aquí tens l'arranjament:</p>
+
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+          </code>
+        </pre>
+
+        <h2>Fes la selecció</h2>
+
+        <p>El primer que necessites es decidir que vols seleccionar, o sigui, amb quins elements del DOM associaràs les teves dades. Tornem a fer-ho senzill i diguem que volem fer un nou paràgraf per a cada un dels valors de la nostre arranjament.</p>
+
+        <p>Podries imaginar que alguna cosa com aquesta podria ser útil:</p>
+
+        <pre>
+          <code>
+            d3.select("body").selectAll("p")
+          </code>
+        </pre>
+
+        <p>i estaríem en el cert, però hi ha una trampa: Els paràgrafs que volem seleccionar <em>encara no existeixen</em>. I aquest és un del punt de major confusió amb D3. Com podem seleccionar elements que encara no existeixen?. Tingues una mica de paciència, ja que la resposta pot requerir que hagis d'escarrassar-te una miqueta. </p>
+
+        <p>La resposta esta en el mètode <code>enter()</code>, un atèntic mètode màgic.</p>
+
+        <p>Aquí hi ha el nostre codi final per aquest exemple, que seguidament explicaré:</p>
+
+        <pre>
+          <code>
+            d3.select("body").selectAll("p")
+              .data(dataset)
+              .enter()
+              .append("p")
+              .text("Nou paràgraf"!");
+          </code>
+        </pre>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/60-binding-data/index.html">Ara mira el que aquest codi pot fer en aqueta pàgina de demostració.</a>Veuràs 5 nous paràgrafs, cadascun d'ells amb el mateix contingut. Això és el que està passant:</p>
+        
+        <p><code>d3.select("body")</code> — Busca el codi <code>body</code> al DOM i passa la seva referència al següent mètode de l'encadenament.</p>
+
+        <p><code>.selectAll("p")</code> — Selecciona tots els paràgrafs del DOM. Si encara no existeixen, retorna una selecció buida. Pensa en aquesta selecció com una representació dels paràgrafs que aviat existiran.</p>
+
+        <p><code>.data(dataset)</code> —  Compta i analitza les nostres dades. Hi ha 5 valors en el nostre conjunt de dades, aixì que tot el que es faci a partir d'ara es farà 5 vegades, una per a cada valor.</p>
+
+        <p><code>.enter()</code> — Per crear nous, elements enllaçats amb les nostres dades, has de fer servir <code>enter()</code>. Aquest mètode mira el DOM, i després la referència a les dades que li han passats els passos anteriors. Si hi ha més dades que elements del DOM, llavors <code>enter()</code> <em>crea un nou element temporal</em> per a aquesta dada. Llavors passa la referència a aquest element temporal al següent pas de la cadena.</p>
+
+        <p><code>.append("p")</code> — Pren
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 
         
