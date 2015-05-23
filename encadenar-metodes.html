@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="ca">
+<!--<![endif]-->
+<head>
+	<meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+	<title>Instal·lació- tutorial d3.js en català</title>
+</head>
+<body>
+
+  <div id="container">
+    <div class="inner">
+      <header>
+        <div>    
+
+        <a href="https://joanprimpratrec2.github.io/index.html">Inici  |  </a>
+        <a href="https://joanprimpratrec2.github.io/fonaments.html">Fonaments |  </a>
+        <a href="https://joanprimpratrec2.github.io/instalacio.html">Instal·lació | </a>
+        <a href="https://joanprimpratrec2.github.io/afegir-elements.html">Afegir Elements | </a>
+        <a href="https://joanprimpratrec2.github.io/encadenar-metodes.html">Encadenar Mètodes | </a>
+        <a href="https://joanprimpratrec2.github.io/asociar-dades.html">Asociar Dades | </a>
+          	
+        
+        </div>
+      </header>
+
+      <hr>
+      <section id="main_content">
+        <h2 id="afegir-elements">Encadenar metodes</h2>
+
+        <p class="timestamp">última ctualització 30 de Desembre de 2012</p>
+        <p class="timestamp">traducció 23 de Maig de 2015</p>
+
+        <p>D3 fa servir una tècnica anomenada <em>chain syntax</em> (sintaxi d'encadenament), que pots tenir vista de jQuery.</p>
+
+        <p>"Encadenant" mètodes fent servir un punt de separació, pots realitzar diverses operacions en una mateixa línia de codi. Pot ser ràpid i senzill, però convé entendre com funciona, per estalviar-se hores i hores de depuració i maldecaps posteriors.</p>
+
+        <p>Per començar, les <em>funcions</em> i els <em>mètodes</em> són dos paraules diferents pel mateix concepte: un tros de codi que rep un argument d'entrada, fa alguna acció, i retorna alguna dada.</p>
+
+        <p>Revisitem la nostra primera línia de codi D3 (
+        <a href="http://alignedleft.com/content/03-tutorials/01-d3/50-chaining-methods/index.html">Aquí hi ha la página de demostració</a>).</p>
+
+        <pre>
+          <code>
+            d3.select("body").append("p").text("Nou paràgraf!");
+          </code>
+        </pre>
+
+        <p>Això pot semblar un gran embolic, sobretot si són les teves primeres passes en programació.</p>
+
+        <p>Així que, el primer que cal saber és que, tant Javascript com HTML, no fan cas dels espais en blanc, ni dels salts de línia. Per tant pots escriure cada mètode en una línia separada per fer-ho més entenedor:</p>
+
+        <pre>
+          <code>
+            d3.select("body")
+              .append("p")
+              .text("Nou paràgraf!");
+          </code>
+        </pre>
+
+        <p>Cadascú té el seu propi estil de codi. Fes servir la indentació, els salts de línia, i els espais en blanc ( tabulador o espais) que et semblin millor.</p>
+
+        <h3>Un enllaç cada vegada</h3>
+
+        <p>Anem a veure cada part d'aquest codi.</p>
+
+        <p><code>d3</code> - Fa referència a l'objecte D3, per poder accedir als seus mètodes.</p>
+
+        <p><code>.seclect("body")</code> - Dona al mètode <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-d3_select"><code>select()</code></a> un selector CSS com a argument d'entrada i aquest retorna una referència al primer element del DOM que hi encaixa. </p>
+
+        <p>Fes servir <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-d3_selectAll"><code>selectAll()</code></a> quan vulguis més d'un element.</p>
+
+        <p>En aquest cas, només volem l'element <code>body</code>, així que només una referencia, la primera referència <code>body</code> es passa al seguüent mètode de la cadena.</p>
+
+        <p><code>.append("p")</code> -<a href="https://github.com/mbostock/d3/wiki/Selections#wiki-append"><code>append()</code></a>  crea els elements nous que especifiques al DOM i els afegeix al final (però a dins, no desprès) de la selecció que li han passat els mètodes anterior. En el nostre cas, volem crear un nou <code>p</code> ( paràgraf) dins l'etiqueta <code>body</code></p>
+
+        <p>Hem especificat <code>p</code> com l'argument d'entrada, i li hem passat, dels mètode <code>select()</code> anterior la referència a <code>body</code>. Per acabar, <code>append()</code>,al seu torn també passa la referència a l'element que ha creat al següent mètode de la cadena.</p>
+
+        <p><code>.text("Nou paràgraf!")</code> - <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-text"><code>text()</code></a> agafa una cadena i la inserta entre les etiquetes d'obertura i tancament de la selecció actual. Com que l'anterior mètode havia passat una referència al nou <code>p</code>, aquest codi inserta el nou text entre les etiquetes  <code>&lt;p&gt;</code> i <code>&lt;/p&gt;</code>. ( en el cas que ja hi haguès algun text entre ambdues etiquetes, es sobreescriuria) .</p>
+
+        <p><code>;</code> - La sempre important semicoma indica la fi d'aquesta línia de codi.
+
+
+        <h2>La transferència</h2>
+
+        <p>La majoria, però no tots, dels mètodes de D3 retornen una selecció, o més ben dit, la referència a aquesta selecció, la qual permet aquesta tècnica tant útil de l'encadenament de mètodes.</p>
+
+        <p>Normalment, un mètode retorna una referencia a l'element sobr el que acaba d'actuar, però no sempre.</p>
+
+        <p>Així que recorda. En l'encadeanment l'ordre dels mètodes és important. El retorn de un mètode ha de coincidir amb el que espera rebre el següent mètode de la cadena. </p>
+
+        <p>Si les entrades i sortides adjacents no coincideixen, la transferència es trencarà com si cau el pal en una carrera de relleus.</p>
+
+        <p>Quan vulguis saber que és el que espera cada funció i que és el que retorna, la referència a l'API és que t'ajudarà. Conté informació detallada sobre cada mètode, incloen-t'hi si torna o no una selecció.</p>
+
+        <h2>Sense Encadenaments</h2>
+
+        <p>El nostre senzill codi pot ser reescrit sense la sintaxi de cadena, i quedaria així:</p>
+
+        <pre>
+          <code>
+            var body = d3.select("body");
+            var p = body.append("p");
+            p.text("Nou paràgraf!");
+          </code>
+        </pre>
+
+        <p>Renoi!!!. Quin embolic. Però hi haurà vegades que hauràs de trencar l'encadenament, com ara quan estiguis cridant funcions que no s'entenen entre elles. O si vols organitzar el teu codi d'una manera que tingui més sentit per a tu.</p>
+
+        
+        <p><a href="https://joanprimpratrec2.github.io/asociar-dades.html">Següent: Asociar Dades –&gt;</a></p>
+        </section>
+
+      	<footer>
+      		Aquest tutorial ha sigut traduit per <a href="https://">Joan Prim</a><br>
+              Tot el contingut ha sigut desenvolupat i li pertany a <a href="http://alignedleft.com/">Scott Murray</a>
+        </footer>
+
+
+      </div>
+    </div>
+  </body>
+</html>
