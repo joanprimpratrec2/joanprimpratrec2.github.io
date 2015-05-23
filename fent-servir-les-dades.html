@@ -46,7 +46,80 @@
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 23 de Maig de 2015</p>
 
-        <p>Un</p>
+        <p>Un cop has carregat les dades i les tens associades als nous elements creats al DOM, com les pots fer servir?</p>
+
+        <p>Aquí tenim el codi de l'apartat anterior:</p>
+
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+
+            d3.select("body").selectAll("p")
+                .data(dataset)
+                .enter()
+                .append("p")
+                .text("New paragraph!");
+          </code>
+        </pre>
+
+        <p>Canviem la última línia per aquesta:</p>
+
+        <pre>
+          <code>    .text(function(d) { return d; });
+          </code>
+        </pre>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/1.html">Comprova el que el nou codi fa a la pàgina de demostració.</a> </p>
+
+        <p>Carai!. Hem fet servir les nostres dades per donar contingut a cadascún dels paràgrafs. Tot gràcies a la màgia del mètode <code>data()</code>.</p>
+
+        <p>Ja veus, quan encadenem els mètodes, a tots els mètodes posteriors a <code>data()</code> pots crear una funció anòmina que accepta un argument com a entrada. En aquest cas fem servir la variable "d". El màgic mètode <code>data()</code> s'assegura que d agafi el  valor de la matriu de dades que ocupa la mateixa posició que l'element que esta tractant.</p>
+
+        <p>El valor de "l'element actual" canvia cada passada que fa D3 sobre el bucle d'elements. Per exemple, quan el bucle està fent la tercera passada, el nostre codi crea el tercer element <code>p</code>, i la variable <code>d</code> conté el tercer valor de la matriu de dades. Per tant el tercer paràgraf contindrà el text "15". </p>
+
+        <h2>Fent funcions</h2>
+
+        <p>Si ets novell escribint les teves pròpies funcions ( = mètodes), l'estructura bàsica de qualsevol d'elles és la següent:</p>
+
+        <pre>
+          <code>
+            function(input_value) {
+                //Calculate something here
+                return output_value;
+            }
+          </code>
+        </pre>
+
+        <p>La funció que hem fet servir es molt simple, gens interessant</p>
+
+        <pre>
+          <code>
+            function(d) {
+              return d;
+            }
+          </code>
+        </pre>
+
+        <p> i esta ficada dins la funció <code>text()</code> de D3, per tant el resultat de la nostra funció anònima serà l'argument per a la funció <code>text()</code>.</p>
+
+        <pre>
+          <code>
+            .text(function(d) {
+              return "I can count up to " + d;
+            });
+          </code>
+        </pre>
+
+        
+
+
+
+
+
+
+
+
+
         
        
 
