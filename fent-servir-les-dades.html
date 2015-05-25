@@ -110,19 +110,104 @@
           </code>
         </pre>
 
-        
+        <p>Però podem ( i ho farem) molt més interessant, perque pots fer servir qualsevol funció. Si, és el plaer i el perill d'escriure el teu propi codi javascript.</p>
 
+        <p>Podem definir les nostres pròpies funcions. Potser t'agradaria afegir una part més de text, que donaria <a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/2.html">aquest resultat</a>.</p>
 
+        <pre>
+          <code>
+            .text(function(d) {
+              return "I can count up to " + d;
+            });
+          </code>
+        </pre>
 
+        <h2>Les dades demanen ser ben tractades</h2>
 
+        <p>Potser t'estàs preguntant per què has d'escriure <code>function(d)</code>... enlloc de senzillament <code>d</code> directament. Per exemple, això no funcionaria:</p>
 
+        <pre>
+          <code>.text(function(d) {
+            return "Puc comptar fins a " + d;
+          });
+          </code>
+        </pre>
 
+        <p>En aquest context, sense col·locar <code>d</code> dins una funció anònima, <code>d</code> no rep valors.</p>
 
+        <p>Pensa en <code>d</code> com un petita i solitaria variable que vol sentir-se acompanyada per la calurosa abraçada que li proporcionen els parèntesis. (Seguint amb la metàfora, si, és esgarrifós pensa que l'abraçada realment li fa un funció anònima -un estranger perillós - i que nomès fa les coses més confuses.)</p>
 
+        <p>Aquí <code>d</code> es troba suau i confortablement en poder d'una funció:</p>
 
-        
-       
+        <pre>
+          <code>
+            .text(function(d) {  // &lt;-- Nota la tendra abraçada de l'esquerra
+              return "Puc comptar fins a " + d;
+            });
+          </code>
+        </pre>
 
+        <p>La raó d'aquesta sintaxi és que <code>.text(), .attr()</code>, i molts altres mètodes de D3 prenen una funció com a argument. Per exemple, <code>text()</code> pot prendre facilment qualsevol cadena de text estàtica com a argument:</p>
+
+        <pre>
+          <code>
+            .text("Alguna cosa escrita")
+          </code>
+        </pre>
+
+        <p>... o el resultat d'una funció:</p>
+
+        <pre>
+          <code>
+            .text(algunaFuncio())
+          </code>
+        </pre>
+
+        <p>... o una mateixa funció anònima potser l'argument, tal com passa si escrius:</p>
+
+        <pre>
+          <code>
+            .text(function(d) {
+            return d;
+            })
+          </code>
+        </pre>
+
+        <p>En el codi anterior, estàs definint una funció anònima. Si D3 detecta una funció én aquest lloc, pren aquesta funció, i li passa com a argument <code>d</code> els valors del conjunt de dades del mètode <code>data()</code>. Sense una funció aquí, D3 no pot saber a qui ha de passar les dades com a argument <code>d</code>. </p>
+
+        <p>Al principi, pot semblar una tonteria i una feina innecessària, per nomès aconseguir tenir un argument <code>d</code>, però la importància d'aquesta manera de fer estarà molt més clara quan treballem amb un codi més complex.</p>
+
+        <h2>Més enllà del text</h2>
+
+        <p>La situació és posa molt més interessant quan explorem altres mètodes de D3, com <code>attr()</code> i <code>style()</code>, que permeten veure els atributs de les seleccions fetes d'HTML i les seves propietats CSS respectivament.</p>
+
+        <p>Per exemple, afegint una línia més al nostre codi es <a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/3.html">produeix aquest resultat.</a></p>
+
+        <pre>
+          <code>
+            .style("color", "red");
+          </code>
+        </pre>
+
+        <p>Tot el text ara és vermell; quina gran cosa. Bé, però podríem fer servir una funció pròpia per convertir el text a color vermell només si l'actual valor de <code>d</code> sobrepassa una certa quantitat. Així que canviem la línia perque faci aquesta funció.</p>
+
+        <pre>
+          <code>
+            .style("color", function(d) {
+              if (d &gt; 15) {   //el límit és 15
+                return "red"; // color vermell
+              } else {
+                return "black"; // color negre
+              }
+            });
+          </code>
+        </pre>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/4.html">Mira aquest codi en funcionament</a>. Comprova com els primers tres paràgrafs son negres, però un cop <code>d</code> sobrepassa el valor de 15, el text és de color vermell.</p>
+
+        <p>En el proper capítol, farem servir <code>attr()</code> i <code>style()</code> per manipular <code>divs</code></p>
+
+           
         
         <p><a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs –&gt;</a></p>
         </section>
