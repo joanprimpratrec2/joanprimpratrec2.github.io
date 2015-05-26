@@ -166,41 +166,60 @@
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.png" title="Cinc divs que semblen un de sol" alt="Five divs masquerading as one" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.html">Mira el codi en aquesta pàgina de demostració.</a> Obre el codi font, i l'inspector web del teu navegador per veure que esta passant. Hauries de veure 5 barres verticals, una per cadascuna de les dades de la matriu, tot i que, sense espais entre elles i del mateix color, semblen més aviat un gran rectangle.</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.html">Mira el codi en aquesta pàgina de demostració.</a> Obre el codi font i l'inspector web del teu navegador per veure que està passant. Hauries de veure 5 barres verticals, una per cadascuna de les dades de la matriu, tot i que, sense espais entre elles i del mateix color, semblen més aviat un gran rectangle.</p>
 
+        <h2>Assignant Estils</h2>
 
+        El mètode  <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-style"><code>style()</code></a> es fa servir per aplicar directament a un element HTML una propietat de CSS o el seu valor. És equivalent a incloure regles CSS dins de l'atribut <em>style</em> directament a l'arxiu HTML, tal com això:
 
+        <pre>
+          <code>
+            &lt;div style="height: 75px;"&gt;&lt;/div&gt;
+          </code>
+        </pre>
 
+        <p>En un diagrama de barres, l'alçada de cada barra ha de ser el valor de les dades. Això, com ja sabem necessita una funció anònima. Així que afegim-la al final del nostre codi D3.</p>
 
+        <pre>
+          <code>
+            .style("height", function(d) {
+              return d + "px";
+            });
+          </code>
+        </pre>
 
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/2.png" title="Un petit diagrama de barres!" alt="Un petit diagrama de barres!" /></p>
 
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/2.html">Mira aquesta demo amb el codi.</a>Veuràs un petitíssim diagrama de barres.</p>
 
+        <p>Cada passada que fa D3 pel bucle de la matriu de dades, el valor que s'assigna a <em>d</em>, és el que ocupa la posició del mateix ordinal, ( primera passada, primer valor,... quarta passada, quart valor). Per tant li estem assignant a la propietat <code>height</code> el valor de <code>d</code> (el de cada passada) i li afegim <code>px</code> ( per especificar que les unitats son píxels). L'alçada resultant és doncs: 5px, 10px, 15px, 20px i 25px.</p>
 
+        <p>Així sembla molt poca cosa. Podem fer les barres més altes.</p>
 
+        <pre>
+          <code>
+            .style("height", function(d) {
+                var barHeight = d * 5;  //Scale up by factor of 5
+                return barHeight + "px";
+            });
+          </code>
+        </pre>
 
+        <p>i afegim un petit espai entre barra i barra</p>
 
+        <pre>
+          <code>
+            margin-right: 2px;
+          </code>
+        </pre>
 
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/3.png" title="El diagrama de barres final" alt="El diagrama de barres final" /></p>
 
+        <p>Xulo! Podríem anar al SIGGRAPH amb aquest diagrama.</p>
 
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/3.html">Aquí hi ha la pàgina demo final amb aquest codi.</a> Un altra vegada, mira el codi font i fes servir l'inspector web del teu navegador, per contrastar l'arxiu HTML original amb el DOM final.</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-           
+                   
         
         <p><a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() –&gt;</a></p>
         </section>
