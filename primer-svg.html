@@ -36,6 +36,7 @@
         <a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs | </a>
         <a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() | </a>
         <a href="https://joanprimpratrec2.github.io/primer-svg.html">El primer SVG | </a>
+        <a href="https://joanprimpratrec2.github.io/dibuixant-svgs.html">Dibuixant SVG's | </a>
                   	
         
         </div>
@@ -45,14 +46,154 @@
       <section id="main_content">
         <h2 id="afegir-elements">El primer svg</h2>
 
-        <p class="timestamp">última actualització 30 de Desembre de 2012</p>
-        <p class="timestamp">traducció 26 de Maig de 2015</p>
+        <p class="timestamp">última actualització 24 de Maig de 2014</p>
+        <p class="timestamp">traducció 27 de Maig de 2015</p>
+
+        <p>D3 és molt més útil si la fas servir per generar i manipualar arxius visuals com SVGs.</p>
+
+        <p>Dibuixar amb <code>divs</code> o altes elements d'HTML nadius és possible, però una mica barroer i sempre a expenses de les usals inconsistències entre els diferents navegadors web.</p>
+
+        <p>Fer servir SVGs es molt més fiable, consistent i ràpid</p>
+
+        <p>El software de dibuix vectorial com potser Ilustrator, es pot fer servir per generar arxius SVG, pero ara necessitem aprendre com poder-los generar amb codi.</p>
+
+        <p>L'element SVG</p>
+
+        <p>"Scalable Vector Graphics" ( en català Gràfic vectorial escalable) és un format de imatge basat en text. Cada imatge en format SVG es defineix fent servir codi d'etiquetes com l'HTML. El codi SVG pot ser inclòs directament dins un document HTML. Tots els navegadors web suporten SVG <em>excepte</em> <a href="http://caniuse.com/#feat=svg">Internet Explorer versions 8 i anteriors</a>. Els arxius SVG es basen en XML, per tant tingues present que els elements que no tenen una etiqueta de tancament són autotancats. Per exemple:</p>
+
+        <pre>
+          <code>
+            &lt;element&gt;&lt;/element&gt;   &lt;!-- Uses closing tag --&gt;
+            &lt;element/&gt;                  &lt;!-- Self-closing tag --&gt;
+          </code>
+        </pre>
+
+        <p>Abans que puguis dibuixar qualsevol cosa, has de crear l'element SVG. Pensa en l'element SVG com una tela a on es dibuixarà la resta. ( Respecte a això, SVG és conceptualment similar a l'element <code>canvas</code> d'HTML.) Com a mínim és bo especificar els valors de <code>width</code> (amplada) i <code>height</code> (alçada)</p>. 
+
+        <p>Si no s'especifiquen, SVG tot l'espai possible dins l'element a on es trobi</p>
+
+        <pre>
+          <code>
+            &lt;svg width="500" height="50"&gt;
+            &lt;/svg&gt;
+          </code>
+        </pre>
+
+        <p>Aquí hi ha el SVG generat per aquest codi:</p>
+
+        <svg width="500" height="50">
+        </svg>
+
+        <p>No el veus? Clica amb el botó dret a l'espai buit superior i selecciona "Inspect element". El teu navegador mostrarà alguna cosa semblant a aquesta:</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/100-an-svg-primer/1.png" title="Inspeccionant un SVG buit" alt="Inspeccionant un SVG buit" /></p>
+
+        <p>Nota que hi ha un element SVG, i que ocupa 500 px en horitzontal i 50 pixels en vertical. Encara no sembla gran cosa. </p>
+
+        <p>Nota també que el navegador assumeix que el valor són píxels, ja que per defecte aquesta és la seva unitat de mesura. Hem especificat dimensions de 500 i 50, no 500px i 50px. Podríem haver especificat explícitament px, o qualsevol altre unitat, incloent <code>em, pt, in, cm </code> i <code>mm</code>.</p>
+
+
+        <h2>Formes Senzilles</h2>
+
+        <p>Hi ha algunes formes senzilles que pots incloure directament entre dues etiquetes <em>svg</em>, com ara <code>rect</code>, <code>circle</code>, <code>ellipse</code>, <code>line</code>, <code>text</code>, i <code>path</code></p>
+
+        <p>Si estas familiaritzat amb programació de gràfics per a ordinador, reconeixeràs el sistema de coordenades basat en el pixel que es fa servir usualment, a on el <em>0,0</em> es troba a la cantonada superior esquerra de l'espai de dibuix, i a on els valors positius de <em>x</em>, es mouen cap a la dreta, i els valors positius de <em>y</em> es mouen cap a l'esquerra.</p>
+
+        <svg width="505" height="65">
+          <line x1="5" y1="5" x2="5" y2="50" stroke="gray" stroke-width="1"/>
+          <line x1="5" y1="50" x2="0" y2="45" stroke="gray" stroke-width="1"/>
+          <line x1="5" y1="50" x2="10" y2="45" stroke="gray" stroke-width="1"/>
+          <line x1="5" y1="5" x2="500" y2="5" stroke="gray" stroke-width="1"/>
+          <line x1="500" y1="5" x2="495" y2="0" stroke="gray" stroke-width="1"/>
+          <line x1="500" y1="5" x2="495" y2="10" stroke="gray" stroke-width="1"/>
+          <circle cx="5" cy="5" r="3" fill="#008"/>
+          <text x="10" y="20">0,0</text>
+          <circle cx="105" cy="25" r="3" fill="#008"/>
+          <text x="110" y="40">100,20</text>
+          <circle cx="205" cy="45" r="3" fill="#008"/>
+          <text x="210" y="60">200,40</text>
+        </svg>
+
+        <p>El codi <code>rect</code> dibuixa un rectangle. Fes servir <code>x</code> i <code>y</code> per especificar les coordenades la cantonada superior esquerra, i <code>widht</code> i <code>height</code> per establir les dimensions. Aquest rectangle ocuparà tot l'espai del nostre SVG:
+
+        <pre>
+          <code>
+            &lt;rect x="0" y="0" width="500" height="50"/&gt;
+          </code>
+        </pre>
+
+        <svg width="500" height="50">
+            <rect x="0" y="0" width="500" height="50"/>
+        </svg>
+
+        <p>El codi <code>circle</code> dibuixa un cercle. Fes servir <code>cx</code> i <code>cy</code> per especificar les coordenades del centre del cercle, i <code>r</code>  per especificar el radi. Aquest cercle estarà centrat al mig del nostre SVG de 500px d'amplada perque el seu valor de<code>cx</code> ("center-x") es 250.</p>
+
+        <pre>
+          <code>
+            &lt;circle cx="250" cy="25" r="25"/&gt;
+          </code>
+        </pre>
+
+        <svg width="500" height="50">
+          <circle cx="250" cy="25" r="25"/>
+        </svg>
+
+        <p>L'ordre <code>ellipse</code> is similar, però espera diferents valors de radi per a cada eix. Enlloc de <code>r</code>, fes servir <code>rx</code> i <code>ry</code>.</p>
+
+        <pre>
+          <code>
+            &lt;ellipse cx="250" cy="25" rx="100" ry="25"/&gt;
+          </code>
+        </pre>
+
+        <svg width="500" height="50">
+            <ellipse cx="250" cy="25" rx="100" ry="25"/>
+        </svg>
+
+
+        <p>La ordre <code>line</code> dibuixa una línia. Fes servir <code>x1</code> i <code>y1</code> per especificar les coordenades d'un dels seus extrems, i <code>x2</code> i <code>y2</code> per especificar les coordenades de l'altre extrem. Per a fer-la visible li hem d'asignar també un color, i això es fa donant-li un valor a <code>stroke</code></p>
+
+        <pre>
+          <code>
+            &lt;line x1="0" y1="0" x2="500" y2="50" stroke="black"/&gt;
+          </code>
+        </pre>
+
+        <svg width="500" height="50">
+            <line x1="0" y1="0" x2="500" y2="50" stroke="black"/>
+        </svg>
+
+        <p>L'etiqueta <code>text</code> pinta un text. Fes servir <code>x</code> per especificar la posició del costat esquerra i <code>y</code> per especificar la posició vertical del tipus <em>baseline</em>.</p>
+
+        <pre>
+          <code>
+            &lt;text x="250" y="25"&gt;Easy-peasy&lt;/text&gt;
+          </code>
+        </pre>
+
+        <svg width="500" height="50">
+            <text x="250" y="25">Easy-peasy</text>
+        </svg>
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
 
         
         
                    
         
-        <p><a href="https://joanprimpratrec2.github.io/primer-svg.html">El primer SVG </a> &rarr;</p>
+        <p><a href="https://joanprimpratrec2.github.io/dibuixant-svgs.html">Dibuixant SVG's</a> &rarr;</p>
         </section>
 
       	<footer>
