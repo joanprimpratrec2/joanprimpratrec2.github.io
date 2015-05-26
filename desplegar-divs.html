@@ -47,7 +47,156 @@
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 25 de Maig de 2015</p>
 
-        <p>  </p>
+        <p>És hora de començar a dibuixar amb les dades.</p>
+
+        <p>Continuem treballant amb la nostra petita matriu de dades de l'últim capítol:</p>
+
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+          </code>
+        </pre>
+
+        <p>El farem servir per generar un diagrama de barres.</p> 
+
+        <p>Els diagrames de barres, són bàsicament rectangles, i un <code>&lt;div&gt;</code> de HTML és la manera més senzilla de dibuixar un rectangle. (Bé, per a un navegador web tot és un rectangle, per tant podries adapar fácilment aquest exemple fent servir <code>spans</code> o qualsevol altre element que vulguesis.)</p>
+
+        <p>Aquest <code>div</code> el farem servir com la barra que representa una dada:</p>
+
+        <div style="display: inline-block;
+            width: 20px;
+            height: 75px;
+            background-color: teal;">
+        </div>
+
+        <pre>
+          <code>&lt;div style="display: inline-block;
+                    width: 20px;
+                    height: 75px;
+                    background-color: teal;"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+        
+        <p>(Entre la gent que fa els estandards webs, això es coneix com un "semantic no-no". Normalment, hom no pot fer servir un <code>div</code> buit per efectes purament visuals, encara que el codi del tutorials son una notable excepció.)</p>
+
+        <p>Degut a que és un <code>div</code>, la seva amplada <code>widht</code> i la seva alçada <code>height</code> es defineixen amb estils CSS. Cada barra del nostre diagrama tindrà les mateixes característiques visuals ( excepte per l'alçada), així que posarem les característiques comuns en una classe que anomenarem <em>bar</em>:</p>
+
+        <pre>
+          <code>
+          div.bar {
+            display: inline-block;
+            width: 20px;
+            height: 75px;   /* We'll override this later */
+            background-color: teal;
+          }
+          </code>
+        </pre>
+
+        <p>Ara cada <code>div</code> necessita ser assignat a una classe <em>bar</em>, per tal que se li apliqui l'estil CSS que hem definit. Si estiguessis escrivint el codi HTML a ma, escriuries això: </p>
+
+        <pre>
+          <code>
+            &lt;div class="bar"&gt;&lt;/div&gt;
+          </code>
+        </pre>
+
+        <p>Amb D3, per afegir una classe a un element, farem servir el mètode <code>selection.attr()</code>. És important entendre la diferència entre <code>attt()</code> i el seu cosí germà, <code>style()</code>.</p>
+
+        <h2>Definint atributs</h2>
+
+        <p><a href="https://github.com/mbostock/d3/wiki/Selections#wiki-attr"><code>attr()</code></a> es fa servir per definir el valor que un atribut HTML tinrà per a un element. Un atribut HTML és qualsevol parell  clau/valor que puguis incloure entre els símbols <code>&lt;&gt;</code>. Per exemple, aquests elements HTML </p> 
+
+        <pre>
+          <code>
+            &lt;p class="caption"&gt;
+            &lt;select id="country"&gt;
+            &lt;img src="logo.png" width="100px" alt="Logo" /&gt;
+          </code>
+        </pre>
+
+        <p>un total de 5 atributs ( amb els seus corresponents valors), i tots ells poden ser assignats amb <code>attr()</code></p>
+
+        <pre>
+          <code>
+            class   |   caption
+            id      |   country
+            src     |   logo.png
+            width   |   100px
+            alt     |   Logo
+          </code>
+        </pre>
+
+        <p>Per assignar als nostres <code>div</code> la classe <em>bar</em>, podem fer servir: </p>
+
+        <pre>
+          <code>
+            .attr("class", "bar")
+          </code>
+        </pre>
+
+        <h2>Un apunt sobre les Classes</h2> 
+
+        <p>Tingues en compte que la classe d'un element HTML és guarda com un atribut. La classe, al seu torn, es fa servir com a referència per assignar les regles d'estil de CSS. Això pot provocar algun tipus de confusió perque hi ha una diferència entre assignar una classe ( a partir de la qual s'obtenen les regles d'estil) i aplicar un estil directament a un element. Pots fer ambdues coses amb D3. Fes servir el que millor s'adapti al resultat que vols aconseguir.</p>
+
+        <p>Com a regla general, et recomano fer servir les <em>classes</em> per les propietats que són compartides entre multiples elements, i apicar les regles d'<em>estils</em> directe, únicament als elements que es desviin de la norma. (De fet, això és el que farem d'aquí a uns instants).</p>
+
+        <p>També aprofito per a fer una petita menció d´un altre mètode de D3 <code>classed()</code>, que es pot fer servir per aplicar o treure de manera ràpida un element d'una classe. El codi anterior es podria haver escrit de la segënt manera:</p>
+
+        <pre>
+          <code>
+            .classed("bar", true)
+          </code>
+        </pre>
+
+        <h2>Tornant a les barres</h2> 
+
+        <p>Posem-ho tot plegat. Aquest és el codi D3 complet:</p>
+
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+
+            d3.select("body").selectAll("div")
+                .data(dataset)
+                .enter()
+                .append("div")
+                .attr("class", "bar");
+          </code>
+        </pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.png" title="Cinc divs que semblen un de sol" alt="Five divs masquerading as one" /></p>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.html">Mira el codi en aquesta pàgina de demostració.</a> Obre el codi font, i l'inspector web del teu navegador per veure que esta passant. Hauries de veure 5 barres verticals, una per cadascuna de les dades de la matriu, tot i que, sense espais entre elles i del mateix color, semblen més aviat un gran rectangle.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
 
