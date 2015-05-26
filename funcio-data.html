@@ -36,8 +36,7 @@
         <a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs | </a>
         <a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() | </a>
         <a href="https://joanprimpratrec2.github.io/primer-svg.html">El primer SVG | </a>
-        <a href="https://joanprimpratrec2.github.io/primer-svg.html">El primer SVG | </a>
-          	
+                  	
         
         </div>
       </header>
@@ -49,6 +48,137 @@
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 26 de Maig de 2015</p>
 
+        <p>Varem acabar amb un <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/1.html">simple diagrama de barres</a>, dibuixat amb, <code>div</code>s i generat amb els valors de la nostra senzilla matriu.</p>
+
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+          </code>
+        </pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/1.png" title="Diagrama de barres senzill" alt="Diagrama de barres senzill" /></p>
+
+        <p>Això està bé, peró el mon real de les dades no s'assembla mai a això. Deixa'm <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/2.html">modificar les nostres dades</a>.</p>
+   
+        <pre>
+          <code>
+            var dataset = [ 25, 7, 5, 26, 11 ];
+          </code>
+        </pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/2.png" title="Diagrama de barres" alt="diagrama de barres" /></p>
+
+        <p>Per suposat, no estem limitats per 5 dades. Deixa'm <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/3.html">afegir-ne més</a>!</p>
+
+        <pre>
+          <code>
+            var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19,
+                        14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
+                        24, 18, 25, 9, 3 ];
+           </code>
+         </pre>
+
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/3.png" title="diagrama de barres" alt="diagrama de barres" /></p>
+
+        <p>25 valors enlloc de 5!. Com ho fa D3 per expandir automàticament el nostre diagrama quan ho necessita?</p>
+
+        <pre>
+          <code>
+            d3.select("body").selectAll("div")
+              .data(dataset)  // &lt;-- The answer is here!
+              .enter()
+              .append("div")
+              .attr("class", "bar")
+              .style("height", function(d) {
+                  var barHeight = d * 5;
+                  return barHeight + "px";
+            });
+          </code>
+        </pre>
+
+        <p>Dona-li 10 valors a <code>data()</code> i farà 10 passades. Dona-li un milió de valors, i farà un milió de passades ( Això si, fa falta paciència.)</p>
+
+        <p>Aquesta és la potència del mètode <code>data()</code>  — ser prou intel·ligent per fer les passades que calguin segon la llargada de la matriu de dades que li passis, executant cada mètode posterior en la cadena aquest mateix nombre de cops, actualitzant el valor de <code>d</code> a cada passada.</p>
+
+        <p>Això només és una part, i si encara no té sentit per a tu, aviat el tindrà. T'animo a guardar el codi font de l'arxiu HTML anterior, canviar els valors de la matriu, i comprovar com les barres del diagrama es van modificant.</p>
+
+        <p>Recorda, el mètode <code>data()</code> és el que crea la visualització, i no al revés.</p>
+
+        <h2>Dades aleatòries</h2>
+
+        <p>Algunes vegades potser interessant generar dades aleatòries, per exemple, per fer proves del codi. <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/4.html">Això es just el que he fet aquí.</a> Comprova com cada vegada que recarregues al pàgina, les barres surten diferent.</p>
+
+
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/4.png" title="Bar chart with random values" alt="Bar chart with random values" /><br />
+        <img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/5.png" title="Bar chart with random values" alt="Bar chart with random values" /><br />
+        <img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/6.png" title="Bar chart with random values" alt="Bar chart with random values" /></p>
+
+        <p>Mira el codi font, i veuràs aquest codi:</p>
+
+        <pre>
+          <code>
+            var dataset = [];                      //Crea una matriu buida
+            for (var i = 0; i &lt; 25; i++) {         //Bucle de 25 passades
+              var newNumber = Math.random() * 30;  //Nou nombre aleatori (0-30)
+              dataset.push(newNumber);             //Afegeix el nombre a la matriu
+            }
+          </code>
+        </pre>
+
+        <p>Aquest codi, no fa servir cap mètode de D3, és només JavaScript. Sense entrar en molt de detall, aquest codi fa:</p>
+
+        <ol>
+          <li>Crea una matriu buida amb el nom de <em>dataset</em></li>
+          <li>Inici un bucle de 25 passades</li>
+          <li>A cada passada, genera un nombre aleatori entre el 0 i el 30.</li>
+          <li>Aquest nou nombre s'afegeix a <em>dataset</em>. (<code>push()</code> és un mètode de matrius que afegeix un nou valor al final de la matriu.)</li>
+        </ol>
+
+        <p>Només per curiositat, obre la consola de JavaScript i escriu <code>console.log(dataset)</code>. Veuràs la matriu de 25 nombres aleatoris sencera.</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/7.png" title="Nombres aleatoris a la consola" alt=" Nombres aleatoris a la consola" /></p>
+
+        <p>Recorda que son nombre decimals de coma flotant (14.793717765714973), i no nombre sencers (14) com els que hem fet servir inicialment. Per aquest exemple, els nombre decimals estan bé, però si mai necessites arrodonir-los al sencer més pròxim , pots fer servir el mètode <code>Math.round()</code>. Per exemple, podríes voler fer-ho pel generador de nombres aleatoris d'aquesta línia</p>
+
+        <pre>
+          <code>
+            var newNumber = Math.random() * 30;
+          </code>
+        </pre>
+
+        <p>d'aquesta manera</p>
+
+        <pre>
+          <code>    
+            var newNumber = Math.round(Math.random() * 30);
+          </code>
+        </pre>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/5.html">Prova-ho aquí</a>, i fes servir la consola per verificar que els nombres han sigut arrodonit al nombre sencer més proper:</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/8.png" title="Nombres aleatories en consola" alt="Nombres aleatoris en consola" /></p>
+
+        <p>En el proper capítol expandirem les nostres possibilitats amb SVG.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         
                    
         
