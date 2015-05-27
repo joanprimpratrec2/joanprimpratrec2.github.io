@@ -88,17 +88,173 @@
           </code>
         </pre>
 
+        <p>Recordes que la majoria dels mètodes de D3 retornen una referència als elements del DOM sobre els que actues? Creant una nova variable <code>svg</code>, podrem utilitzar la referencia capturada pel mètode <code>append()</code>. Pensa amb <code>svg</code> no com una 'variable' sinó com la 'referència que apunta a l'objecte SVG que acabem de crear'. Aquesta referència ens estalviarà molt de codi posteriorment. Enlloc de buscar aquesta referència cada vegada — com a <code>d3.select("svg")</code> — , ja la tindrem a <em>svg</em>. </p>
+
+        <pre>
+          <code>
+            svg.attr("width", 500)
+                .attr("height", 50);
+          </code>
+        </pre>
+
+        <p>Alternativament, també s'hagués pogut escriure en una sola línia de codi:</p>
+
+        <pre>
+          <code>
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", 500)
+                .attr("height", 50);
+          </code>
+        </pre>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/1.html">Mira la demo per aquest codi</a> Inspecciona el DOM i fixa't que hi ha, certament, un element SVG buit.</p>
+
+        <p>Per simplificar-te la vida, et recomano posar els valors d'amplada i alçada en variables al principi del teu codi, <a href="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/2.html">d'aquesta manera</a> (mira el codi font):</p>
 
 
+        <pre>
+          <code>//Width and height ( amplada i alçada)
+            var w = 500;
+            var h = 50;
+          </code>
+        </pre>
 
+        <p>A partir d'ara ho faré a tots els exemples. Posant els valors de grandària en variables, es fàcil referenciar-los a qualsevol altra part del codi, com ara:</p>
 
+        <pre>
+          <code>var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)   // &lt;-- Aquí
+            .attr("height", h); // &lt;-- i també aquí!
+          </code>
+        </pre>
 
+        <p>Fins i tot, si m'enviessis una petició per 'variabilitzar' el mon real, m'hi sumaria entusiamat.</p>
 
+        <h2>Formes creades a partir de les dades</h2>
 
+        <p>Ha arribat el moment d'afegir formes gràfiques. Repesco la nostra vella matriu de confiança.</p>
 
+        <pre>
+          <code>
+            var dataset = [ 5, 10, 15, 20, 25 ];
+          </code>
+        </pre>
+
+        <p>i faig servir <code>data()</code> per iterar sobre cada valor de la matriu, creant un cercle amb cadascun d'ells.</p>
+
+        <pre>
+          <code>svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle");
+          </code>
+        </pre>
+
+        <p>Recorda, el mètode <code>selectAll()</code> retornarà una referència buida pels cercles ( perque encara no existeixen), <code>data()</code> uneix els valors de la matriu amb els elements que haurem creat, <code>enter()</code> retorna la referència als espais creats pels nous elements, i <code>append()</code> finalment afegeix els cercles al DOM</p>
+
+        <p>Per fer més senzilla la referència a tots els cercles després, podem crear una variable a on guardar-les.</p>
+
+        <pre>
+          <code>
+            var circles = svg.selectAll("circle")
+                 .data(dataset)
+                 .enter()
+                 .append("circle");
+          </code>
+        </pre>
+
+        <p>Perfecte, però tots aquests cercles necessiten una posció i una grandària. Estigues alerta, el codi que ve a continuació et pot tornar boig.</p>
+
+        <pre>
+          <code>
+            circles.attr("cx", function(d, i) {
+                return (i * 50) + 25;
+              })
+              .attr("cy", h/2)
+              .attr("r", function(d) {
+                  return d;
+              });
+          </code>
+        </pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/1.png" title="Fila de cercles de les dades" alt="Fila de cercles de les dades" /></p>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/3.html">Un regal pels ulls aquesta demo.</a> Anem a veure el codi pas a pas.</p>
+
+        <pre>
+          <code>
+            circles.attr("cx", function(d, i) {
+                    return (i * 50) + 25;
+                })
+          </code>
+        </pre>
+
+        <p>Pren la referència a tots els <code>circle</code>s i assigna l'atribut <code>cx</code> per a cadascun. Les nostres dades no han estat encara unides als elements <code>circle</code>, així que per a cada <code>circle</code>, el valor <code>d</code> és igual al valor que ocupa la mateixa posició a la matriu (5, 10, 15, 20, or 25).</p>
+
+        <p>Un altre valor, <code>i</code>, també es crea automàticament. <code>i</code> es l'índex numèric que correspont al valor de la passada actual. El compte comença amb zero, així que al primer cercle li correspon <code>i == 0</code>, al segon cercle <code>i == 1</code> i així succesivament.</p>
+
+        <p>Estem fent servir el valor <code>i</code> per col·locar els cercles cada cop més a la dreta, donat que a cada passada el valor de <code>i</code> s'incrementa, per tant:</p>
+
+        <pre>
+          <code>
+            (0 * 50) + 25 retorna 25
+            (1 * 50) + 25 retorna 75
+            (2 * 50) + 25 retorna 125
+            (3 * 50) + 25 retorna 175
+            (4 * 50) + 25 retorna 225
+          </code>
+        </pre>
+
+        <p>Per asseguran-te que <code>i</code> existeix i està disponible per a la teva funció, l'has d'incloure com a argument a la definició d'aquesta (<code>function(d, i)</code>).</p>
+
+        <p>També hi has d'incloure <code>d</code>, fins i tot encara que la facis servir després ( com per exemple en el cas anterior)</p>
+
+        <p>A la següent línia:</p>
+
+        <pre>
+          <code>
+            .attr("cy", h/2)
+          </code>
+        </pre>
+
+        <p><code>h</code> és l'alçada que té l'element SVG, <code>h/2</code> que és la meitat de d'aquesta alçada, posiciona el centre dels <code>circle</code>s a la meitat de l'alçada de l'SVG.</p>
+
+        <pre>
+          <code>
+            .attr("r", function(d) {
+                return d;
+              });
+          </code>
+        </pre>
+
+        <p>Finalment, a cada <code>circle</code> se li assigna un radi <code>r</code> de valor <code>d</code>, que correspont al valor de la matriu de dades per aquella passada.</p>
+
+        <h2>Ohhh quins Colors</h2>
+
+        <p>El color de fons i del contorn són altres atributs que pots assignar fent servir els mateixos mètodes, senzillament afegint aquest codi</p>
+
+        <pre>
+          <code>
+            .attr("fill", "yellow")
+            .attr("stroke", "orange")
+            .attr("stroke-width", function(d) {
+                return d/2;
+              });
+          </code>
+        </pre>
+
+        <p>obtenim aquest resultat (<a href="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/4.html">mira la demo</a>):</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/110-drawing-svgs/2.png" title="Cercles amb el valor de les dades i color de fons" alt="Cercles amb el valor de les dades i color de fons" /></p>
+
+        <p>Per suposat, pot barrejar i combinar atributs i personalitzar funcions per aplicar a qualsevol combinació de propietats. El truc amb la visualització de dades és, per suposat, fer servir les assignacions adequades, de tal manera que l'expressió visual de les seves dades sigui comprensible i útil per l'espectador.</p>
+
+        
                            
         
-        <p>Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/tipus-dades.html">Tipus de dades </a> &rarr;</p>
+        <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/tipus-dades.html">Tipus de dades </a> &rarr;</p>
         </section>
 
       	<footer>
