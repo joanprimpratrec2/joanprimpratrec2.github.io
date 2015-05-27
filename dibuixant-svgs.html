@@ -47,8 +47,54 @@
       <section id="main_content">
         <h2 id="afegir-elements">Dibuixant SVG's</h2>
 
-        <p class="timestamp">última actualització 24 de Maig de 2014</p>
+        <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 27 de Maig de 2015</p>
+
+        <p>Ara que estem familiaritzats amb l'estructura bàsica de un SVG i els seus elements, com podem començar a generar formes des de les nostres dades?</p>
+
+        <p>Te n'hauràs adonat que totes les propietats dels elements de l'SVG s'especifiquen com a <em>atrributs</em>. Així és, són incloses com a parelles propietat/valor entre les etiquetes de cada element, tal com això:</p>
+
+        <pre>
+          <code>
+            &lt;element property="value"/&gt;
+          </code>
+        </pre>
+
+        <p>Caram!! Això s'assembla molta codi HTML</p>
+
+        <pre>
+          <code>
+            &lt;p class="eureka"&gt;
+          </code>
+        </pre>
+
+        <p>Hem fet servir els mètodes de D3, <code>append()</code> i <code>attr()</code> per crear nous elements d'HTML i assignar-los els seus atributs. Des del moment en que l'element SVG existeix en el DOM, tal com passa amb els elements HTML, podem fer servir <code>append()</code> i <code>attr()</code> de la mateixa forma per generar imatges SVG!!</p>
+
+        <h2>Crear el SVG</h2>
+
+        <p>Primer, necessitem crear l'elemnet SVG a on col·locar els nostres dibuixos:</p>
+
+        <pre>
+          <code>
+            d3.select("body").append("svg");
+          </code>
+        </pre>
+
+        <p>El codi anterior busca l'element <code>body</code> i li afegeix (<code>append()</code>) un nou element <em>svg</em> just abans de l'etiqueta de tancament d'aquest element. Tot i que aquest codi funciona et recomano fer-ho d'aquesta manera:</p>
+
+        <pre>
+          <code>
+            var svg = d3.select("body").append("svg");
+          </code>
+        </pre>
+
+
+
+
+
+
+
+
 
                            
         
