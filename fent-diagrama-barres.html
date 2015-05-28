@@ -361,28 +361,37 @@
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/18.png" title="Etiquetes de valor realment boniques" alt="Etiquetes de valor realment boniques" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.html">Fantasti-codi!</a>Si no ets un obsés de la tipografia, llavors ho tens tot fet. Si, pel contrari, ets com jo. hauràs notat que les etiquetes no estan perfectament alineades amb les seves barres. Això és força fàcil d'arreglar.Fem servir l'atribut <code>text-anchor</code> de l'SVG per centrar-les horitzontalment al valor de <code>x</code> assignat:</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.html">Fantasti-codi!</a> Si no ets un obsés de la tipografia, ja ho tens tot. Si, pel contrari, ets com jo, hauràs notat que les etiquetes no estan perfectament alineades amb les seves barres. Això és força fàcil d'arreglar.Fem servir l'atribut <code>text-anchor</code> de l'SVG per centrar-les horitzontalment al valor de <code>x</code> assignat:</p>
 
-        <pre><code>    .attr("text-anchor", "middle")
-        </code></pre>
+        <pre>
+            <code>
+              .attr("text-anchor", "middle")
+            </code>
+        </pre>
 
-        <p>Then, let’s change the way we calculate the <code>x</code> position by setting it to the left edge of each bar <em>plus</em> half the bar width:</p>
+        <p>Llavors, canviem la manera en que calculem la coordenada <code>x</code> definint-la al costat esquerra de cada barra <em>més</em> la meitat de la seva amplada:</p>
 
-        <pre><code>    .attr("x", function(d, i) {
-                return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
-            })
-        </code></pre>
+        <pre>
+            <code>    
+                .attr("x", function(d, i) {
+                    return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
+                })
+            </code>
+        </pre>
 
-        <p>And I’ll also bring the labels up one pixel for perfect spacing:</p>
+        <p>I també afegirem un píxel més a la coordenad <em>y</em>perque quedi més ben espait:</p>
 
-        <pre><code>    .attr("y", function(d) {
-                return h - (d * 4) + 14;  //15 is now 14
-            })
-        </code></pre>
+        <pre>
+            <code>
+                .attr("y", function(d) {
+                    return h - (d * 4) + 14;  //15 is now 14
+                })
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/19.png" title="Centered labels" alt="Centered labels" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/19.png" title="Etiquetes centrades" alt="Etiquetes centrades" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/10.html">Done!</a>  Now, let’s branch out from bar charts.</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/10.html">Fet!</a> Ja tenim llest el diagrama de barres. Anem a explorar altres temes.</p>
                            
         
         <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/fent-grafic-dispersio.html">Fent un gràfic de dispersió </a> &rarr;</p>
