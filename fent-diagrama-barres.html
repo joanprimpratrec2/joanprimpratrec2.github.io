@@ -201,135 +201,167 @@
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/7.png" title="20 barres uniformement espaiades amb amplada variable" alt="20 barres uniformement espaiades amb amplada variabl" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/5.html">Funciona!</a> L'amplada de les barres i la posició x s'escala correctament, tant si hi ha 20 barres com 5</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/5.html">Funciona!</a></p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/8.png" title="Five evenly spaced bars with dynamic widths" alt="Five evenly spaced bars with dynamic widths" /></p>
+         <p>L'amplada de les barres i la posició x s'escala correctament, tant si hi ha 20 barres com 5</p>
 
-        <p>or even 100:</p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/8.png" title="5 barres uniformement espaiades amb amplada variable" alt="5 barres uniformement espaiades amb amplada variable" /></p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.png" title="One hundred evenly spaced bars with dynamic widths" alt="One hundred evenly spaced bars with dynamic widths" /></p>
+        <p>o 100:</p>
 
-        <p>Finally, we encode our data as the <em>height</em> of each bar. You would hope it were as easy as referencing the <code>d</code> data value when setting each bar’s <code>height</code>:</p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.png" title="100 barres uniformement espaiades amb amplada variable" alt="100 barres uniformement espaiades amb amplada variabl" /></p>
+
+        <p>Per últim, hem de codificar l'alçada (<em>height</em>) de cada barra perque s'adapti al valor de les dades. Et podria semblar que ha de ser tan senzill com assignar <code>d</code> a cada valor d'alçada <code>height</code>:</p>
+
+        <pre>
+            <code>
+                .attr("height", function(d) {
+                    return d;
+                });
+            </code>
+        </pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/10.png" title="Alçades dinàmiques" alt="Alçades dinàmiques" /></p>
+
+        <p>Hmm, curiós. Potser cal escalar una mica el valor de l'alçada?</p>
 
         <pre><code>.attr("height", function(d) {
-            return d;
+            return d * 4;  // &lt;--  escalat 4 vegades!
         });
         </code></pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/10.png" title="Dynamic heights" alt="Dynamic heights" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/11.png" title="Alçades dinàmiques" alt="Alçades dinàmiques" /></p>
 
-        <p>Hmm, that looks funky. Maybe we can just scale up our numbers a bit?</p>
+        <p>Per desgràcia, no és així de fàcil - volem que les nostres barres creixin cap amunt i no cap avall - però no culpem D3 , culpem l'SVG .</p>
 
-        <pre><code>.attr("height", function(d) {
-            return d * 4;  // &lt;-- Times four!
-        });
-        </code></pre>
+        <p>Recordaràs, del capítol "El primer svg" que les formes, en aquest cas els rectangles <code>rect</code>s, tenen l'origen de les coordenades <code>x</code> i <code>y</code> a la cantonada <em>superior-esquerra</em>.A nosaltres, ens seria molt més senzill que l'origen de coordenades fos a la cantonada inferior-esquerra, però, que hi farem!. No és així com ho té definit l'SVG, i, francament li importa un rabe el que ens sembli millor.</p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/11.png" title="Dynamic heights" alt="Dynamic heights" /></p>
+        <p>Sabent que les nostres barres creixent cap per avall, els hem de capgirar. Si restem a l'alcada total de l'SVG el valor de la dada  trobarem el punt superior de la nostra barra capgirada:</p>
 
-        <p>Alas, it is not that easy — we want our bars to grow upward from the bottom edge, not down from the top — but don’t blame D3, blame SVG.</p>
+        <pre>
+            <code>
+                .attr("y", function(d) {
+                    return h - d;  //L'alçada menys el valor de la dada
+                })
+            </code>
+        </pre>
 
-        <p>You’ll recall from the SVG primer that, when drawing <code>rect</code>s, the <code>x</code> and <code>y</code> values specify the coordinates of the <em>upper-left corner</em>.  That is, the origin or reference point for every <code>rect</code> is its top-left.  For our purposes, it would be soooooo much easier to set the origin point as the bottom-left corner, but that’s just not how SVG does it, and, frankly, SVG is pretty indifferent about your feelings on the matter.</p>
+        <p>Llavors, per fer que la part inferior de la nostra barra, sigui la part inferior de l'SVG, cada alçada del <code>rect</code>s serà el valor mateix de la dada:</p>
 
-        <p>Given that our bars do have to “grow down from the top,” then where is “the top” of each bar in relationship to the top of the SVG?  Well, the top of each bar could be expressed as a relationship between the height of the SVG and the corresponding data value, as in:</p>
+        <pre>
+            <code>
+                .attr("height", function(d) {
+                    return d;  //Just the data value
+                });
+            </code>
+        </pre>
 
-        <pre><code>.attr("y", function(d) {
-            return h - d;  //Height minus data value
-        })
-        </code></pre>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/12.png" title="Creixent des de dalt cap a baix" alt="Creixent des de dalt cap a baix" /></p>
 
-        <p>Then, to put the “bottom” of the bar on the bottom of the SVG, each <code>rect</code>s height can be just the data value itself:</p>
+        <p>Escalem un xic les barres canviant <code>d</code> per <code>d * 4</code>. (Notea: Més tard aprendrem el mètode de D3 <em>scales</em>, que ofeix més i millors opcions per aquesta tasca.)</p>
 
-        <pre><code>.attr("height", function(d) {
-            return d;  //Just the data value
-        });
-        </code></pre>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/13.png" title="Creixent més des de dalt cap a baix" alt="Creixent més des de dalt cap a baix" /></p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/12.png" title="Growing down from above" alt="Growing down from above" /></p>
-
-        <p>Let’s scale things up a bit by changing <code>d</code> to <code>d * 4</code>. (Note: Later we’ll learn about D3 <em>scales</em>, which offer better ways to accomplish this.)</p>
-
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/13.png" title="Growing bigger from above" alt="Growing bigger from above" /></p>
-
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/6.html">Here&rsquo;s the working code for our growing-down-from-above bar chart.</a></p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/6.html">Aquí tens el codi pel nostre diagrama que creix de baix cap a dalt</a></p>
 
         <h2>Color</h2>
 
-        <p>Adding color is easy.  Just use <code>attr()</code> to set a <code>fill</code>:</p>
+        <p>Afegir color és senzill.  Fes servir el mètode <code>attr()</code> per definir l'atribut <code>fill</code>:</p>
 
-        <pre><code>.attr("fill", "teal");
-        </code></pre>
+        <pre>
+            <code>
+                .attr("fill", "teal");
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/14.png" title="Teal bars" alt="Teal bars" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/14.png" title="barres de color verd" alt="barres de color verd" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/7.html">Here&rsquo;s an all-teal bar chart.</a>  But often, you’ll want a shape’s color to reflect some quality of the data.  That is, you may want to <em>encode</em> the data as color.  (In the case of our bar chart, that makes a <em>dual encoding</em>, in which the same data value is encoded in two different visual properties: height and color.)</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/7.html">Aquí tens el diagrama de color verd.</a>  Però sovint, el que voldràs és que el color reflecteixi alguna propietat de les dades. Per tant el que vols és <em>encode</em> les dades en forma de color.  (En el cas del nostre diagrama de barres, hi haurà una <em>codificació dual</em>, amb la que la mateixa dada codificarà dues propietats de la barra, la seva alçada i el seu color.)</p>
 
-        <p>Using data to drive color is as easy as writing a custom function that again references <code>d</code>. Here, we replace <code>"teal"</code> with a custom function:</p>
+        <p>Fer servir les dades per donar color és tan senzill com escriure una nova funció que lligui <code>d</code> amb l'atribut color. Aquí, canviem el color verd <code>"tral"</code> per la nostra funció:</p>
 
-        <pre><code>.attr("fill", function(d) {
-            return "rgb(0, 0, " + (d * 10) + ")";
-        });
-        </code></pre>
+        <pre>
+            <code>
+                .attr("fill", function(d) {
+                    return "rgb(0, 0, " + (d * 10) + ")";
+                });
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/15.png" title="Data-driven blue bars" alt="Data-driven blue bars" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/15.png" title="barres de tons blaus en funció de les dades" alt="barres de tons blaus en funció de les dades" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/8.html">Here&rsquo;s that code.</a> This is not a particularly useful visual encoding, but you can get the idea of how to translate data into color. Here, <code>d</code> is multiplied by 10, and then used as the blue value in an <code>rgb()</code> color definition. So the greater values of <code>d</code> (taller bars) will be more blue. Smaller values of <code>d</code> (shorter bars) will be less blue (closer to black).</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/8.html">Aquí tens el codi.</a> Aquest no és un efecte visua particulament útil, però et dona una pista de com traduir les dades en color. Aquí, la <code>d</code> es multiplica per 10, i fem servir aquest valor per definir la part blava de l'ordre <code>rgb()</code>. Així doncs, a valors més grans de <code>d</code> (barres més altes) major quantitat de blau i per tant un blau més brillant i clar i viceversa, valors més petits menor quantitat de blau i per tant un color més proper al negre.</p>
 
-        <h2>Labels</h2>
+        <h2>Etiquetes</h2>
 
-        <p>Visuals are great, but sometimes you need to show the actual data values as text within the visualization. Here’s where value labels come in, and they are very, very easy to generate with D3.</p>
+        <p>A vegades amb l'efecte visual no es suficient, i necessites mostra el valor de la dada en forma de text dins la visualització. Aquí, és a on entre el valor de l'etiqueta i amb D3, són molt fàcils de generar.</p>
 
-        <p>You’ll recall from the SVG primer that you can add <code>text</code> elements to an SVG element. We‘ll start with:</p>
+        <p>Recordes del capítol sobre le primer svg, que podiem afegir elements de <code>text</code> a un SVG. Començarem amb:</p>
 
-        <pre><code>svg.selectAll("text")
-           .data(dataset)
-           .enter()
-           .append("text")
-        </code></pre>
+        <pre>
+            <code>
+                svg.selectAll("text")
+                   .data(dataset)
+                   .enter()
+                   .append("text")
+            </code>
+        </pre>
 
-        <p>Look familiar? Just as we did for the <code>rect</code>s, here we do for the <code>text</code>s. First, select what you want, bring in the data, enter the new elements (which are just placeholders at this point), and finally append the new <code>text</code> elements to the DOM.</p>
+        <p>Ho reconeixes? El mateix que hem fet pel rectangles (<code>rect</code>), ara ho fem pels <code>text</code>s. Primer, selecciona el que vols, agafa les dades amb <code>data()</code>, fes servir <code>enter()</code> per crear els espais per a les noves dades, i finalment afegeix (<code>append()</code>) els nous elements <code>text</code> al DOM.</p>
 
-        <p>We’ll extend that code to include a data value within each <code>text</code> element by using the <code>text()</code> method</p>
+        <p>Allargarem el codi per incloure el valor de les dades a cada element <code>text</code> fent servir el mètode <code>text()</code>.</p>
 
-        <pre><code>   .text(function(d) {
-                return d;
-           })
-        </code></pre>
+        <pre>
+            <code>   
+                .text(function(d) {
+                    return d;
+                })
+            </code>
+        </pre>
 
-        <p>and then extend it further, by including <code>x</code> and <code>y</code> values to position the text. It’s easiest if I just copy and paste the same x/y code we used above for the bars:</p>
+        <p>i l'allargarem una mica més enllà, incloent la <code>x</code> i <code>y</code> de la posició del text. És tan fàcil com copiar i enganxar el mateix codi x/y que hem fet servir per les barres:</p>
 
-        <pre><code>   .attr("x", function(d, i) {
-                return i * (w / dataset.length);
-           })
-           .attr("y", function(d) {
-                return h - (d * 4);
-           });
-        </code></pre>
+        <pre>
+            <code>
+                .attr("x", function(d, i) {
+                    return i * (w / dataset.length);
+                    })
+                .attr("y", function(d) {
+                    return h - (d * 4);
+                });
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/16.png" title="Baby value labels!" alt="Baby value labels!" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/16.png" title="Petites etiquetes del valor!" alt="Petites etiquetes del valor!" /></p>
 
-        <p>Aha! Value labels! But some are getting cut off at the top. Let’s try moving them down, inside the bars, by adding a small amount to the <code>x</code> and <code>y</code> calculations:</p>
+        <p>Aha! Etiquetes dels valors! Però alguna queda tallada per la part superior. Intentem moure-es cap a baix, dins les barres, afegint-hi una petita quantitat al cálcul de la <code>x</code> and <code>y</code>:</p>
 
-        <pre><code>   .attr("x", function(d, i) {
-                return i * (w / dataset.length) + 5;  // +5
-           })
-           .attr("y", function(d) {
-                return h - (d * 4) + 15;              // +15
-           });
-        </code></pre>
+        <pre>
+            <code>
+               .attr("x", function(d, i) {
+                    return i * (w / dataset.length) + 5;  // +5
+                })
+                .attr("y", function(d) {
+                    return h - (d * 4) + 15;              // +15
+                });
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/17.png" title="In-bar value labels" alt="In-bar value labels" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/17.png" title="etiquetes dels valors a l'interior de les barres" alt="etiquetes dels valors a l'interior de les barres" /></p>
 
-        <p>Better, but not legible. Fortunately, we can fix that:</p>
+        <p>Millor, però no es llegeix gaire bé. Aforturnadament ho podem arreglar així:</p>
 
-        <pre><code>   .attr("font-family", "sans-serif")
-           .attr("font-size", "11px")
-           .attr("fill", "white");
-        </code></pre>
+        <pre>
+            <code>   
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "11px")
+                .attr("fill", "white");
+            </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/18.png" title="Really nice value labels" alt="Really nice value labels" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/18.png" title="Etiquetes de valor realment boniques" alt="Etiquetes de valor realment boniques" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.html">Fantasti-code!</a> If you are not typographically obsessive, then you’re all done. If, however, you are like me, you’ll notice that the value labels aren’t perfectly aligned within their bars. That’s easy enough to fix.  Let’s use the SVG <code>text-anchor</code> attribute to center the text horizontally at the assigned <code>x</code> value:</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/130-making-a-bar-chart/9.html">Fantasti-codi!</a>Si no ets un obsés de la tipografia, llavors ho tens tot fet. Si, pel contrari, ets com jo. hauràs notat que les etiquetes no estan perfectament alineades amb les seves barres. Això és força fàcil d'arreglar.Fem servir l'atribut <code>text-anchor</code> de l'SVG per centrar-les horitzontalment al valor de <code>x</code> assignat:</p>
 
         <pre><code>    .attr("text-anchor", "middle")
         </code></pre>
