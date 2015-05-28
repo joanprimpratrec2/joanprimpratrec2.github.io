@@ -145,25 +145,34 @@
 
             <p>Fixa't com accedim al valor de les dades i com es fan servir per a les coordenades de posició del centre <code>cx</code> i <code>cy</code>.  Quan fem servir <code>function(d)</code>, D3 dóna automàticament a <code> d </code> el valor de dades actual dins la teva funció. En aquest cas , el valor actual de dades és una de les petites matrius dins de la matriu general que forma el conjunt de dades.</p>
 
-            <p>When <code>d</code> is an array of values (and not just a single value, like <code>3.14159</code>), you need to use bracket notation to access its values.  Hence, instead of <code>return d</code>, we have <code>return d[0]</code> and <code>return d[1]</code>, which return the first and second values of the array, respectively.</p>
+            <p>Quan <code> d </code> és una matriu de valors ( i no només un únic valor , com <code> 3.14159 </code>) , cal fer servir la notació amb claudàtors per accedir a cadascun dels seus valors interns. Per tant , en lloc de <code> return d </code> , tenim <code> return d[0] </code> i <code> return d[1] </code> , que retornen el primer i segon valors de la matriu, respectivament .</p>
 
-            <p>For example, in the case of our first data point <code>[5, 20]</code>, the first value (array position <code>0</code>) is <code>5</code>, and the second value (array position <code>1</code>) is <code>20</code>.  Thus:</p>
+            <p>Per exemple, en el cas del nostre primer punt de dades <code> [ 5, 20 ] </code> , el primer valor ( posició de la matriu <code>0</code>) és <code> 5 </code> , i el segon valor ( posició de la matriu <code>1</code>) és <code> 20 </code > . per tant:</p>
 
-            <pre><code>d[0] returns 5
-            d[1] returns 20
-            </code></pre>
+            <pre>
+              <code>
+                d[0] returns 5
+                d[1] returns 20
+              </code>
+            </pre>
 
-            <p>By the way, if you ever want to access any value in the larger data set (outside of D3, say), you can do so using bracket notation.  For example:</p>
+            <p>Per cert, si mai vols accedir a qualsevol valor del conjunt de dades més gran ( fora del D3 , per exemple ) , pots sempre pots fer-ho utilitzant la notació amb claudàtors. Per exemple :</p>
 
-            <pre><code>dataset[5] returns [410, 12]
-            </code></pre>
+            <pre>
+              <code>
+                dataset[5] returns [410, 12]
+              </code>
+            </pre>
 
-            <p>You can string brackets together, to access values within nested arrays:</p>
+            <p>També pots col·locar claudàtors contigus per accedir als valors de les matrius de dins una altre matriu :</p>
 
-            <pre><code>dataset[5][1] returns 12
-            </code></pre>
+            <pre>
+              <code>
+                dataset[5][1] returns 12
+              </code>
+            </pre>
 
-            <p>Don’t believe me?  <a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/1.html">Take another look at the scatterplot</a>, open your JavaScript console, and try typing in <code>dataset[5]</code> or <code>dataset[5][1]</code> and see what happens.</p>
+            <p>No em creus?  <a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/1.html">Mira una altra manera de fer el gràfic de dispersió</a>, obre la consola JavaScript i prova d'escriure en <code>dataset[5] </code> o <code> dataset[5][1]</code> i a veure què passa</p>
 
             <h2>Size</h2>
 
