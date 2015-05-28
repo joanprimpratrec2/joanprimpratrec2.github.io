@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="ca">
+<!--<![endif]-->
+<head>
+	<meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+	<title>Instal·lació- tutorial d3.js en català</title>
+</head>
+<body>
+
+  <div id="container">
+    <div class="inner">
+      <header>
+        <div>    
+
+        <a href="https://joanprimpratrec2.github.io/index.html">Inici  |  </a>
+        <a href="https://joanprimpratrec2.github.io/fonaments.html">Fonaments |  </a>
+        <a href="https://joanprimpratrec2.github.io/instalacio.html">Instal·lació | </a>
+        <a href="https://joanprimpratrec2.github.io/afegir-elements.html">Afegir Elements | </a>
+        <a href="https://joanprimpratrec2.github.io/encadenar-metodes.html">Encadenar Mètodes | </a>
+        <a href="https://joanprimpratrec2.github.io/asociar-dades.html">Asociar Dades | </a>
+        <a href="https://joanprimpratrec2.github.io/fent-servir-les-dades.html">Fent servir les Dades | </a>
+        <a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs | </a>
+        <a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() | </a>
+        <a href="https://joanprimpratrec2.github.io/primer-svg.html">El primer SVG | </a>
+        <a href="https://joanprimpratrec2.github.io/dibuixant-svgs.html">Dibuixant SVG's | </a>
+        <a href="https://joanprimpratrec2.github.io/tipus-dades.html">Tipus de dades | </a>
+        <a href="https://joanprimpratrec2.github.io/fent-diagrama-barres.html">Fent un diagrama de barres | </a>
+        <a href="https://joanprimpratrec2.github.io/fent-grafic-dispersio.html">Fent un gràfic de dispersió  |</a>
+        <a href="https://joanprimpratrec2.github.io/escales.html">Escales |</a>
+        
+                  	
+        
+        </div>
+      </header>
+
+      <hr>
+      <section id="main_content">
+        <h2>Escales</h2>
+
+        <p class="timestamp">última actualització 30 de Desembre de 2012</p>
+
+        <p class="timestamp">traducció 28 de Maig de 2015</p>
+
+        <div id="text">
+
+          <p class="timestamp">Last updated 2012 December 30</p>
+
+          <p>“Scales són funcions que assignen a partir d'un domini d'entrada un rang de sortida.”</p>
+
+        <p>Aquesta és <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales"> la definició de les <em>scales de D3 de Mike Bostock’s</em> </a>.</p>
+
+        <p>Els valors en qualsevol conjunt de dades és poc probable que es corresponen exactament amb els mesuraments de píxels per a l'ús en la seva visualització . <em>Scales</em> proporcionen una manera convenient per assignar aquests valors de dades als nous valors útils per a la visualització</p>
+
+        <p><em>Scales</em> de D3 són <em>funcions</em> , els paràmetres de les quals s'han de definir. Una vegada que es creen, es crida a la funció d'escala ,s'hi passen les dades , i retorna el valor de sortida escalat . Podeu definir i usar tantes escales com vulguis .</p>
+
+        <p>It may be tempting to think of a scale as something that appears visually in the final image — like a set of tick marks, indicating a progression of values.  <em>Do not be fooled!</em>  Those tick marks are part of an <em>axis</em>, which is essentially a visual representation of a scale.  A scale is a mathematical relationship, with no direct visual output.  I encourage you to think of scales and axes as two different, yet related, elements.</p>
+
+        <p>This topic addresses only <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><em>linear</em></a> scales, since they are most common and understandable.  Once you understand linear scales, the others will be a piece of cake.</p>
+
+        <h2>Apples and Pixels</h2>
+
+        <p>Imagine that the following data set represents the number of apples sold at a roadside fruit stand each month:</p>
+
+        <pre><code>var dataset = [ 100, 200, 300, 400, 500 ];
+        </code></pre>
+
+        <p>First of all, this is great news, as the stand is selling 100 additional apples each month!  Business is booming.  To showcase this success, you want to make a bar chart illustrating the steep upward climb of apple sales, with each data value corresponding to the height of one bar.</p>
+
+        <p>Until now, we’ve used data values directly as display values, ignoring unit differences.  So if 500 apples were sold, the corresponding bar would be 500 pixels tall.</p>
+
+        <p>That could work, but what about next month, when 600 apples are sold?  And a year later, when 1,800 apples are sold?  Your audience would have to purchase ever-larger displays, just to be able to see the full height of those very tall apple-bars!  (Mmm, apple bars!)</p>
+
+        <p>This is where scales come in.  Because apples are not pixels (which are also not oranges), we need scales to translate between them.</p>
+
+        <h2>Domains and Ranges</h2>
+
+        <p>A scale’s <em>input domain</em> is the range of possible input data values.  Given the apples data above, appropriate input domains would be either 100 and 500 (the minimum and maximum values of the data set) or zero and 500.</p>
+
+        <p>A scale’s <em>output range</em> is the range of possible output values, commonly used as display values in pixel units.  The output range is completely up to you, as the information designer.  If you decide the shortest apple-bar will be 10 pixels tall, and the tallest will be 350 pixels tall, then you could set an output range of 10 and 350.</p>
+
+        <p>For example, create a scale with an input domain of <code>100,500</code> and an output range of <code>10,350</code>.  If you gave that scale the value <code>100</code>, it would return <code>10</code>.  If you gave it <code>500</code>, it would spit back <code>350</code>.  If you gave it <code>300</code>, it would hand <code>180</code> back to you on a silver platter.  (<code>300</code> is in the center of the domain, and <code>180</code> is in the center of the range.)</p>
+
+        <p>We could visualize the domain and range as corresponding axes, side-by-side:</p>
+
+        <svg width="505" height="115">
+            <text x="220" y="15" font-style="italic">Input domain</text>
+            <line x1="5" y1="30" x2="500" y2="30" stroke="gray" stroke-width="1"/>
+            <circle cx="5" cy="30" r="3" fill="#008"/>
+            <text x="8" y="48">100</text>
+            <circle cx="255" cy="30" r="3" fill="#008"/>
+            <text x="258" y="48">300</text>
+            <circle cx="500" cy="30" r="3" fill="#008"/>
+            <text x="473" y="48">500</text>
+            <line x1="5" y1="90" x2="500" y2="90" stroke="gray" stroke-width="1"/>
+            <circle cx="5" cy="90" r="3" fill="#008"/>
+            <text x="8" y="84">10</text>
+            <circle cx="255" cy="90" r="3" fill="#008"/>
+            <text x="258" y="84">180</text>
+            <circle cx="500" cy="90" r="3" fill="#008"/>
+            <text x="473" y="84">350</text>
+            <text x="220" y="110" font-style="italic">Output range</text>
+        </svg>
+
+        <p>One more thing:  Given that it is very easy to mix up the <em>input domain</em> and <em>output range</em> terminology, I’d like to propose a little exercise.  When I say “input,” you say “domain.”  Then I say “output,” and you say “range.”  Ready?  Okay:</p>
+
+        <ul>
+        <li>Input! Domain!</li>
+        <li>Output! Range!</li>
+        <li>Input! Domain!</li>
+        <li>Output! Range!</li>
+        </ul>
+
+        <p>Got it?  Great.</p>
+
+        <h2>Normalization</h2>
+
+        <p>If you’re familiar with the concept of <em>normalization</em>, it may be helpful to know that, with a linear scale, that’s all that is really going on here.</p>
+
+        <p>Normalization is the process of mapping a numeric value to a new value between 0 and 1, based on the possible minimum and maximum values.  For example, with 365 days in the year, day number 310 maps to about 0.85, or 85% of the way through the year.</p>
+
+        <p>With linear scales, we are just letting D3 handle the math of the normalization process.  The input value is normalized according to the domain, and then the normalized value is scaled to the output range.</p>
+
+        <h2>Creating a Scale</h2>
+
+        <p>D3’s scale generators are accessed with <code>d3.scale</code> followed by the type of scale you want.</p>
+
+        <pre><code>var scale = d3.scale.linear();
+        </code></pre>
+
+        <p>Congratulations!  Now <code>scale</code> is a function to which you can pass input values.  (Don’t be misled by the <code>var</code> above; remember that in JavaScript, variables can store functions.)</p>
+
+        <pre><code>scale(2.5);  //Returns 2.5
+        </code></pre>
+
+        <p>Since we haven't set a domain and a range yet, this function is mapping input to output on a 1:1 scale.  That is, whatever we input will be returned unchanged.</p>
+
+        <p>We can set the scale’s input domain to <code>100,500</code> by passing those values to the <code>domain()</code> method as an array:</p>
+
+        <pre><code>scale.domain([100, 500]);
+        </code></pre>
+
+        <p>Set the output range in similar fashion, with <code>range()</code>:</p>
+
+        <pre><code>scale.range([10, 350]);
+        </code></pre>
+
+        <p>These steps can be done separately, as above, or chained together into one line of code:</p>
+
+        <pre><code>var scale = d3.scale.linear()
+                            .domain([100, 500])
+                            .range([10, 350]);
+        </code></pre>
+
+        <p>Either way, our scale is ready to use!</p>
+
+        <pre><code>scale(100);  //Returns 10
+        scale(300);  //Returns 180
+        scale(500);  //Returns 350
+        </code></pre>
+
+        <p>Typically, you will call scale functions from within an <code>attr()</code> method or similar, not on their own.  Let’s modify our scatterplot visualization to use dynamic scales.</p>
+
+        <h2>Scaling the Scatterplot</h2>
+
+        <p>To revisit our data set from the scatterplot:</p>
+
+        <pre><code>var dataset = [
+                        [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+                        [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
+                      ];
+        </code></pre>
+
+        <p>You’ll recall that <code>dataset</code> is an array of arrays.  We mapped the first value in each array onto the x axis, and the second value onto the y axis.  Let’s start with the x axis.</p>
+
+        <p>Just by eyeballing the x values, it looks like they range from 5 to 480, so a reasonable input domain to specify might be <code>0,500</code>, right?</p>
+
+        <p>…</p>
+
+        <p>Why are you giving me that look?  Oh, because you want to keep your code flexible and scalable, so it will continue to work even if the data change in the future.  Very smart!</p>
+
+        <p>Instead of specifying fixed values for the domain, we can use convenient array functions like <code>min()</code> and <code>max()</code> to analyze our data set on the fly.  For example, this loops through each of the x values in our arrays and returns the value of the greatest one:</p>
+
+        <pre><code>d3.max(dataset, function(d) {    //Returns 480
+            return d[0];  //References first value in each sub-array
+        });
+        </code></pre>
+
+        <p>Putting it all together, let’s create the scale function for our x axis:</p>
+
+        <pre><code>var xScale = d3.scale.linear()
+                             .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+                             .range([0, w]);
+        </code></pre>
+
+        <p>First, notice I named it <code>xScale</code>.  Of course, you can name your scales whatever you want, but a name like <code>xScale</code> helps me remember what this function does.</p>
+
+        <p>Second, notice I set the low end of the input domain to zero.  (Alternatively, you could use <code>min()</code> to calculate a dynamic value.)  The upper end of the domain is set to the maximum value in <code>dataset</code> (which is 480).</p>
+
+        <p>Finally, observe that the output range is set to <code>0</code> and <code>w</code>, the SVG’s width.</p>
+
+        <p>We’ll use very similar code to create the scale function for the y axis:</p>
+
+        <pre><code>var yScale = d3.scale.linear()
+                             .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                             .range([0, h]);
+        </code></pre>
+
+        <p>Note that the <code>max()</code> function references <code>d[1]</code>, the y value of each sub-array.  Also, the upper end of <code>range()</code> is set to <code>h</code> instead of <code>w</code>.</p>
+
+        <p>The scale functions are in place! Now all we need to do is use them. Simply modify the code where we create a <code>circle</code> for each data value</p>
+
+        <pre><code>.attr("cx", function(d) {
+            return d[0];
+        })
+        </code></pre>
+
+        <p>to return a scaled value (instead of the original value):</p>
+
+        <pre><code>.attr("cx", function(d) {
+            return xScale(d[0]);
+        })
+        </code></pre>
+
+        <p>Likewise, for the y axis, this</p>
+
+        <pre><code>.attr("cy", function(d) {
+            return d[1];
+        })
+        </code></pre>
+
+        <p>is modified as:</p>
+
+        <pre><code>.attr("cy", function(d) {
+            return yScale(d[1]);
+        })
+        </code></pre>
+
+        <p>For good measure, let’s make the same change where we set the coordinates for the text labels, so these lines</p>
+
+        <pre><code>.attr("x", function(d) {
+            return d[0];
+        })
+        .attr("y", function(d) {
+            return d[1];
+        })
+        </code></pre>
+
+        <p>become this:</p>
+
+        <pre><code>.attr("x", function(d) {
+            return xScale(d[0]);
+        })
+        .attr("y", function(d) {
+            return yScale(d[1]);
+        })
+        </code></pre>
+
+        <p>And there we are!</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.png" title="Scatterplot using x and y scales" alt="Scatterplot using x and y scales" /></p>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.html">Here&rsquo;s the working code.</a>  Visually, it is disappointingly similar to our original scatterplot!  Yet we are making more progress than may be apparent.</p>
+
+        <h2>Refining the Plot</h2>
+
+        <p>You may have noticed that smaller y values are at the top of the plot, and the larger y values are toward the bottom. Now that we’re using scales, it’s super easy to reverse that, so greater values are higher up, as you would expect.  It’s just a matter of changing the output range of <code>yScale</code> from</p>
+
+        <pre><code>.range([0, h]);
+        </code></pre>
+
+        <p>to</p>
+
+        <pre><code>.range([h, 0]);
+        </code></pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.png" title="Scatterplot with y scale inverted" alt="Scatterplot with y scale inverted" /></p>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.html">Here&rsquo;s that code.</a>  Yes, now a <em>smaller</em> input to <code>yScale</code> will produce a <em>larger</em> output value, thereby pushing those <code>circle</code>s and <code>text</code> elements down, closer to the base of the image. I know, it’s almost too easy!</p>
+
+        <p>Yet some elements are getting cut off.  Let’s introduce a <code>padding</code> variable:</p>
+
+        <pre><code>var padding = 20;
+        </code></pre>
+
+        <p>Then we’ll incorporate the <code>padding</code> amount when setting the range of both scales.  The range for <code>xScale</code> was <code>range([0, w])</code>, but now it’s</p>
+
+        <pre><code>.range([padding, w - padding]);
+        </code></pre>
+
+        <p>The range for <code>yScale</code> was <code>range([h, 0])</code>, but now it’s</p>
+
+        <pre><code>.range([h - padding, padding]);
+        </code></pre>
+
+        <p>This should provide us with 20 pixels of extra room on the left, right, top, and bottom edges of the SVG.  And it does!</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.png" title="Scatterplot with padding" alt="Scatterplot with padding" /></p>
+
+        <p>But the text labels on the far right are still getting cut off, so I’ll double the amount of <code>xScale</code>’s padding on the right side by multiplying by two:</p>
+
+        <pre><code>.range([padding, w - padding * 2]);
+        </code></pre>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.png" title="Scatterplot with more padding" alt="Scatterplot with more padding" /></p>
+
+        <p>Better! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.html">Here&rsquo;s the code so far.</a>  But there’s one more change I’d like to make.  Instead of setting the radius of each <code>circle</code> as the square root of its y value (which was a bit of a hack, and not useful in any case), why not create another custom scale?</p>
+
+        <pre><code>var rScale = d3.scale.linear()
+                             .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                             .range([2, 5]);
+        </code></pre>
+
+        <p>Then, setting the radius looks like this:</p>
+
+        <pre><code>.attr("r", function(d) {
+            return rScale(d[1]);
+        });
+        </code></pre>
+
+        <p>This is exciting, because we are guaranteeing that our radius values will <em>always</em> fall within the range of <code>2,5</code>. (Or <em>almost</em> always: See reference to <code>clamp()</code> below.)  So data values of <code>0</code> (the minimum input) will get circles of radius <code>2</code> (or a diameter of 4 pixels).  The very largest data value will get a circle of radius <code>5</code> (diameter of 10 pixels).</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.png" title="Scatterplot with scaled radii" alt="Scatterplot with scaled radii" /></p>
+
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.html">Voila</a>: Our first scale used for a visual property other than an axis value.</p>
+
+        <p>Finally, just in case the power of scales hasn’t yet blown your mind, I’d like to add one more array to the data set: <code>[600, 150]</code></p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.png" title="Scatterplot with big numbers added" alt="Scatterplot with big numbers added" /></p>
+
+        <p>Boom! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.html">Here&rsquo;s the code.</a>  Notice how all the old points maintained their relative positions, but have migrated closer together, down and to the left, to accommodate the newcomer.</p>
+
+        <p>And now, one final revelation: We can now very easily change the size of our SVG, and everything scales accordingly.  Here, I’ve increased the value of <code>h</code> from <code>100</code> to <code>300</code> and made <em>no other changes</em>:</p>
+
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/7.png" title="Large, scaled scatterplot" alt="Large, scaled scatterplot" /></p>
+
+        <p>Boom, again! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.html">Here&rsquo;s the updated code.</a>  Hopefully, you are seeing this and realizing: No more late nights tweaking your code because the client decided the graphic should be 800 pixels wide instead of 600.  Yes, you will get more sleep because of me (and D3’s brilliant built-in methods).  Being well-rested is a competitive advantage.  You can thank me later.</p>
+
+        <h2>Other Methods</h2>
+
+        <p><code>d3.scale.linear()</code> has several other handy methods that deserve a brief mention here:</p>
+
+        <ul>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_nice"><code>nice()</code></a> — This tells the scale to take whatever input domain that you gave to <code>range()</code> and expand both ends to the nearest round value.  From the D3 wiki: “For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1].”  This is useful for normal people, who find it hard to read numbers like 0.20147987687960267.</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_rangeRound"><code>rangeRound()</code></a> — Use <code>rangeRound()</code> in place of <code>range()</code> and all values output by the scale will be rounded to the nearest whole number.  This is useful if you want shapes to have exact pixel values, to avoid the fuzzy edges that may arise with antialiasing.</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_clamp"><code>clamp()</code></a> — By default, a linear scale <em>can</em> return values outside of the specified range.  For example, if given a value outside of its expected input domain, a scale will return a number also outside of the output range.  Calling <code>.clamp(true)</code> on a scale, however, forces all output values to be within the specified range.  Meaning, excessive values will be rounded to the range’s low or high value (whichever is nearest).</li>
+        </ul>
+
+        <h2>Other Scales</h2>
+
+        <p>In addition to <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><code>linear</code></a> scales (discussed above), D3 has several other scale methods built-in:</p>
+
+        <ul>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-identity"><code>identity</code></a> — A 1:1 scale, useful primarily for pixel values</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-sqrt"><code>sqrt</code></a> — A square root scale</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-pow"><code>pow</code></a> — A power scale (good for the gym)</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-log"><code>log</code></a> — A logarithmic scale</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantize"><code>quantize</code></a> — A linear scale with discrete values for its output range, for when you want to sort data into “buckets”</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantile"><code>quantile</code></a> — Similar to above, but with discrete values for its input domain (when you already have “buckets”)</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Ordinal-Scales"><code>ordinal</code></a> — Ordinal scales use non-quantitative values (like category names) for output; perfect for comparing apples and oranges</li>
+        </ul>
+
+              <p class="next_up">Next up: <a href="http://alignedleft.com/tutorials/d3/axes">Axes</a> &rarr;</p>
+                    
+            <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/escales.html">Escales </a> &rarr;</p>
+          </div>
+        </section>
+
+      	<footer>
+      		Aquest tutorial ha sigut traduit per <a href="https://">Joan Prim</a><br>
+              Tot el contingut ha sigut desenvolupat i li pertany a <a href="http://alignedleft.com/">Scott Murray</a>
+        </footer>
+
+
+      </div>
+    </div>
+  </body>
+</html>
