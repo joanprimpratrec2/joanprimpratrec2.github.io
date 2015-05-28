@@ -174,72 +174,90 @@
 
             <p>No em creus?  <a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/1.html">Mira una altra manera de fer el gràfic de dispersió</a>, obre la consola JavaScript i prova d'escriure en <code>dataset[5] </code> o <code> dataset[5][1]</code> i a veure què passa</p>
 
-            <h2>Size</h2>
+            <h2>Grandària</h2>
 
-            <p>Maybe you want the circles to be different sizes, so their radii correspond to their y values.  Instead of setting all <code>r</code> values to <code>5</code>, try:</p>
+            <p>Potser vols que els cercles siguin de diferents mides, i que els seus radis els hi correspongui el valors de i . En lloc d'establir tots els valors del radi <code>r</code> igual a <code>5</code>, prova :</p>
 
-            <pre><code>.attr("r", function(d) {
-                return Math.sqrt(h - d[1]);
-            });
-            </code></pre>
+            <pre>
+              <code>
+                .attr("r", function(d) {
+                  return Math.sqrt(h - d[1]);
+                });
+              </code>
+            </pre>
 
-            <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/2.png" title="Scatterplot with sized circles" alt="Scatterplot with sized circles" /></p>
+            <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/2.png" title="Gràfic de dispersió amb cercles de radi variable" alt="Gràfic de dispersió amb cercles de radi variable" /></p>
 
-            <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/2.html">This is neither pretty nor useful</a>, but it illustrates how you might use <code>d</code>, along with bracket notation, to reference data values and set <code>r</code> accordingly.</p>
+            <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/2.html">Això ni és maco ni serveix per gaire res</a>, peró em serveix per mostrar-te com pot fer servir la <code>d</code>, amb claudàtors, per referència a valors específics del conjunt de dades i definir els radis<code>r</code>.</p>
 
-            <h2>Labels</h2>
+            <h2>Etiquetes</h2>
 
-            <p>Let’s label our data points with <code>text</code> elements. I’ll adapt the label code from our bar chart experiments, starting with:</p>
+            <p>Deixa'm etiquetar els nostres punts de les dades amb elements de <code>text</code>. Adaptaré el codi de les etiquetes que varem fer servir pels diagrames de barres, començant amb:</p>
 
-            <pre><code>svg.selectAll("text")
-               .data(dataset)
-               .enter()
-               .append("text")
-            </code></pre>
+            <pre>
+              <code>
+                svg.selectAll("text")
+                    .data(dataset)
+                    .enter()
+                    .append("text")
+              </code>
+            </pre>
 
-            <p>So far, this looks for all <code>text</code> elements in the SVG (there aren’t any yet), and then appends a new <code>text</code> element for each data point.  Use the <code>text()</code> method to specify each element’s contents:</p>
+            <p>De moment, busca tots els elements <code>text</code> al SVG ( no n'hi ha cap encara) , i després afegeix un nou element <code>text</code> per a cada dada. Feu servir el codi <code>Text()</code> per especificar el contingut de cada element :</p>
 
-            <pre><code>   .text(function(d) {
+            <pre>
+              <code>
+                 .text(function(d) {
                     return d[0] + "," + d[1];
-               })
-            </code></pre>
+                 })
+              </code>
+            </pre>
 
-            <p>This looks messy, but bear with me.  Once again, we’re using <code>function(d)</code> to access each data point.  Then, within the function, we’re using <em>both</em> <code>d[0]</code> <em>and</em> <code>d[1]</code> to get both values within that data point array.</p>
+            <p>Això sembla complicat , però confia en mi. Un cop més , estem usant <code>(d)</code> per accedir a cada valor de les dades . Després, dins de la funció, estem fent servir <em>tant </em> <code>d[0]</code> <em>com</em> <code>d[1]</code> per obtenir ambdós valors dins d'aquesta matriu que forma la dada <em>d</em>.</p>
 
-            <p>The plus <code>+</code> symbols, when used with strings, such as the comma between quotation marks <code>","</code>, act as <em>append</em> operators.  So what this one line of code is really saying is:  Get the values of <code>d[0]</code> and <code>d[1]</code> and smush them together with a comma in the middle.  The end result should be something like <code>5,20</code> or <code>25,67</code>.</p>
+            <p>El símbol <code>+</code>, quan s'utilitza amb variables de cadena, com ara la coma entre cometes <code> ","</code> , actuen com un operador de suma. Així que el que la ínia de codi està dient en realitat és : Obtenir els valors de <code>d[0]</code> i <code>d[1]</code> i ajunta'ls amb una coma entre mig. El resultat final ha de ser alguna cosa semblant a <code> 5,20 </code> o <code> 25,67 </code>.</p>
 
-            <p>Next, we specify <em>where</em> the text should be placed with <code>x</code> and <code>y</code> values.  For now, let’s just use <code>d[0]</code> and <code>d[1]</code>, the same values that we used to specify the <code>circle</code> positions. </p>
+            <p>A continuació , especifiquem <em>a on</em> s'han de col·locar els texts amb els valors de la <code> x </code> i <code>y</code>. De moment , farem servir <code> d[0] </code> i <code>d[1]</code> , els mateixos valors que utilitzem per especificar la posició del cercle <code>circle</code>. </p>
 
-            <pre><code>   .attr("x", function(d) {
-                    return d[0];
-               })
-               .attr("y", function(d) {
-                    return d[1];
-               })
-            </code></pre>
+            <pre>
+              <code>
+                 .attr("x", function(d) {
+                      return d[0];
+                  })
+                  .attr("y", function(d) {
+                      return d[1];
+                  })
+              </code>
+            </pre>
 
-            <p>Finally, add a bit of font styling with:</p>
+            <p>Finalment, afegim alguna regla d'estil per canviar la tipografia:</p>
 
-            <pre><code>   .attr("font-family", "sans-serif")
-               .attr("font-size", "11px")
-               .attr("fill", "red");
-            </code></pre>
+            <pre>
+              <code>
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "11px")
+                .attr("fill", "red");
+              </code>
+            </pre>
 
-            <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/3.png" title="Scatterplot with labels" alt="Scatterplot with labels" /></p>
+            <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/3.png" title="Gràfic de dispersió amb etiquetes" alt="Gràfic de dispersió amb etiquetes" /></p>
 
-            <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/3.html">Here&rsquo;s that working code.</a></p>
+            <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/140-making-a-scatterplot/3.html">Aquí pots comprovar el funcionament del codi.</a></p>
 
-            <h2>Next Steps</h2>
+            <h2>Propers passos</h2>
 
-            <p>Hopefully, some core concepts of D3 are becoming clear: Loading data, generating new elements, and using data values to derive attribute values for those elements.</p>
+            <p>Amb sort, alguns conceptes bàsics de la llibreria D3 estan quedant clars : Carregar dades , generar nous elements  i l'ús dels valors de dades per derivar valors dels atributs dels elements .</p>
 
-            <p>Yet the image above is barely passable as a data visualization. The scatterplot is hard to read, and the code doesn’t use our data flexibly. To be honest, we haven’t yet improved on — gag — Excel’s <em>Chart Wizard!</em></p>
+            <p>No obstant això , la imatge anterior encara no és acceptable per a visualitzar dades . El diagrama de dispersió és difícil de llegir, i el codi no utilitza les nostres dades de manera flexible. Per ser honest , encara no hem millorat l' <em>Assistent per a diagrames</em> d' Excel.</p>
 
-            <p>Not to worry: D3 is way cooler than Chart Wizard (not to mention Clippy), but generating a shiny, interactive chart involves taking our D3 skills to the next level.  To use data flexibly, we’ll learn about D3’s <em>scales</em>.  To make our scatterplot easier to read, we’ll learn about <em>axis generators</em> and axis labels.  Following that, we’ll make things interactive and learn how to update data on the fly.</p>
+            <p>No cal preocupar-se: l'ús de D3 és més ingrat que l'Assistent per a gràfics ( per no parlar de Clippy ) , i la generació d'un gràfic interactiu brillant implica adquirir noves habilitats en l'ús de D3.</p>
 
-            <p class="next_up">Next up: <a href="http://alignedleft.com/tutorials/d3/scales">Scales</a> &rarr;</p>
-        
-        <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/escales.html">Escales </a> &rarr;</p>
+            <p>Per treballar amb dades de forma flexible , hem d'aprendre <em>l'ús d'escales de D3 </em>.</p>
+
+            <p>Per fer del nostre diagrama de dispersió més fàcil de llegir, hem d'aprendre com <em> fer eixos </em> i etiquetes. Després d'això, farem les coses de manera interactiva i aprendrem com actualitzar les dades sobre la marxa</p>
+                    
+            <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/escales.html">Escales </a> &rarr;</p>
+          </div>
         </section>
 
       	<footer>
