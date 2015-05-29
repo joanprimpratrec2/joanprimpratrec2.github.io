@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+
+	<title>Axes &mdash; Scott Murray &mdash; alignedleft</title>
+	
+	<meta name="description" content="Data visualization, generative art, and tutorials by Scott Murray, code artist." />
+	<meta name="keywords" content="code, art, design, data, visualization, generative, algorithmic, processing, d3, d3.js, book, maps" />
+	<meta name="robots" content="index, follow" />
+
+	<link rel="alternate" type="application/rss+xml" href="http://alignedleft.com/tutorials/d3/feed" />
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://alignedleft.com/assets/css/screen.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="http://alignedleft.com/assets/css/tutorial.css" />
+	<link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="http://alignedleft.com/assets/css/narrow.css" />
+	<meta name="viewport" content="initial-scale=1.0" />
+
+	
+	
+</head>
+
+<body class="tutorial">
+
+	
+	<header>
+		<h1><a href="http://alignedleft.com/">Scott Murray</a><span class="prof">, code artist</span></h1>
+		<nav>
+  <ul>
+        <li><a href="http://alignedleft.com/about">About</a></li>
+        <li><a href="http://alignedleft.com/work">Work</a></li>
+        <li><a class="active" href="http://alignedleft.com/tutorials">Tutorials</a></li>
+        <li><a href="http://alignedleft.com/resources">Resources</a></li>
+        <li><a href="http://alignedleft.com/talks">Talks</a></li>
+        <li><a href="http://alignedleft.com/contact">Contact</a></li>
+      </ul>
+</nav>	</header>
+
+	<!--[if lte IE 8]>
+		<div id="ie_warning"><strong>You&rsquo;re using an old version of Internet Explorer.</strong> Consider upgrading your browser to <a href="http://www.apple.com/safari/">Safari</a>, <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>, or <a href="http://www.google.com/chrome">Chrome</a>, and experience a more beautiful web!</div>
+	<![endif]-->
+
+	<noscript>
+		<div id="js_warning"><strong>JavaScript is turned off, so this page won&rsquo;t be very interactive.</strong> Switch JavaScript back on in your web browser for the full experience.</div>
+	</noscript>
+
+<h3>
+	<a href="http://alignedleft.com/tutorials">Tutorials</a> &gt;
+	<a href="http://alignedleft.com/tutorials/d3">D3</a> &gt;
+	Axes</h3>
+
+<h2>Axes</h2>
+
+<div id="text">
+
+	<p class="timestamp">Last updated 2012 December 30</p>
+
+	<p>Having mastered the use of D3 scales, we now have this scatterplot:</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/1.png" title="Large, scaled scatterplot" alt="Large, scaled scatterplot" /></p>
+
+<p>Let’s add horizontal and vertical axes, so we can do away with the horrible red numbers cluttering up our chart.</p>
+
+<h2>Introducing Axes</h2>
+
+<p>Much like the scale functions, <a href="https://github.com/mbostock/d3/wiki/SVG-Axes">D3’s <em>axes</em></a> are actually <em>functions</em> whose parameters you define.  Unlike scales, when an axis function is called, it doesn’t return a value, but generates the visual elements of the axis, including lines, labels, and ticks.</p>
+
+<p>Note that the axis functions are SVG-specific, as they generate SVG elements. Also, axes are intended for use with quantitative scales (as opposed to ordinal ones).</p>
+
+<h2>Setting up an Axis</h2>
+
+<p>Use <code>d3.svg.axis()</code> to create a generic axis function:</p>
+
+<pre><code>var xAxis = d3.svg.axis();
+</code></pre>
+
+<p>At a minimum, each axis also needs to be told on what <em>scale</em> to operate.  Here we’ll pass in the <code>xScale</code> from the scatterplot code:</p>
+
+<pre><code>xAxis.scale(xScale);
+</code></pre>
+
+<p>We can also specify where the labels should appear relative to the axis itself. The default is <code>bottom</code>, meaning the labels will appear below the axis line.  (Although this is the default, it can’t hurt to specify it explicitly.)</p>
+
+<pre><code>xAxis.orient("bottom");
+</code></pre>
+
+<p>Of course, we can be more concise and string all this together into one line:</p>
+
+<pre><code>var xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom");
+</code></pre>
+
+<p>Finally, to actually generate the axis and insert all those little lines and labels into our SVG, we must <em>call</em> the <code>xAxis</code> function. I’ll put this code at the end of our script, so the axis is generated after the other elements in the SVG:</p>
+
+<pre><code>svg.append("g")
+    .call(xAxis);
+</code></pre>
+
+<p><a href="https://github.com/mbostock/d3/wiki/Selections#wiki-call">D3’s <code>call()</code> function</a> takes a <em>selection</em> as input and hands that selection off to any <em>function</em>.  So, in this case, we have just appended a new <code>g</code> group element to contain all of our about-to-be-generated axis elements.  (The <code>g</code> isn’t strictly necessary, but keeps the elements organized and allows us to apply a class to the entire group, which we’ll do in a moment.)</p>
+
+<p>That <code>g</code> becomes the selection for the next link in the chain. <code>call()</code> hands that selection off to the <code>xAxis</code> function, so our axis is generated within the new <code>g</code>.  That snippet of code above is just nice, clean shorthand for this exact equivalent:</p>
+
+<pre><code>svg.append("g")
+    .call(d3.svg.axis()
+                .scale(xScale)
+                .orient("bottom"));
+</code></pre>
+
+<p>See, you could cram the whole axis function within <code>call()</code>, but it’s usually easier on our brains to define functions first, then call them later.</p>
+
+<p>In any case, <a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/1.html">here&rsquo;s what that looks like:</a></p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/2.png" title="Simple, but ugly axis" alt="Simple, but ugly axis" /></p>
+
+<h2>Cleaning it Up</h2>
+
+<p>Technically, that is an axis, but it’s neither pretty nor useful.  To clean it up, let’s first assign a class of <code>axis</code> to the new <code>g</code> element, so we can target it with CSS:</p>
+
+<pre><code>svg.append("g")
+    .attr("class", "axis")  //Assign "axis" class
+    .call(xAxis);
+</code></pre>
+
+<p>Then, we introduce our first CSS styles, up in the <code>&lt;head&gt;</code> of our page:</p>
+
+<pre><code>.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+</code></pre>
+
+<p><a href="https://developer.mozilla.org/en/SVG/Attribute/shape-rendering">The <code>shape-rendering</code> property</a> is an SVG attribute, used here to make sure our axis and its tick mark lines are pixel-perfect. No blurry axes for us!</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/3.png" title="Cleaner axis" alt="Cleaner axis" /></p>
+
+<p>That’s better, but the top of the axis is cut off, and we want it down at the base the chart anyway.  We can <code>transform</code> the entire axis group, pushing it to the bottom:</p>
+
+<pre><code>svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + (h - padding) + ")")
+    .call(xAxis);
+</code></pre>
+
+<p>Note the use of <code>(h - padding)</code>, so the group’s top edge is set to <code>h</code>, the height of the entire image, minus the <code>padding</code> value we created earlier.</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/4.png" title="Nice, clean axis" alt="Nice, clean axis" /></p>
+
+<p>Much better! <a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/2.html">Here&rsquo;s the code so far.</a></p>
+
+<h2>Check for Ticks</h2>
+
+<p>Some ticks spread disease, but <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_ticks">D3’s ticks</a> communicate information. Yet more ticks are not necessarily better, and at a certain point they begin to clutter your chart. You’ll notice that we never specified how many ticks to include on the axis, nor at what intervals they should appear. Without clear instruction, D3 has auto-magically examined our scale <code>xScale</code> and made informed judgements about how many ticks to include, and at what intervals (every 50, in this case).</p>
+
+<p>As you would imagine, you can customize all aspects of your axes, starting with the rough number of ticks, using <code>ticks()</code>:</p>
+
+<pre><code>var xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom")
+                  .ticks(5);  //Set rough # of ticks
+</code></pre>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/5.png" title="Fewer ticks" alt="Fewer ticks" /></p>
+
+<p><a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/3.html">Here&rsquo;s that code.</a></p>
+
+<p>You probably noticed that, while we specified only five ticks, D3 has made an executive decision and ordered up a total of seven.  That’s because D3 has got your back, and figured out that including only <em>five</em> ticks would require slicing the input domain into less-than-gorgeous values — in this case, 0, 150, 300, 450, and 600.  D3 inteprets the <code>ticks()</code> value as merely a suggestion, and will override your suggestion with what it determines to be the most clean and human-readable values — in this case, intervals of 100 — even when that requires including slightly more or fewer ticks than you requested. This is actually a totally brilliant feature that increases the scalability of your design; as the data set changes, and the input domain expands or contracts (bigger numbers or smaller numbers), D3 ensures that the tick labels remain clear and easy to read.</p>
+
+<h2>Y Not?</h2>
+
+<p>Time to label the vertical axis!  By copying and tweaking the code we already wrote for the <code>xAxis</code>, we add this near the top of of our code</p>
+
+<pre><code>//Define Y axis
+var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(5);
+</code></pre>
+
+<p>and this, near the bottom:</p>
+
+<pre><code>//Create Y axis
+svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(" + padding + ",0)")
+    .call(yAxis);
+</code></pre>
+
+<p>Note that the labels will be oriented <code>left</code> and that the <code>yAxis</code> group <code>g</code> is translated to the right by the amount <code>padding</code>.</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/6.png" title="Initial Y axis" alt="Initial Y axis" /></p>
+
+<p>This is starting to look like something real! But the <code>yAxis</code> labels are getting cut off. To give them more room on the left, I’ll bump up the value of <code>padding</code> from 20 to 30:</p>
+
+<pre><code>var padding = 30;
+</code></pre>
+
+<p>Of course, you could also introduce separate <code>padding</code> variables for each axis, say <code>xPadding</code> and <code>yPadding</code>, for more control over the layout.</p>
+
+<p><a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/4.html">Here&rsquo;s the code</a>, and here’s what it looks like:</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/7.png" title="Scatterplot with Y axis" alt="Scatterplot with Y axis" /></p>
+
+<h2>Final Touches</h2>
+
+<p>To prove to you that our new axis are dynamic and scalable, I’d like to switch from using a static data set to using randomized numbers:</p>
+
+<pre><code>//Dynamic, random dataset
+var dataset = [];
+var numDataPoints = 50;
+var xRange = Math.random() * 1000;
+var yRange = Math.random() * 1000;
+for (var i = 0; i &lt; numDataPoints; i++) {
+    var newNumber1 = Math.round(Math.random() * xRange);
+    var newNumber2 = Math.round(Math.random() * yRange);
+    dataset.push([newNumber1, newNumber2]);
+}
+</code></pre>
+
+<p>This code initializes an empty array, then loops through 50 times, chooses two random numbers each time, and adds (“pushes”) that pair of values to the <code>dataset</code> array.</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/8.png" title="Scatterplot with random data" alt="Scatterplot with random data" /></p>
+
+<p><a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/5.html">Try the code here.</a>  Each time you reload the page, you’ll get different data values.  Notice how both axes scale to fit the new domains, and ticks and label values are chosen accordingly.</p>
+
+<p>Having made my point, I think we can finally cut those horrible, red labels, by commenting out the relevant lines of code:</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/9.png" title="Scatterplot with random data and no red labels" alt="Scatterplot with random data and no red labels" /></p>
+
+<p><a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/6.html">Our final scatterplot code!</a></p>
+
+<h2>Formatting Tick Labels</h2>
+
+<p>One last thing:  So far, we’ve been working with integers — whole numbers — which are nice and easy.  But data is often messier, and in those cases, you may want more control over how the axis labels are formatted.  Enter <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_tickFormat"><code>tickFormat()</code></a>, which enables you to specify how your numbers should be formatted.  For example, you may want to include three places after the decimal point, or display values as percentages, or both.</p>
+
+<p>In that case, you could first define a new number formatting function.  This one, for example, says to treat values as percentages with one decimal point precision.  (See <a href="https://github.com/mbostock/d3/wiki/Formatting#wiki-d3_format">the reference entry for d3.format()</a> for more options.)</p>
+
+<pre><code>var formatAsPercentage = d3.format(".1%");
+</code></pre>
+
+<p>Then, tell your axis to use that formatting function for its ticks, e.g.:</p>
+
+<pre><code>xAxis.tickFormat(formatAsPercentage);
+</code></pre>
+
+<p>Development tip: I find it easiest to test these formatting functions out in the JavaScript console. For example, just open any page that loads D3, such as <a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/6.html">our final scatterplot</a>, and type your format rule into the console.  Then test it by feeding it a value, as you would with any other function:</p>
+
+<p><img src="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/10.png" title="Testing format in the console" alt="Testing format in the console" /></p>
+
+<p>You can see here that a data value of <code>0.54321</code> is converted to <code>54.3%</code> for display purposes — perfect!</p>
+
+<p><a href="http://alignedleft.com/content/03-tutorials/01-d3/160-axes/7.html">Give that code a try here.</a>  A percentage format doesn’t make sense with our scatterplot’s current data set, but as an exercise, you could try tweaking how the random numbers are generated, for more appropriate, non-whole number values, or experiment with the format function itself.</p>
+
+			<p class="next_up">Next up: <a href="http://alignedleft.com/tutorials/d3/transitions">Transitions</a> &rarr;</p>
+	
+	<p class="feedback">
+	<a href="http://www.jdoqocy.com/click-6754088-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920026938.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781449339739_%2525zp&cjsku=0636920026938"><img src="../../assets/images/idvftw_cover.gif" border="0" alt="Interactive Data Visualization for the Web"></a>These tutorials have been expanded into a book, <em>Interactive Data Visualization for the Web</em>, published by O&rsquo;Reilly in March 2013.  <a href="http://www.dpbolvw.net/click-6754088-11260198?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920026938.do%3Fcmp%3Daf-strata-books-videos-product_cj_9781449339739_%2525zp&cjsku=0636920026938">Purchase the ebook and print editions</a> from O&rsquo;Reilly. <a href="http://chimera.labs.oreilly.com/books/1230000000345/">A free, online version</a> includes interactive examples.  Download <a href="https://github.com/alignedleft/d3-book/">the sample code files</a> and <a href="https://tinyletter.com/alignedleft">sign up to receive updates by email</a>.<br/>
+	<br/>
+	<a href="http://twitter.com/alignedleft">Follow me on Twitter</a> or <a href="http://alignedleft.com/tutorials/d3/feed">watch this RSS feed</a> for other updates.<br/>
+	<br/>
+	These tutorials have been generously translated to <a href="http://pkuwwt.github.com/d3-tutorial-cn">Chinese (简体中文)</a> by <a href="http://pkuwwt.github.com/">Wentao Wang</a>, <a href="http://kaisersly.github.io/scottmurray-d3-fr/">French (Français)</a> by <a href="https://twitter.com/kaisersly">Sylvain Kieffer</a>, <a href="http://ja.d3js.info/alignedleft/tutorials/d3/">Japanese (日本語版)</a> by <a href="http://blog.node.ws">Hideharu Sakai</a>, <a href="http://serganbus.github.io/d3tutorials/">Russian (русский)</a> by <a href="http://serganbus.github.io/">Sergey Ivanov</a>, and <a href="http://gcoch.github.io/D3-tutorial/">Spanish (Español)</a> by <a href="https://twitter.com/gabrielcoch">Gabriel Coch</a>.<br/>
+	<br/>
+	Also see my video course, &ldquo;<a href="http://www.anrdoezrs.net/click-6754088-11790507">An Introduction to d3.js: From Scattered to Scatterplot</a>.&rdquo;
+</p>
+
+<div style="clear: both;"></div>
+</div>
+
+	<footer>
+		<p>Copyright © 2006–2015 Scott Murray</p>
+	</footer>
+
+<!-- Piwik -->
+<script type="text/javascript">
+	var _paq = _paq || [];
+	_paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+		_paq.push(["trackPageView"]);
+	_paq.push(["enableLinkTracking"]);
+
+	(function() {
+		var u=(("https:" == document.location.protocol) ? "https" : "http") + "://track.alignedleft.com/";
+		_paq.push(["setTrackerUrl", u+"piwik.php"]);
+		_paq.push(["setSiteId", "1"]);
+		var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+		g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+	})();
+</script>
+<!-- End Piwik -->
+
+</body>
+</html>
