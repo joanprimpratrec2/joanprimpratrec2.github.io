@@ -69,39 +69,54 @@
 
           <h2>Introducció als eixos</h2>
 
-          <p>Com a les funcions <em>scale()</em>, <a href="https://github.com/mbostock/d3/wiki/SVG-Axes">els <em>eixos</em> de D3</a> són en realitat <em>funcions</em> els pàrmetres de les quals has de definir.  A diferència d'<em>scales</em>, quan es crida una funció <em>axis()</em>, no retorna un valor, però genera els elements visuals de l'eix, incloent línies, etiquetes i tics.</p>
+          <p>Com a les funcions <em>scale()</em>, <a href="https://github.com/mbostock/d3/wiki/SVG-Axes">els <em>eixos</em> de D3</a> són en realitat <em>funcions</em> els pàrmetres de les quals has de definir.  A diferència d'<em>scales</em>, quan es crida una funció <em>axis()</em>, aqeusta no retorna un valor, però si que genera els elements visuals de l'eix, incloent línies, etiquetes i tics.</p>
 
-          <p>Note that the axis functions are SVG-specific, as they generate SVG elements. Also, axes are intended for use with quantitative scales (as opposed to ordinal ones).</p>
+          <p>Recordeu que les funcions d'eix són específiques per a SVG, ja que generen elements SVG. A més, els eixos estan dissenyats per funcionar amb escales quantitatives (no per a ordinals).</p>
 
-          <h2>Setting up an Axis</h2>
+          <h2>Preparant un Eix</h2>
 
-          <p>Use <code>d3.svg.axis()</code> to create a generic axis function:</p>
+          <p>Fes serivr <code>d3.svg.axis()</code> per crear una funció <code>axis()</code> genèrica:</p>
 
-          <pre><code>var xAxis = d3.svg.axis();
-          </code></pre>
+          <pre>
+            <code>
+              var xAxis = d3.svg.axis();
+            </code>
+          </pre>
 
-          <p>At a minimum, each axis also needs to be told on what <em>scale</em> to operate.  Here we’ll pass in the <code>xScale</code> from the scatterplot code:</p>
+          <p>Com a mínim, cada eix necessita que li diguin quina <em>scale()</em> ha de fer servir. Aquí li passarem l'<code>EscalaX</code> del codi del gràfic de dispersió:</p>
 
-          <pre><code>xAxis.scale(xScale);
-          </code></pre>
+          <pre>
+            <code>
+              xAxis.scale(xScale);
+            </code>
+          </pre>
 
-          <p>We can also specify where the labels should appear relative to the axis itself. The default is <code>bottom</code>, meaning the labels will appear below the axis line.  (Although this is the default, it can’t hurt to specify it explicitly.)</p>
+          <p>També podem especificar a on han d'aparèixer les etiquetes amb relació a l'eix. El valor per defecte és <code>down</code> (a sota), és a dir, les etiquetes apareixerà sota la línia d'eix. (Tot i que aquest és el valor per defecte, no fa cap mal especificar-lo explícitament.)</p>
 
-          <pre><code>xAxis.orient("bottom");
-          </code></pre>
+          <pre>
+            <code>
+              xAxis.orient("bottom");
+            </code>
+          </pre>
 
-          <p>Of course, we can be more concise and string all this together into one line:</p>
+          <p>Per descomptat, podem ser més concisos i encadenar tot això en una sola línia:</p>
 
-          <pre><code>var xAxis = d3.svg.axis()
+          <pre>
+            <code>
+              var EixX = d3.svg.axis()
                             .scale(xScale)
                             .orient("bottom");
-          </code></pre>
+            </code>
+          </pre>
 
-          <p>Finally, to actually generate the axis and insert all those little lines and labels into our SVG, we must <em>call</em> the <code>xAxis</code> function. I’ll put this code at the end of our script, so the axis is generated after the other elements in the SVG:</p>
+          <p>Finalment, per generar realment l'eix i inserir totes aquestes petites línies i etiquetes en el nostre SVG, hem de <em>cridar</em> la funció <code>EixX </code>. Posarem el codi al final del nostre script, i així l'eix es genera després que els altres elements en el SVG: (recorda que svg no té layers, i per tant has de tenir en compte la superposició de les formes</p>
 
-          <pre><code>svg.append("g")
-              .call(xAxis);
-          </code></pre>
+          <pre>
+            <code>
+              svg.append("g")
+                    .call(xAxis);
+            </code>
+          </pre>
 
           <p><a href="https://github.com/mbostock/d3/wiki/Selections#wiki-call">D3’s <code>call()</code> function</a> takes a <em>selection</em> as input and hands that selection off to any <em>function</em>.  So, in this case, we have just appended a new <code>g</code> group element to contain all of our about-to-be-generated axis elements.  (The <code>g</code> isn’t strictly necessary, but keeps the elements organized and allows us to apply a class to the entire group, which we’ll do in a moment.)</p>
 
