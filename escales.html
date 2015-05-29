@@ -59,42 +59,63 @@
 
           <p class="timestamp">Last updated 2012 December 30</p>
 
-          <p>“Scales són funcions que assignen a partir d'un domini d'entrada un rang de sortida.”</p>
+          <p>“<em>Scales</em> són funcions que assignen a partir d'un domini d'entrada un rang de sortida.”</p>
 
         <p>Aquesta és <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales"> la definició de les <em>scales de D3 de Mike Bostock’s</em> </a>.</p>
 
-        <p>Els valors en qualsevol conjunt de dades és poc probable que es corresponen exactament amb els mesuraments de píxels per a l'ús en la seva visualització . <em>Scales</em> proporcionen una manera convenient per assignar aquests valors de dades als nous valors útils per a la visualització</p>
+        <p>Els valors en qualsevol conjunt de dades és poc probable que es corresponguin exactament amb les dimension en píxles del svg a on s'han de visualitzar. <em>Scales</em> proporcionen una manera fàcil d'adaptar els valors inicials als valors que encaixin amb les dimensions de l'espai de visualització.</p>
 
-        <p><em>Scales</em> de D3 són <em>funcions</em> , els paràmetres de les quals s'han de definir. Una vegada que es creen, es crida a la funció d'escala ,s'hi passen les dades , i retorna el valor de sortida escalat . Podeu definir i usar tantes escales com vulguis .</p>
+        <p>Les <em>Scales</em> de D3 són <em>funcions</em>, els paràmetres de les quals s'han de definir.</p>
 
-        <p>It may be tempting to think of a scale as something that appears visually in the final image — like a set of tick marks, indicating a progression of values.  <em>Do not be fooled!</em>  Those tick marks are part of an <em>axis</em>, which is essentially a visual representation of a scale.  A scale is a mathematical relationship, with no direct visual output.  I encourage you to think of scales and axes as two different, yet related, elements.</p>
+        <p>>Un cop creades, quan es crida a la funció d'escala ,s'hi envien les dades inicial (el domini d'entrada), aquesta els transforma en un conjunt de dades adaptat al marc de visualització.</p> 
 
-        <p>This topic addresses only <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><em>linear</em></a> scales, since they are most common and understandable.  Once you understand linear scales, the others will be a piece of cake.</p>
+        <p>Podeu definir i usar tantes escales com vulguis .</p>
 
-        <h2>Apples and Pixels</h2>
+        <p>Pots estar temptat de pensar en una escala com un conjunt de marques de graduació que indica una progressió de valors que apareix a la visualització. <Em>No et deixis enganyar! </Em></p>
 
-        <p>Imagine that the following data set represents the number of apples sold at a roadside fruit stand each month:</p>
+         <p>Aquestes marques de graduació són part d'un <em>eix</em> , que és essencialment una representació visual d'una escala.</p>
 
-        <pre><code>var dataset = [ 100, 200, 300, 400, 500 ];
-        </code></pre>
+         <p>Per a D3 una escala és una relació matemàtica, sense sortida visual directa. Has de pensar en escales i eixos com dos termes diferents, però amb elements relacionats.</p>
 
-        <p>First of all, this is great news, as the stand is selling 100 additional apples each month!  Business is booming.  To showcase this success, you want to make a bar chart illustrating the steep upward climb of apple sales, with each data value corresponding to the height of one bar.</p>
+        <p>Aquest capítol només parla d'escales <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><em>lineals</em></a>, que són les més comuns i les més entendores. Un cop hagis entés bé les escales lineals, les altres no et costaran gaire esforç.</p>
 
-        <p>Until now, we’ve used data values directly as display values, ignoring unit differences.  So if 500 apples were sold, the corresponding bar would be 500 pixels tall.</p>
+        <h2>Pomes i Píxels</h2>
 
-        <p>That could work, but what about next month, when 600 apples are sold?  And a year later, when 1,800 apples are sold?  Your audience would have to purchase ever-larger displays, just to be able to see the full height of those very tall apple-bars!  (Mmm, apple bars!)</p>
+        <p>Imagineu que el següent conjunt de dades representa el nombre de pomes venut en una fruiteria cada mes:</p>
 
-        <p>This is where scales come in.  Because apples are not pixels (which are also not oranges), we need scales to translate between them.</p>
+        <pre>
+          <code>
+            var dataset = [ 100, 200, 300, 400, 500 ];
+          </code>
+        </pre>
 
-        <h2>Domains and Ranges</h2>
+        <p>Primer de tot, és una gran notícia. La botiga ven 100 pomes més cada mes! El negoci va de nassos!.</p>
 
-        <p>A scale’s <em>input domain</em> is the range of possible input data values.  Given the apples data above, appropriate input domains would be either 100 and 500 (the minimum and maximum values of the data set) or zero and 500.</p>
+        <p>Per mostrar aquest èxit, vol fer un gràfic de barres que il·lustri l'ascens empinat de les vendes de la poma, en el que cada valor de venda mensual es corresopongui a l'altura d'una barra del diagrama.</p>
 
-        <p>A scale’s <em>output range</em> is the range of possible output values, commonly used as display values in pixel units.  The output range is completely up to you, as the information designer.  If you decide the shortest apple-bar will be 10 pixels tall, and the tallest will be 350 pixels tall, then you could set an output range of 10 and 350.</p>
+        <p>Fins ara , hem utilitzat els valors de dades directament com a valors de visualització , fent cas omís de les diferències entre unitats. Així, si es van vendre 500 pomes, la barra corresponent seria de 500 píxels d'alçada.</p>
 
-        <p>For example, create a scale with an input domain of <code>100,500</code> and an output range of <code>10,350</code>.  If you gave that scale the value <code>100</code>, it would return <code>10</code>.  If you gave it <code>500</code>, it would spit back <code>350</code>.  If you gave it <code>300</code>, it would hand <code>180</code> back to you on a silver platter.  (<code>300</code> is in the center of the domain, and <code>180</code> is in the center of the range.)</p>
+        <p>Això podria anar bé, però què passa amb el mes que ve, quan es venen 600 pomes?. I un any més tard, quan es venen 1,800 pomes?. Els que volguessin veure-ho haurien de comprar pantalles cada cop més grans, només per ser capaços de veure tota l'alçada d'aquestes barres!</p>
 
-        <p>We could visualize the domain and range as corresponding axes, side-by-side:</p>
+        <p>Aquí és on entra el mètode <em>scales()</em>. Com que les pomes no són píxels ( i tampoc són taronges ) , necessitem escales per fer-ne la traducció.</p>
+
+        <h2>Dominis i Rangs</h2>
+
+        <p>El <em>domini d'entrada </em> del mètode <em>scales</em> és el ventall de possibles valors de dades d'entrada. En el conjunt de  dades anteriors (venda de pomes mensuals), el domini d'entrada tindria un valor mínim de 100 i  un de màsim de 500  o també  el podriem establir entre (zero) 0 i 500 .</p>
+
+        <p>El <em>rang de sortida</em> del mètode <em>scales</em> és el ventall de possibles valors de sortida per a ocupar tot, o la part que es vulgui de l'element del DOM, a on han de veure's les dade, la unitat que normalment es fa servir és el <em>píxel</em>.</p>
+
+        <p>El rang de sortida és totalment decisió teva, o del dissenyador de la informació. Si vostè decideix que la barra de vendes mensuals de pomes més curta sigui de 10 píxels d'alçada i la més alta sigui de 350 píxels d'alçada , llavors et cal establir un rang de sortida entre 10 i 350 .</p>
+
+        <p>Per exemple, creeu una escala amb un domini d'entrada de <code> 100,500</code> i un rang de sortida de <code> 10,350 </code>.</p> 
+
+        <p>Com que has definit el valor inferior del domini d'entrada en <code> 100 </code>, et retornarà el valor inferior del rang de sortida que és <code>10</code>. </p>
+
+        <p>Com que li has donat un valor de <code> 500 </code> al valor máxim del domini d'entrada, et retornarà el valor màxim del rang de sortida, que en aquest cas l'has definit amb un valor de <code> 350 </code>.</p> 
+
+        <p>Els valors intermitjos es calculen proporcionalment, és a dir a un valor d'entrada per aquesta escala de <code>300</code> que és al mig del domini, retornaria un valor de <code>180</code> que és al mig del rang de sortida.</p>
+        
+        <p>Podríem visualitzar el domini i el rang com a eixos amb diferents "escales" que van de costat a costat. </p>
 
         <svg width="505" height="115">
             <text x="220" y="15" font-style="italic">Input domain</text>
@@ -115,7 +136,7 @@
             <text x="220" y="110" font-style="italic">Output range</text>
         </svg>
 
-        <p>One more thing:  Given that it is very easy to mix up the <em>input domain</em> and <em>output range</em> terminology, I’d like to propose a little exercise.  When I say “input,” you say “domain.”  Then I say “output,” and you say “range.”  Ready?  Okay:</p>
+        <p>Una cosa més:  Tenint en compte que és molt fàcil barrejar el <em> domini d'entrada </em> i el <em> rang de sortida </em>,m'agradaria proposar-te un exercidi de terminologia, per aclarir-nos. Quan digui "d'entrada " , tu dius "domini" . Quan diguid "sortida", tu diues "rang". A punt? Som-hi!</p>
 
         <ul>
         <li>Input! Domain!</li>
@@ -124,258 +145,358 @@
         <li>Output! Range!</li>
         </ul>
 
-        <p>Got it?  Great.</p>
+        <p>Ho tens?  Fantàstic.</p>
 
-        <h2>Normalization</h2>
+        <h2>Normalització</h2>
 
-        <p>If you’re familiar with the concept of <em>normalization</em>, it may be helpful to know that, with a linear scale, that’s all that is really going on here.</p>
+        <p>Si està familiaritzat amb el concepte de <em>normalització </em> , et pot ser útil saber que, amb una escala lineal, això és el que s'està produint.</p>
 
-        <p>Normalization is the process of mapping a numeric value to a new value between 0 and 1, based on the possible minimum and maximum values.  For example, with 365 days in the year, day number 310 maps to about 0.85, or 85% of the way through the year.</p>
+        <p>La normalització és el procés d'assignar a un valor numèric   un nou valor entre 0 i 1, en funció d'uns valors mínims i màxims predefinit.</p>
 
-        <p>With linear scales, we are just letting D3 handle the math of the normalization process.  The input value is normalized according to the domain, and then the normalized value is scaled to the output range.</p>
+         <p>Per exemple amb 365 dies a l'any, el dia número 310 li pertorca aproximadament el valor 0,85 , o el que és el mateix està al 85% de la llargada de l'any.</p>
 
-        <h2>Creating a Scale</h2>
+        <p>Amb escales lineals , només estem deixant que D3 gestioni les opracions matemàtiques del procés de normalització. El valor d'entrada es normalitza d'acord amb el domini (recorda: vol dir valors d'entrada) i, a continuació, el valor normalitzat es escalat pel rang (valors de sortida).</p>
 
-        <p>D3’s scale generators are accessed with <code>d3.scale</code> followed by the type of scale you want.</p>
+        <h2>Creant una escala</h2>
 
-        <pre><code>var scale = d3.scale.linear();
-        </code></pre>
+        <p>S'accedeix al Generador d'escales de D3  amb <code>d3.scale</code>, seguit pel tipus d'escala que es desitja.</p>
 
-        <p>Congratulations!  Now <code>scale</code> is a function to which you can pass input values.  (Don’t be misled by the <code>var</code> above; remember that in JavaScript, variables can store functions.)</p>
+        <pre>
+          <code>
+            var escala = d3.scale.linear();
+          </code>
+        </pre>
 
-        <pre><code>scale(2.5);  //Returns 2.5
-        </code></pre>
+        <p>Enhorabona! Ara <code>escala</code> és una funció a la qual es pot passar valors d'entrada. ( No es deixi enganyar pel <code> var </code> anterior; recordi que a JavaScript , les variables poden emmagatzemar funcions. )</p>
 
-        <p>Since we haven't set a domain and a range yet, this function is mapping input to output on a 1:1 scale.  That is, whatever we input will be returned unchanged.</p>
+        <pre>
+          <code>
+            escala(2.5);  //Retorna 2.5
+          </code>
+        </pre>
 
-        <p>We can set the scale’s input domain to <code>100,500</code> by passing those values to the <code>domain()</code> method as an array:</p>
+        <p>Ja que no hem establert cap domini ni cap rang, aquesta funció fa servir l'escala 1: 1 . És a dir , tot el entra es retorna sense canvis.</p>
 
-        <pre><code>scale.domain([100, 500]);
-        </code></pre>
+        <p>Podem establir com a domini d'entrada per l'escala els valors <code> 100,500 </code> al passar aquests valors al <code>domini()</code> com una matriu :</p>
 
-        <p>Set the output range in similar fashion, with <code>range()</code>:</p>
+        <pre>
+          <code>
+            escala.domain([100, 500]);
+          </code>
+        </pre>
 
-        <pre><code>scale.range([10, 350]);
-        </code></pre>
+        <p>Ajusta el rang de sortida de manera semblant, amb <code>range()</code>:</p>
 
-        <p>These steps can be done separately, as above, or chained together into one line of code:</p>
+        <pre>
+          <code>
+            escala.range([10, 350]);
+          </code>
+        </pre>
 
-        <pre><code>var scale = d3.scale.linear()
-                            .domain([100, 500])
-                            .range([10, 350]);
-        </code></pre>
+        <p>Aquests passos es poden realitzar per separat, com l'anterior, o encadenats junts en una sola línia de codi </p>
 
-        <p>Either way, our scale is ready to use!</p>
+        <pre>
+          <code>
+            var escala = d3.scale.linear()
+                                .domain([100, 500])
+                                .range([10, 350]);
+          </code>
+        </pre>
 
-        <pre><code>scale(100);  //Returns 10
-        scale(300);  //Returns 180
-        scale(500);  //Returns 350
-        </code></pre>
+        <p>I d'aqueta manera, ja tenim l'escala preparada!</p>
 
-        <p>Typically, you will call scale functions from within an <code>attr()</code> method or similar, not on their own.  Let’s modify our scatterplot visualization to use dynamic scales.</p>
+        <pre>
+          <code>
+            escala(100);  //Retorna 10
+            escala(300);  //Retorna 180
+            escala(500);  //Retorna 350
+          </code>
+        </pre>
 
-        <h2>Scaling the Scatterplot</h2>
+        <p>En general , es fa la crida a la funció "escala" dins d'un mètode <code>attr ( )</code> o similar, i no directament.</p>
 
-        <p>To revisit our data set from the scatterplot:</p>
+        <p>Ara modificarem el nostre gràfic de dispersió fent servir escales dinàmiques.</p>
 
-        <pre><code>var dataset = [
-                        [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-                        [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
+        <h2>Escalant el nostre gràfic de dispersió</h2>
+
+        <p>Revisem el nostre conjunt de dades del gràfic de dispersió:</p>
+
+        <pre>
+          <code>
+            var dataset = [
+                        [5, 20], 
+                        [480, 90], 
+                        [250, 50], 
+                        [100, 33], 
+                        [330, 95],
+                        [410, 12], 
+                        [475, 44], 
+                        [25, 67], 
+                        [85, 21], 
+                        [220, 88]
                       ];
+          </code>
+        </pre>
+
+        <p>Recordaràs que el <code> conjunt de dades </code > és una matriu de matrius. Hem traçat el primer valor de cada matriu sobre l'eix x , i el segon valor sobre l'eix y.</p>
+
+
+        <p>Comencem amb l'eix x.</p>
+
+        <p>Només fent una ullada als valors de x, sembla que van des de 5 fins a 480, de manera que un domini raonable d'entrada podria ser de <code>0,500</code> , oi ?</p>
+
+        <p>… Per què em mires d'aquesta manera?</p>
+
+        <p>Ahh, perquè vols mantenir el teu codi flexible i escalable , de manera que funcioni fins i tot si es canvien de dades en el futur. Molt intel·ligent!.</p>
+
+        <p>En lloc d'especificar valors fixos pel domini, podem fer servir algunes funcions de matriu convenients com ara <code>min () </code> i <code>max () </code> per analitzar sobre la marxa, quins són els valors mínim i màxim de les nostres dades.</p> 
+
+        <p>Per exemple, aquest codi fa un bucle a través dels valors de x del nostre conjunt de dades i retorna el valor més gran:</p>
+
+        <pre>
+          <code>
+            d3.max(dataset, function(d) {    //Retorna 480
+              return d[0];  //Fa referència al primer valor de la nostra sub-matriu
+            });
+          </code>
+        </pre>
+
+        <p>Posem-ho tot junt, per crear l'escala pel nostre eix x:</p>
+
+        <pre>
+          <code>
+            var EscalaX = d3.scale.linear()
+                                .domain([0, d3.max(dataset, function(d) { 
+                                          return d[0]; 
+                                        })])
+                                .range([0, w]);
+          </code>
+        </pre>
+
+        <p>En primer lloc, fixa't que li he posat de nom <code> EscalaX </code>. Per descomptat, pots nomenar les teves escales com vulguis, però un nom com <code> 
+        EscalaX </code> ajuda a recordar que fa aquesta funció.</p>
+
+        <p>En segon lloc, fixa't que he posat l'extrem inferior del domini d'entrada a zero. (També podeu fer servir <code>min () </code> per calcular un valor dinàmic.) L'extrem superior del domini s'estableix en el valor màxim del <code>conjunt de dades </code> (que és de 480).</p>
+
+        <p>Finalment, fixa't que el rang de sortida s'estableix en <code> 0 </code> i <code> w </code>, l'amplada de la SVG.</p>
+
+        <p>Farem servir un codi molt similar per crear la funció d'escala per a l'eix y:</p>
+
+        <pre>
+          <code>
+            var EscalaY = d3.scale.linear()
+                            .domain([0, d3.max(dataset, function(d) {     
+                                return d[1]; 
+                              })])
+                            .range([0, h]);
         </code></pre>
 
-        <p>You’ll recall that <code>dataset</code> is an array of arrays.  We mapped the first value in each array onto the x axis, and the second value onto the y axis.  Let’s start with the x axis.</p>
+        <p>Recordeu que el mètode <code> max () </code> s'aplica sobre les dades <code> d[1] </code>, que son els valors segons de cada sub-matriu. A més, l'extrem superior del <code>rang ()</code> s'estableix en <code> h </code> en lloc de <code> w </code>.</p>
 
-        <p>Just by eyeballing the x values, it looks like they range from 5 to 480, so a reasonable input domain to specify might be <code>0,500</code>, right?</p>
+        <p>Les funcions d'escala estan al seu lloc! Ara tot el que necessitem és fer-les servir. Només has de  modificar el codi on varem crear les coordenades per a cada  <code> circle </code></p>
 
-        <p>…</p>
+        <pre>
+          <code>
+            .attr("cx", function(d) {
+              return d[0];
+            })
+          </code>
+        </pre>
 
-        <p>Why are you giving me that look?  Oh, because you want to keep your code flexible and scalable, so it will continue to work even if the data change in the future.  Very smart!</p>
+        <p>així retorna el valor "escalat" (en lloc del valor original):</p>
 
-        <p>Instead of specifying fixed values for the domain, we can use convenient array functions like <code>min()</code> and <code>max()</code> to analyze our data set on the fly.  For example, this loops through each of the x values in our arrays and returns the value of the greatest one:</p>
+        <pre>
+          <code>
+            .attr("cx", function(d) {
+              return xScale(d[0]);
+            })
+          </code>
+        </pre>
 
-        <pre><code>d3.max(dataset, function(d) {    //Returns 480
-            return d[0];  //References first value in each sub-array
-        });
-        </code></pre>
+        <p>De la mateixa manera, per a l'eix y, aquest</p>
 
-        <p>Putting it all together, let’s create the scale function for our x axis:</p>
+        <pre>
+          <code>
+            .attr("cy", function(d) {
+              return d[1];
+            })
+          </code>
+        </pre>
 
-        <pre><code>var xScale = d3.scale.linear()
-                             .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-                             .range([0, w]);
-        </code></pre>
+        <p>es modifica com:</p>
 
-        <p>First, notice I named it <code>xScale</code>.  Of course, you can name your scales whatever you want, but a name like <code>xScale</code> helps me remember what this function does.</p>
+        <pre>
+          <code>
+            .attr("cy", function(d) {
+                return yScale(d[1]);
+            })
+          </code>
+        </pre>
 
-        <p>Second, notice I set the low end of the input domain to zero.  (Alternatively, you could use <code>min()</code> to calculate a dynamic value.)  The upper end of the domain is set to the maximum value in <code>dataset</code> (which is 480).</p>
+        <p>Per si fos poc, farem el mateix canvi en què establim les coordenades per a les etiquetes de text, de manera que aquestes línies/p>
 
-        <p>Finally, observe that the output range is set to <code>0</code> and <code>w</code>, the SVG’s width.</p>
+        <pre>
+          <code>
+            .attr("x", function(d) {
+               return d[0];
+            })
+            .attr("y", function(d) {
+                return d[1];
+            })
+          </code>
+        </pre>
 
-        <p>We’ll use very similar code to create the scale function for the y axis:</p>
+        <p>siguin aquestes:</p>
 
-        <pre><code>var yScale = d3.scale.linear()
-                             .domain([0, d3.max(dataset, function(d) { return d[1]; })])
-                             .range([0, h]);
-        </code></pre>
+        <pre>
+          <code>
+            .attr("x", function(d) {
+              return xScale(d[0]);
+            })
+            .attr("y", function(d) {
+              return yScale(d[1]);
+            })
+          </code>
+        </pre>
 
-        <p>Note that the <code>max()</code> function references <code>d[1]</code>, the y value of each sub-array.  Also, the upper end of <code>range()</code> is set to <code>h</code> instead of <code>w</code>.</p>
+        <p>I aquí està!</p>
 
-        <p>The scale functions are in place! Now all we need to do is use them. Simply modify the code where we create a <code>circle</code> for each data value</p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.png" title="Gràfic de disperció fent servir escales x i y" alt="Gràfic de disperció fent servir escales x i y" /></p>
 
-        <pre><code>.attr("cx", function(d) {
-            return d[0];
-        })
-        </code></pre>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.html">Aquí tens el codi funcionant</a>.</p>
 
-        <p>to return a scaled value (instead of the original value):</p>
+        <p>Visualment, és decebedorament similar al nostre diagrama de dispersió original! No obstant això, estem fent més progressos del que poden ser evidents.</p>
 
-        <pre><code>.attr("cx", function(d) {
-            return xScale(d[0]);
-        })
-        </code></pre>
+        <h2>Perfeccionant la sortida a pantalla</h2>
 
-        <p>Likewise, for the y axis, this</p>
+        <p>Pots haver-te fixat que els valors de y més petits estan al capdemunt del gràfic, mentre que els més grans estan cap a la part inferior. Ara que estem fent servir escales, és molt fàcil canviar això, de tal manera que els valors més grans estiguin cap a la part superiror, com era d'esperar. És només una qüestió de canviar el rang de sortida de <code> EscalaY </code></p>
 
-        <pre><code>.attr("cy", function(d) {
-            return d[1];
-        })
-        </code></pre>
+        <pre>
+          <code>
+            .range([0, h]);
+          </code>
+        </pre>
 
-        <p>is modified as:</p>
+        <p>per</p>
 
-        <pre><code>.attr("cy", function(d) {
-            return yScale(d[1]);
-        })
-        </code></pre>
+        <pre>
+          <code>
+            .range([h, 0]);
+          </code>
+        </pre>
 
-        <p>For good measure, let’s make the same change where we set the coordinates for the text labels, so these lines</p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.png" title="Gràfic de dispersió amb l'escala invertida" alt="Gràfic de dispersió amb l'escala invertida" /></p>
 
-        <pre><code>.attr("x", function(d) {
-            return d[0];
-        })
-        .attr("y", function(d) {
-            return d[1];
-        })
-        </code></pre>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.html">Aquí tens el codi.</a>  Sí, ara un valor d'entrada <em>menor</em> a l'<code>EscalaY </code> produirà un valor de sortida <em> major </em>, que empeny els <code>cercle</code>s i els elements de <code>text</code>cap a baix, o sigui més a prop de la base de la imatge. Ho sé, és gairebé massa fàcil!</p>
 
-        <p>become this:</p>
+        <p>Encara alguns elements queden tallats. Introduim doncs una variable pel <code>padding</code>:</p>
 
-        <pre><code>.attr("x", function(d) {
-            return xScale(d[0]);
-        })
-        .attr("y", function(d) {
-            return yScale(d[1]);
-        })
-        </code></pre>
+        <pre>
+          <code>
+            var padding = 20;
+          </code>
+        </pre>
 
-        <p>And there we are!</p>
+        <p>Llavors incorporarem el valor del <code>padding</code> quan fixem el rang de les dues escales. El rang de <code>EscalaX</code> era <code> rang ([0, w]) </code>, i ara serà</p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.png" title="Scatterplot using x and y scales" alt="Scatterplot using x and y scales" /></p>
+        <pre>
+          <code>
+            .range([padding, w - padding]);
+          </code>
+        </pre>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/1.html">Here&rsquo;s the working code.</a>  Visually, it is disappointingly similar to our original scatterplot!  Yet we are making more progress than may be apparent.</p>
+        <p>El rang per l'<code>EscalaY</code> era <code>range([h, 0])</code>, peró ara serà</p>
 
-        <h2>Refining the Plot</h2>
+        <pre>
+          <code>
+            .range([h - padding, padding]);
+          </code>
+        </pre>
 
-        <p>You may have noticed that smaller y values are at the top of the plot, and the larger y values are toward the bottom. Now that we’re using scales, it’s super easy to reverse that, so greater values are higher up, as you would expect.  It’s just a matter of changing the output range of <code>yScale</code> from</p>
+        <p>Això ens dona 20 píxels de marge a tot voltant del marge de l'SVG:</p>
 
-        <pre><code>.range([0, h]);
-        </code></pre>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.png" title="Gràfic de dispersió amb marges" alt="Gràfic de dispersió amb marges" /></p>
 
-        <p>to</p>
+        <p>No obstant això, les etiquetes de text de l'extrem dret encara queden tallades, així que duplicarem la quantitat de l'<code>EscaleX </code>perque en quede el doble de marge a la part dreta:</p>
 
-        <pre><code>.range([h, 0]);
-        </code></pre>
+        <pre>
+          <code>
+            .range([padding, w - padding * 2]);
+          </code>
+        </pre>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.png" title="Scatterplot with y scale inverted" alt="Scatterplot with y scale inverted" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.png" title="Gràfic de dispersió amb més marge a la dreta" alt="Gràfic de dispersió amb més marge a la dreta" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/2.html">Here&rsquo;s that code.</a>  Yes, now a <em>smaller</em> input to <code>yScale</code> will produce a <em>larger</em> output value, thereby pushing those <code>circle</code>s and <code>text</code> elements down, closer to the base of the image. I know, it’s almost too easy!</p>
+        <p>Millor! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.html">Aquí tnes el codi fins al moment. </a></p> 
 
-        <p>Yet some elements are getting cut off.  Let’s introduce a <code>padding</code> variable:</p>
+        <p>Però hi ha un canvi més que m'agradaria fer. En lloc d'establir el radi de cada <code> circle </code> com l'arrel quadrada del seu valor de i (que és un valor complex, i tampoc aporta res), per què no fem  una altra escala personalitzada?</p>
 
-        <pre><code>var padding = 20;
-        </code></pre>
-
-        <p>Then we’ll incorporate the <code>padding</code> amount when setting the range of both scales.  The range for <code>xScale</code> was <code>range([0, w])</code>, but now it’s</p>
-
-        <pre><code>.range([padding, w - padding]);
-        </code></pre>
-
-        <p>The range for <code>yScale</code> was <code>range([h, 0])</code>, but now it’s</p>
-
-        <pre><code>.range([h - padding, padding]);
-        </code></pre>
-
-        <p>This should provide us with 20 pixels of extra room on the left, right, top, and bottom edges of the SVG.  And it does!</p>
-
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.png" title="Scatterplot with padding" alt="Scatterplot with padding" /></p>
-
-        <p>But the text labels on the far right are still getting cut off, so I’ll double the amount of <code>xScale</code>’s padding on the right side by multiplying by two:</p>
-
-        <pre><code>.range([padding, w - padding * 2]);
-        </code></pre>
-
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.png" title="Scatterplot with more padding" alt="Scatterplot with more padding" /></p>
-
-        <p>Better! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/3.html">Here&rsquo;s the code so far.</a>  But there’s one more change I’d like to make.  Instead of setting the radius of each <code>circle</code> as the square root of its y value (which was a bit of a hack, and not useful in any case), why not create another custom scale?</p>
-
-        <pre><code>var rScale = d3.scale.linear()
-                             .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+        <pre>
+          <code>
+            var EscalaR = d3.scale.linear()
+                             .domain([0, d3.max(dataset, function(d) { 
+                                      return d[1];
+                                   })])
                              .range([2, 5]);
-        </code></pre>
+          </code>
+        </pre>
 
-        <p>Then, setting the radius looks like this:</p>
+        <p>Després de fixar el radi es veu així:</p>
 
-        <pre><code>.attr("r", function(d) {
-            return rScale(d[1]);
-        });
-        </code></pre>
+        <pre>
+          <code>
+            .attr("r", function(d) {
+                return rScale(d[1]);
+            });
+          </code>
+        </pre>
 
-        <p>This is exciting, because we are guaranteeing that our radius values will <em>always</em> fall within the range of <code>2,5</code>. (Or <em>almost</em> always: See reference to <code>clamp()</code> below.)  So data values of <code>0</code> (the minimum input) will get circles of radius <code>2</code> (or a diameter of 4 pixels).  The very largest data value will get a circle of radius <code>5</code> (diameter of 10 pixels).</p>
+        <p>Això és emocionant, perquè estem garantint que els nostres valors del radi cauen sempre dins del rang establert entre <code>2,5</code>. (O gairebé sempre :. Veure la referència que hi ha a continuació  a <code> clamp () </code>) Així pels valors de dades de <code> 0 </code> (l'entrada mínima) aconseguirà cercles de radi <code> 2 </code> (o un diàmetre de 4 píxels). Amb el valor de radi més gran obtindrà un cercle de radi <code> 5 </code> (diàmetre de 10 píxels).</p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.png" title="Scatterplot with scaled radii" alt="Scatterplot with scaled radii" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.png" title="Gràfic de dispersió amb el radi escalat" alt="Gràfic de dispersió amb el radi escalat" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.html">Voila</a>: Our first scale used for a visual property other than an axis value.</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/4.html">Voila</a>: La nostra primera escala utilitzat per a una propietat visual que no sigui un valor de l'eix.</p>
 
-        <p>Finally, just in case the power of scales hasn’t yet blown your mind, I’d like to add one more array to the data set: <code>[600, 150]</code></p>
+        <p>Finalment, per si de cas el poder d'escales encara no t'ha seduit, m'agradaria afegir una varietat nés al conjunt de dades: <code>[600, 150]</code></p>
 
-        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.png" title="Scatterplot with big numbers added" alt="Scatterplot with big numbers added" /></p>
+        <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.png" title="Gràfic de dispersió amb grans nombres afegits" alt="Gràfic de dispersió amb grans nombres afegits" /></p>
 
-        <p>Boom! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.html">Here&rsquo;s the code.</a>  Notice how all the old points maintained their relative positions, but have migrated closer together, down and to the left, to accommodate the newcomer.</p>
+        <p>Boom! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/5.html">Aquí hi ha el codi.</a>  Observa com tots els punts anteriors mantenen les seves posicions relatives, però han migrat i estan més a prop entre ells, més cap a baix i més cap a l'esquerra, per donar cabuda al nouvingut.</p>
 
-        <p>And now, one final revelation: We can now very easily change the size of our SVG, and everything scales accordingly.  Here, I’ve increased the value of <code>h</code> from <code>100</code> to <code>300</code> and made <em>no other changes</em>:</p>
+        <p>I ara, una revelació final: Ara es fàcil canviar la mida del nostre SVG. Automàticament es canvien totes les escales. Aquí, he augmentat el valor de <code> h </code> de <code> 100 </code> a <code> 300 </code> i <em>no he canviat res més.</em>:</p>
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/7.png" title="Large, scaled scatterplot" alt="Large, scaled scatterplot" /></p>
 
-        <p>Boom, again! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.html">Here&rsquo;s the updated code.</a>  Hopefully, you are seeing this and realizing: No more late nights tweaking your code because the client decided the graphic should be 800 pixels wide instead of 600.  Yes, you will get more sleep because of me (and D3’s brilliant built-in methods).  Being well-rested is a competitive advantage.  You can thank me later.</p>
+        <p>Boom, un altre cop! <a href="http://alignedleft.com/content/03-tutorials/01-d3/150-scales/6.html">Aquí tens el codi actualitzat.</a> Espero, que estiguis veient això i adonant-te que: No més nits en blanc austant el codi perquè el client ha decidit que el gràfic ha de ser de 800 píxels d'ample en lloc de 600. Sí, tindràs més hores de son gràcies a mi (i als brillants mètodes incorporats a D3) . Estar ben descansat és un avantatge competitiu. Podràs agrair-m'ho més endavant.</p>
 
-        <h2>Other Methods</h2>
+        <h2>Altres mètodes</h2>
 
-        <p><code>d3.scale.linear()</code> has several other handy methods that deserve a brief mention here:</p>
+        <p><code>d3.scale.linear()</code> té diversos altres mètodes útils que mereixen ser comentats:</p>
 
         <ul>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_nice"><code>nice()</code></a> — This tells the scale to take whatever input domain that you gave to <code>range()</code> and expand both ends to the nearest round value.  From the D3 wiki: “For example, for a domain of [0.20147987687960267, 0.996679553296417], the nice domain is [0.2, 1].”  This is useful for normal people, who find it hard to read numbers like 0.20147987687960267.</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_rangeRound"><code>rangeRound()</code></a> — Use <code>rangeRound()</code> in place of <code>range()</code> and all values output by the scale will be rounded to the nearest whole number.  This is useful if you want shapes to have exact pixel values, to avoid the fuzzy edges that may arise with antialiasing.</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_clamp"><code>clamp()</code></a> — By default, a linear scale <em>can</em> return values outside of the specified range.  For example, if given a value outside of its expected input domain, a scale will return a number also outside of the output range.  Calling <code>.clamp(true)</code> on a scale, however, forces all output values to be within the specified range.  Meaning, excessive values will be rounded to the range’s low or high value (whichever is nearest).</li>
+          <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_nice"><code>nice()</code></a> — Això li diu a <em>scale()</em> que arrodoneixi els valors del domini d'entrada al valor més sencer més proper. Des del wiki de D3: "Per exemple, per a un domini de [,20147987687960267,, 996679553296417], el domini és més agradable si és [0.2, 1]." Això és útil per a la gent normal, que tenen dificultats per llegir nombres com, 20147987687960267.</li>
+
+          <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_rangeRound"><code>rangeRound()</code></a> —Fes servir <code>rangeRound()</code> en lloc de <code>range()</code> i tots els valors de sortida s'arrodonirant al valor serncer més propoer. Això és útil si vols formes abm un número exacte de píxels, que eviti contorns difuminats que poden tenir problemes de visualització tot i l'antialiasing.</li>
+
+          <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear_clamp"><code>clamp()</code></a> — Per defecte, una escala lineal <em> pot </em> retornar valors fora del rang especificat. Per exemple, si se li dóna un valor fora del domini d'entrada esperat, una escala retornarà un nombre també fora del rang de sortida. Crida a <code> .clamp (true) </code> en una escala,i obliga a tots els valors de sortida a estar dins del rang especificat. Això vol dir que els valors excessius seran arrodonits al valor inferior o superior de la gamma (el que sigui més proper).</li>
         </ul>
 
-        <h2>Other Scales</h2>
+        <h2>Altres Scales</h2>
 
-        <p>In addition to <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><code>linear</code></a> scales (discussed above), D3 has several other scale methods built-in:</p>
+        <p>A part de  <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-linear"><code>linear</code></a> scales (de les que hem parlat fins ara), D3 té altres tipus de métodes incorporats:</p>
 
         <ul>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-identity"><code>identity</code></a> — A 1:1 scale, useful primarily for pixel values</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-sqrt"><code>sqrt</code></a> — A square root scale</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-identity"><code>identity</code></a> — Una escala 1: 1, útil sobretot per a valors de píxels</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-sqrt"><code>sqrt</code></a> — Una escala amb proporció d'arrel quadrada</li>
         <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-pow"><code>pow</code></a> — A power scale (good for the gym)</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-log"><code>log</code></a> — A logarithmic scale</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantize"><code>quantize</code></a> — A linear scale with discrete values for its output range, for when you want to sort data into “buckets”</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantile"><code>quantile</code></a> — Similar to above, but with discrete values for its input domain (when you already have “buckets”)</li>
-        <li><a href="https://github.com/mbostock/d3/wiki/Ordinal-Scales"><code>ordinal</code></a> — Ordinal scales use non-quantitative values (like category names) for output; perfect for comparing apples and oranges</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-log"><code>log</code></a> — A escala logarítmica</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantize"><code>quantize</code></a> — Una escala lineal amb valors discrets per entrades fora del domini, per quan vols ordenar dades en paquets</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales#wiki-quantile"><code>quantile</code></a> — Semblant a l'anterior, però amb valors discrets pel seu domini d'entrada (quan ja tens paquets)</li>
+        <li><a href="https://github.com/mbostock/d3/wiki/Ordinal-Scales"><code>ordinal</code></a> — Escales ordinals que utilitzen valors no quantitatius (com noms de categories) per a la sortida; perfecte per comparar pomes i taronges</li>
         </ul>
 
-              <p class="next_up">Next up: <a href="http://alignedleft.com/tutorials/d3/axes">Axes</a> &rarr;</p>
-                    
-            <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/escales.html">Escales </a> &rarr;</p>
+             
+            <p class="next_up">Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/eixos.html">Eixos </a> &rarr;</p>
           </div>
         </section>
 
