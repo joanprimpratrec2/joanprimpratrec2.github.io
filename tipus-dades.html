@@ -53,7 +53,7 @@
 
       <hr>
       <section id="main_content">
-        <h2 id="afegir-elements">Tipus de Dades</h2>
+        <h2>Tipus de Dades</h2>
 
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 27 de Maig de 2015</p>
@@ -64,7 +64,9 @@
 
         <p>Una variable és un conjunt de dades, el bloc més petit que és pot anomenar conjunt de dades. Les variables són els fonaments de totes les altres estructures de dades, que senzillament són altres tipus de configuració de les mateixes variables.</p>
 
-        <p>Si ets nou a JavaScript, has de saber que es un llenguatge de tipus <em>loosely typed</em> , que vol dir que no fa falta que especifiques quin <em>type</em> (tipus) d'informació guardarà la variable previament a fer-la servir. Molts altres llenguatges, com Java (que és completament diferent de Java<em>Script</em>!), requereix que defineix el tipus de dada que contindrà la variable quan la defineixes, com ara <code>int</code>, <code>float</code>, <code>boolean</code>, or <code>String</code>.</p>
+        <p>Si ets nou a JavaScript, has de saber que es un llenguatge de tipus <em>loosely typed</em> , que vol dir que no fa falta que especifiques quin <em>type</em> (tipus) d'informació guardarà la variable previament a fer-la servir.</p> 
+
+        <p>Molts altres llenguatges, com Java (que és completament diferent de Java<em>Script</em>!), requereix que defineixis el tipus de dada que contindrà la variable quan la defineixes, com ara <code>int</code>, <code>float</code>, <code>boolean</code>, or <code>String</code>.</p>
 
         <pre>
           <code>
@@ -113,7 +115,7 @@
           </code>
         </pre>
 
-        <p>Reescriure-ho com una matriu és molt més senzill. Claudàtors <code>[]</code> indiquen que és una matriu, mentre que per separar els valors de la matriu es fa servir la coma:</p>
+        <p>Reescriure-ho com una matriu és molt més senzill. Els claudàtors <code>[]</code> indiquen que és una matriu, mentre que per separar els valors de la matriu es fa servir la coma:</p>
 
         <pre>
           <code>
@@ -121,7 +123,7 @@
           </code>
         </pre>
 
-        <p>Arrays are ubiquitous in data visualization, so you should become very comfortable with them. You can access (retrieve) a value in an array by using bracket notation:</p>
+        <p>Les matrius són omnipresents en la visualització de dades, pel que has de tenir-les mot per ma. Pots accedir (recuperar) un valor d'una matriu utilitzant notació suport:</p>
 
         <pre>
           <code>
@@ -162,16 +164,18 @@
             var percentages = [ 0.55, 0.32, 0.91 ];
             var names = [ "Ernie", "Bert", "Oscar" ];
 
-            percentages[1]  //Returns 0.32
-            names[1]        //Returns "Bert"
+            percentages[1]  //Retorna 0.32
+            names[1]        //Retorna "Bert"
           </code>
         </pre>
 
-        <h2>Com actuen les matrius amb el for()</h2>
+        <h2>Com actuen les matrius amb el bucle FOR()</h2>
 
-        <p>La visualització de dades basada en codi no seria possible sense les matrius i la poderoa instrucció de bucles <code>for()</code>. Juntes, formen el duo dinàmic friki de les dades. (Si no et consideres un "friki de les dades", et recordeo que estàs llegint el capítol titolat "tipus de dades").</p>
+        <p>La visualització de dades basada en codi no seria possible sense les matrius i la poderosa instrucció de bucles <code>for()</code>. Juntes, formen el duo dinàmic friki de les dades. (Si no et consideres un "friki de les dades", et recordo que estàs llegint el capítol titolat "tipus de dades").</p>
 
-        <p>Una matriu organitza grans quantitats de dades en el lloc que els hi correspon. Així la instrucció <code>for()</code> pot fer un bucle i aplicar alguna acció per cadascun d'ells de manera ràpida i efectiva  — com ara, expressar el seu valor d'una forma visual. D3 sovint gestiona aquest bucle per nosaltres, amb el seu mètode màgic <code>data()</code>, però és important ser capaç de construir els teus propis bucles.</p>
+        <p>Una matriu organitza grans quantitats de dades en el lloc que els hi correspon. Així la instrucció <code>for()</code> pot fer un bucle i aplicar alguna acció per cadascun d'ells de manera ràpida i efectiva  — com ara, expressar el seu valor d'una forma visual.</p> 
+
+        <p>D3 sovint gestiona aquest bucle per nosaltres, amb el seu mètode màgic <code>data()</code>, però és important ser capaç de construir els teus propis bucles.</p>
 
         <p>No entraré en els mecanismes del codi <code>for()</code> aquí; això donaria per un altre tutorial sencer. Pero fixa't amb aquest exemple, que fa un bucle sobre els valors <code>numbers</code> d'abans.</p>
 
@@ -183,11 +187,11 @@
           </code>
         </pre>
 
-        <p>Veus la part <code>numbers.length</code>?  Aquesta es la part maca. Si <code>numbers</code> te 10 posicions de llargada, el bucle es repetirà 10 vegades. Si en té 10 milions… doncs si, es repetirà 10 milions . Això és el que els ordinador saben fer millor: agafar un conjunt de instruccions i executar-les  una i altra vegada. I això és precisament la causa de perque la visualització de dades és tan agraida — tu dissenyes i codifiques un sistema de visualització, i el sistema et respon de la manera que esperes independenment del tipus de dades. El sistema de regles de representació és consistent encara que les dades no ho siguin.</p>
+        <p>Veus la part <code>numbers.length</code>?  Aquesta es la part interessant. Si <code>numbers</code> te 10 posicions de llargada, el bucle es repetirà 10 vegades. Si en té 10 milions… doncs si, es repetirà 10 milions . Això és el que els ordinador saben fer millor: agafar un conjunt de instruccions i executar-les  una i altra vegada. I això és precisament la causa de perque la visualització de dades és tan agraida — tu dissenyes i codifiques un sistema de visualització, i el sistema et respon de la manera que esperes independenment del tipus de dades. El sistema de regles de representació és consistent encara que les dades no ho siguin.</p>
 
         <h2>Objectes</h2>
 
-        <p>Les matrius son adequades per assignar simples llistes de valors, però si les dades són més complexes llavors és millor fer servir els objectes.</p> 
+        <p>Les matrius son adequades per assignar llistes de valors simples, però si les dades són més complexes llavors és millor fer servir els objectes.</p> 
 
         <p>Pel que ens ocupa, pensa en els objectes de JavaScript com una estructura de dades personalitzada.</p> 
 
@@ -215,13 +219,19 @@
           </code>
         </pre>
 
-        <p>Pensa en el valor com una "propietat" de l'objecte. Oh, mira, fruita. “Quin tipus de fruita ést?” et pots preguntar. Doncs resulta que, <code>fruit.kind</code> es <code>"grape"</code>. “Es saborosa?” Oh, i tant, perque <code>fruit.tasty</code> és <code>true</code>.</p>
+        <p>Pensa en el valor com una "propietat" de l'objecte.</p> 
+
+        <p>Oh, mira, fruita. “Quin tipus de fruita és?” et pots preguntar.</p> 
+
+        <p>Doncs resulta que, <code>fruit.kind</code> es <code>"grape"</code>. </p>
+
+        <p>“Es saborosa?” Oh, i tant, perque <code>fruit.tasty</code> és <code>true</code>.</p>
 
         <h2>Objectes + Matrius</h2>
 
         <p>Pots combinar aquestes dues estructures per crear una matriu d'objectes, o objectes de matrius, o objectes d'objectes, o, bé, básicament qualsevol estructura que doni sentit a les teves dades.</p>
 
-        <p>Digue'm que hem comprat un parell més de peces de fruita, i volem incorporar-les al nostre catàleg. Hem fet servir claudàtors <code>[]</code> a la part exterior, que indiquen que és una matriu, seguida de claus <code>{}</code>, i la notració del tipus objecte al seu interior, amb cada objecte separat per comes.</p>
+        <p>Diguem que hem comprat un parell més de peces de fruita, i volem incorporar-les al nostre catàleg. Hem fet servir claudàtors <code>[]</code> a la part exterior, que indiquen que és una matriu, seguida de claus <code>{}</code>, i la notració del tipus objecte al seu interior, amb cada objecte separat per comes.</p>
 
         <pre>
           <code>
@@ -289,7 +299,9 @@
 
         <h2>JSON</h2>
 
-        <p>En algun moment del teu estudi de D3, et trobaràs amb la notació d'objectes de JavaScript(JavaScript Object Notation) . Pots <a href="http://en.wikipedia.org/wiki/Json">llegir-ne els detalls aquí</a>, però JSON es bàsicamenet una sintaxi específica per organitzar dades com a objectes de JavaScript. La sintaxi esta optimitzada per fer-se servir amb JavaScript (obviament) i consultes d'AJAX, raó per la qual veuràs moltes APIs basades en la web que escupt dades en format JSON. És més ràpid i fàcil d'analitzar amb JavaScript que XML, i per suposat D3 s'entén bé amb aquest tipus de format.</p>
+        <p>En algun moment del teu estudi de D3, et trobaràs amb la notació d'objectes de JavaScript(JavaScript Object Notation).</p> 
+
+        <p>Pots <a href="http://en.wikipedia.org/wiki/Json">llegir-ne els detalls aquí</a>, però JSON es bàsicamenet una sintaxi específica per organitzar dades com a objectes de JavaScript. La sintaxi esta optimitzada per fer-se servir amb JavaScript (obviament) i consultes d'AJAX, raó per la qual veuràs moltes APIs basades en la web que escupt dades en format JSON. És més ràpid i fàcil d'analitzar amb JavaScript que XML, i per suposat D3 s'entén bé amb aquest tipus de format.</p>
 
         <p>Ès això. No sembla gaire diferent del que ja hem vist:</p>
 
@@ -310,7 +322,9 @@
 
         <p>Al igual que amb JSON és només una formalització de la sintaxi d'objectes de JavaScript, GeoJSON és un altre tipus de formalització de la sintaxi d'objectes de JSON, optimitzada per a guardar dades geogràfiques (geodata). Tots els objedtes GeoJSON són objectes JSON , i tots els objectes JSON son objectes de JavaScript.</p>
 
-        <p><a href="http://geojson.org/geojson-spec.html">GeoJSON</a> pot guardar coordenades de punts geogràfiques (normalment longitud i latitud), però també formes (com línies i polígons) i d'altres característiques espaials. Si tens una gran quantitat de geodata, val la pena analitzar-la en format GeoJSON per optimitzar el seu ús per part de D3.</p>
+        <p><a href="http://geojson.org/geojson-spec.html">GeoJSON</a> pot guardar coordenades de punts geogràfiques (normalment longitud i latitud), però també formes (com línies i polígons) i d'altres característiques espaials.</p> 
+
+        <p>Si tens una gran quantitat de geodata, val la pena analitzar-la en format GeoJSON per optimitzar el seu ús per part de D3.</p>
 
         <p>Entrarem en més detalls del format GeoJSON quan parlem sobre els geomapes, peró de moment, només et cal saber com es veu una senzilla dada GeoJSON:</p>
 
@@ -333,7 +347,7 @@
         };
         </code></pre> 
 
-        <p> (Pot ser confús, però la longitud va sempre llistada abans que la latitud. Cal acostumar-se a pensar en termes de lon/lat enlloc de lat/lon.)</p>
+        <p> (Pot ser confús, però la longitud va sempre llistada abans que la latitud. Cal acostumar-se a pensar en termes de lon/lat en lloc de lat/lon.)</p>
 
         
         

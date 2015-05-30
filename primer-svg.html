@@ -65,18 +65,25 @@
 
         <p>El software de dibuix vectorial com ara Ilustrator, es pot fer servir per generar arxius SVG. Ara però, el que volem i necessitem és aprendre com poder-los generar amb codi.</p>
 
-        <p>L'element SVG</p>
+        <h2>L'element SVG</h2>
 
-        <p>"Scalable Vector Graphics" ( en català Gràfic vectorial escalable) és un format de imatge basat en text. Cada imatge en format SVG es defineix fent servir codi d'etiquetes com l'HTML. El codi SVG pot ser inclòs directament dins un document HTML. Tots els navegadors web suporten SVG <em>excepte</em> <a href="http://caniuse.com/#feat=svg">Internet Explorer versions 8 i anteriors</a>. Els arxius SVG es basen en XML, per tant tingues present que els elements que no tenen una etiqueta de tancament són autotancats. Per exemple:</p>
+        <p>"Scalable Vector Graphics" ( en català Gràfic vectorial escalable) és un format de imatge basat en text. Cada imatge en format SVG es defineix fent servir codi d'etiquetes com l'HTML. El codi SVG pot ser inclòs directament dins un document HTML.</p>
+
+        <p>Tots els navegadors web suporten SVG <em>excepte</em> <a href="http://caniuse.com/#feat=svg">Internet Explorer versions 8 i anteriors</a>.</p>
+
+
+        <p>Els arxius SVG es basen en XML, per tant tingues present que els elements que no tenen una etiqueta de tancament són autotancats. Per exemple:</p>
 
         <pre>
           <code>
-            &lt;element&gt;&lt;/element&gt;   &lt;!-- Uses closing tag --&gt;
-            &lt;element/&gt;                  &lt;!-- Self-closing tag --&gt;
+            &lt;element&gt;&lt;/element&gt;   &lt;!-- Fa servir una etiqueta de tancament --&gt;
+            &lt;element/&gt;                  &lt;!-- Element autotancat --&gt;
           </code>
         </pre>
 
-        <p>Abans que puguis dibuixar qualsevol cosa, has de crear l'element SVG. Pensa en l'element SVG com un paper blanc a on es dibuixarà la resta. ( Respecte a això, SVG és conceptualment similar a l'element <code>canvas</code> d'HTML.) Com a mínim és bo especificar els valors de <code>width</code> (amplada) i <code>height</code> (alçada) per l'element <em>SVG</em>.</p> 
+        <p>Abans que puguis dibuixar qualsevol cosa, has de crear l'element SVG.</p>
+
+        <p> Pensa en l'element SVG com un paper blanc a on es dibuixarà la resta. ( Respecte a això, SVG és conceptualment similar a l'element <code>canvas</code> d'HTML.) Com a mínim és bo especificar els valors de <code>width</code> (amplada) i <code>height</code> (alçada) per l'element <em>SVG</em>.</p> 
 
         <p>Si no s'especifiquen, SVG fa servir tot l'espai possible de l'element pare que el contingui.</p>
 
@@ -107,7 +114,9 @@
 
         <p>Hi ha algunes formes senzilles que pots incloure directament entre dues etiquetes <em>svg</em>, com ara <code>rect</code>, <code>circle</code>, <code>ellipse</code>, <code>line</code>, <code>text</code>, i <code>path</code></p>
 
-        <p>Si estas familiaritzat amb programació de gràfics per a ordinador, reconeixeràs quw el sistema de coordenades basat píxels que es fa servir és el que es fa servir usualment. El <em>0,0</em> es troba a la cantonada superior esquerra de l'espai de dibuix, els valors positius de <em>x</em> es mouen cap a la dreta, i els valors positius de <em>y</em> es mouen cap a baix.</p>
+        <p>Si estas familiaritzat amb programació de gràfics per a ordinador, reconeixeràs el sistema de coordenades basat en píxels que es el que es fa servir normalment.</p> 
+
+        <p>El <em>0,0</em> es troba a la cantonada superior esquerra de l'espai de dibuix, els valors positius de <em>x</em> es mouen cap a la dreta, i els valors positius de <em>y</em> es mouen cap a baix.</p>
 
         <svg width="505" height="65">
           <line x1="5" y1="5" x2="5" y2="50" stroke="gray" stroke-width="1"/>
@@ -136,7 +145,7 @@
             <rect x="0" y="0" width="500" height="50"/>
         </svg>
 
-        <p>El codi <code>circle</code> dibuixa un cercle. Fes servir els seus atributs <code>cx</code> i <code>cy</code> per especificar les coordenades del centre del cercle, i <code>r</code>  per especificar el radi. Aquest cercle estarà centrat al mig del nostre SVG de 500px d'amplada perque el seu valor de<code>cx</code> ("center-x") és 250.</p>
+        <p>El codi <code>circle</code> dibuixa un cercle. Fes servir els seus atributs <code>cx</code> i <code>cy</code> per especificar les coordenades del centre del cercle, i <code>r</code>  per especificar el radi. Aquest cercle estarà centrat al mig del nostre SVG de 500px d'amplada perque el seu valor de <code>cx</code> ("center-x") és 250.</p>
 
         <pre>
           <code>
@@ -185,7 +194,7 @@
             <text x="250" y="25">Easy-peasy</text>
         </svg>
 
-        <p><code>text</code> heretarà l'estil CSS (això inclou el tipus de lletra) de l'element pare, excepte que s'en hagi especificat un de propi. (En un instant aprendrem més coses sobre l'estil del text ). Fixa't com el text anterior té el mateix format que aquest paràgraf. Podem sobreescriure el format de la següent manera:</p>
+        <p><code>text</code> heretarà l'estil CSS (això inclou el tipus de lletra) de l'element pare, excepte que se n'hagi especificat un de propi. (En un instant aprendrem més coses sobre l'estil del text ). Fixa't com el text anterior té el mateix format que aquest paràgraf. Podem sobreescriure el format de la següent manera:</p>
 
         <pre>
           <code>
@@ -199,7 +208,7 @@
            font-size="25" fill="gray">Easy-peasy</text>
         </svg>
 
-        <p>Fixa't també que quan un element traspassa el límit del SVG, queda ocult. Tingues cura de la posició del text, per tal d'evitar que part de les lletres quedin amagades per estar per sobre o per sota del límit del SVG. Mira que passa quan assignem la coordenada <em>y</em> de la posíció del text a 50, o sigui al límit inferior del SVG:</p>
+        <p>Observa també que quan un element traspassa el límit del SVG, queda ocult. Tingues cura de la posició del text, per tal d'evitar que part de les lletres quedin amagades per estar per sobre o per sota del límit del SVG. Mira que passa quan assignem la coordenada <em>y</em> de la posició del text a 50, o sigui al límit inferior del SVG:</p>
 
         <pre>
           <code>
@@ -217,13 +226,13 @@
 
         <h2>Donant Estil als Elements de l'SVG</h2>
 
-        <P>L'estil per defecte de l'SVG té com a color d'emplenament el negre i no dibuixa el contorn (atribut <code>stroke</code> sense valor). Si vols una altre tipus, has d'aplicar regles d'estil als teus elements.</P>
+        <P>L'estil per defecte de l'SVG té com a color d'emplenament el negre i no dibuixa el contorn (atribut <code>stroke</code> sense valor). Si vols fer-ho d'una altra manera, has d'aplicar regles d'estil als teus elements.</P>
 
         <p>Les propietats més comunes del SVG són:</p>
 
         <ul>
-          <li><code>fill</code> — Un valor de color. Tal i com faries amb CSS. Els colors poden ser especificats com a<br />
-            <br />
+          <li><code>fill</code> — Un valor de color. Tal i com faries amb CSS. Els colors poden ser especificats com a:<br />
+            
             <ul>
               <li>colors amb nom — <code>orange</code></li>
               <li>valors hexadecimals — <code>#3388aa</code> o <code>#38a</code></li>
@@ -265,14 +274,14 @@
             </code>
           </pre>
 
-          <p>i definir les regles del color d'emplenament <code>fill</code></p>, el color de la línia de contorn <code>stroke</code> i la seva amplada <code>stroke-width</code> en un arxiu CSS que ho definís per aquesta classe:
+          <p>i definir les regles del color d'emplenament <code>fill</code>, el color de la línia de contorn <code>stroke</code> i la seva amplada <code>stroke-width</code> en un arxiu CSS que ho definís per aquesta classe:</p>
 
           <pre>
             <code>
               .pumpkin {
-                fill: yellow;
-                stroke: orange;
-                stroke-width: 5;
+                  fill: yellow;
+                  stroke: orange;
+                  stroke-width: 5;
               }
             </code>
           </pre>
@@ -317,9 +326,9 @@
               <rect x="80" y="20" width="30" height="30" fill="red"/>
           </svg>
 
-          <p>L'ordre en el qual els elements es codifiquen determina el seu ordre de prioritat. El rectangel porpra és el que apareix primer en el codi, i per tant és el primer que es renderitza. Llavors el blau, el verd, el groc i finalment el vermell que es l'únic que queda totalment visible perque és l'últim a ser renderitzat.</p>
+          <p>L'ordre en el qual els elements es codifiquen determina el seu ordre de prioritat. El rectangle porpra és el que apareix primer en el codi, i per tant és el primer que es renderitza. Llavors el blau, el verd, el groc i finalment el vermell que es l'únic que queda totalment visible perque és l'últim a ser renderitzat.</p>
 
-          <p>Pensa que les formes d'un SVG és com si fossin pintades literalment sobre una tela. La última que es pinta, enfosqueix o tapa l'anterior, i això pot fer l'aparená que està en primer pla.</p>
+          <p>Pensa que les formes d'un SVG és com si fossin pintades literalment sobre una tela. La última que es pinta, enfosqueix o tapa l'anterior, i això pot fer l'aparença que està en primer pla.</p>
 
           <p>Aquesta part de l'ordre del dibuixos pot arribar a ser important quan tens elements que no han de ser tapats per altres. Per exemple, Pots tenir eixos o etiquetes amb valors que han d'apareixer sobre un gràfic. Els eixos i les etiquetes poden ser afegides al final, perque no siguin tapades pels elements del gràfic.</p>
 
@@ -354,14 +363,14 @@
           <pre>
             <code>
               &lt;circle cx="25" cy="25" r="20"
-              fill="rgba(128, 0, 128, 0.75)" 
-              stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"/&gt;
+                    fill="rgba(128, 0, 128, 0.75)" 
+                    stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"/&gt;
               &lt;circle cx="75" cy="25" r="20"
-              fill="rgba(0, 255, 0, 0.75)"
-              stroke="rgba(0, 0, 255, 0.25)" stroke-width="10"/&gt;
+                  fill="rgba(0, 255, 0, 0.75)"
+                  stroke="rgba(0, 0, 255, 0.25)" stroke-width="10"/&gt;
               &lt;circle cx="125" cy="25" r="20"
-              fill="rgba(255, 255, 0, 0.75)"
-              stroke="rgba(255, 0, 0, 0.25)" stroke-width="10"/&gt;
+                  fill="rgba(255, 255, 0, 0.75)"
+                  stroke="rgba(255, 0, 0, 0.25)" stroke-width="10"/&gt;
             </code>
           </pre>
 
@@ -393,14 +402,14 @@
           <pre>
             <code>
               &lt;circle cx="25" cy="25" r="20" fill="purple" 
-              stroke="green" stroke-width="10"
-              opacity="0.9"/&gt;
+                  stroke="green" stroke-width="10"
+                  opacity="0.9"/&gt;
               &lt;circle cx="65" cy="25" r="20" fill="green"
-              stroke="blue" stroke-width="10"
-              opacity="0.5"/&gt;
+                  stroke="blue" stroke-width="10"
+                  opacity="0.5"/&gt;
               &lt;circle cx="105" cy="25" r="20" fill="yellow"
-              stroke="red" stroke-width="10"
-              opacity="0.1"/&gt;
+                  stroke="red" stroke-width="10"
+                  opacity="0.1"/&gt;
             </code>
           </pre>
 
@@ -421,16 +430,16 @@
           <pre>
             <code>
               &lt;circle cx="25" cy="25" r="20"
-              fill="rgba(128, 0, 128, 0.75)" 
-              stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"/&gt;
+                  fill="rgba(128, 0, 128, 0.75)" 
+                  stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"/&gt;
               &lt;circle cx="65" cy="25" r="20"
-              fill="rgba(128, 0, 128, 0.75)" 
-              stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"
-              opacity="0.5"/&gt;
+                  fill="rgba(128, 0, 128, 0.75)" 
+                  stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"
+                  opacity="0.5"/&gt;
               &lt;circle cx="105" cy="25" r="20"
-              fill="rgba(128, 0, 128, 0.75)" 
-              stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"
-              opacity="0.2"/&gt;
+                  fill="rgba(128, 0, 128, 0.75)" 
+                  stroke="rgba(0, 255, 0, 0.25)" stroke-width="10"
+                  opacity="0.2"/&gt;
             </code>
           </pre>
 
@@ -448,10 +457,10 @@
                       opacity="0.2"/>
           </svg>
 
-          <p>Fixa't que el valor d' <code>oppacity</code> es 0.2 o sigui un 20%. Donat que el color de fons té un alfa de 0.75 ( 75%) i els valors es multiplicquen, el valor final d'opacitat es 0.2 vegades 0.75, o sigui 0.2*0.75= 0.15 o 15%</p>
+          <p>Fixa't que el valor d' <code>oppacity</code> és 0,2 o sigui un 20%. Observa que el color de fons té un alfa de 0,75 ( 75%) i els valors es multiplicquen, el valor final d'opacitat es 0,2 vegades 0,75, o sigui 0,2*0,75= 0,15 o 15%</p>
 
           <blockquote>
-            <p>Per saber-nes més sobre SVG — incloent textures, animació, paths, clip-paths, màsqueres i filtres — pots mirar aquí “<a href="http://svgpocketguide.com">Pocket Guide to Writing SVG</a>” de <a href="http://jonibologna.com/">Joni Trythall</a> o també aquií “<a href="http://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html">An SVG Primer for Today’s Browsers</a>” de <a href="http://srufaculty.sru.edu/david.dailey/">David Dailey</a>.</p>
+            <p>Per saber-nes més sobre SVG — incloent textures, animació, paths, clip-paths, màsqueres i filtres — pots mirar aquí “<a href="http://svgpocketguide.com">Pocket Guide to Writing SVG</a>” de <a href="http://jonibologna.com/">Joni Trythall</a> o també aquí “<a href="http://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html">An SVG Primer for Today’s Browsers</a>” de <a href="http://srufaculty.sru.edu/david.dailey/">David Dailey</a>.</p>
           </blockquote>                   
         
         <p>Ves al següent capítol: <a href="https://joanprimpratrec2.github.io/dibuixant-svgs.html">Dibuixant SVG's</a> &rarr;</p>

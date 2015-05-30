@@ -51,14 +51,14 @@
 
       <hr>
       <section id="main_content">
-        <h2 id="afegir-elements">Encadenar metodes</h2>
+        <h2>Encadenar metodes</h2>
 
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 23 de Maig de 2015</p>
 
-        <p>D3 fa servir una tècnica anomenada <em>chain syntax</em> (sintaxi d'encadenament), que pots tenir vista de jQuery.</p>
+        <p>D3 fa servir una tècnica anomenada <em>chain syntax</em> (sintaxi d'encadenament), que potser tinguis vista de jQuery.</p>
 
-        <p>"Encadenant" mètodes fent servir un punt de separació, pots realitzar diverses operacions en una mateixa línia de codi. Pot ser ràpid i senzill, però convé entendre com funciona, per estalviar-se hores i hores de depuració i maldecaps posteriors.</p>
+        <p>"Encadenant" mètodes, que es fa fent servir un punt de separació, pots realitzar diverses operacions en una mateixa línia de codi. Pot ser ràpid i senzill, però convé entendre com funciona, per estalviar-se hores i hores de depuració i maldecaps posteriors.</p>
 
         <p>Per començar, les <em>funcions</em> i els <em>mètodes</em> són dos paraules diferents pel mateix concepte: un tros de codi que rep un argument d'entrada, fa alguna acció, i retorna alguna dada.</p>
 
@@ -85,7 +85,7 @@
 
         <p>Cadascú té el seu propi estil de codi. Fes servir la indentació, els salts de línia, i els espais en blanc ( tabulador o espais) que et semblin millor.</p>
 
-        <h3>Un enllaç cada vegada</h3>
+        <h2>Un enllaç cada vegada</h2>
 
         <p>Anem a veure cada part d'aquest codi.</p>
 
@@ -99,7 +99,7 @@
 
         <p><code>.append("p")</code> -<a href="https://github.com/mbostock/d3/wiki/Selections#wiki-append"><code>append()</code></a>  crea els elements nous que especifiques al DOM i els afegeix al final (però a dins, no desprès) de la selecció que li han passat els mètodes anterior. En el nostre cas, volem crear un nou <code>p</code> ( paràgraf) dins l'etiqueta <code>body</code></p>
 
-        <p>Hem especificat <code>p</code> com l'argument d'entrada, i li hem passat, dels mètode <code>select()</code> anterior la referència a <code>body</code>. Per acabar, <code>append()</code>,al seu torn també passa la referència a l'element que ha creat al següent mètode de la cadena.</p>
+        <p>Hem especificat <code>p</code> com l'argument d'entrada, i li hem passat, del mètode <code>select()</code> anterior la referència a <code>body</code>. Per acabar, <code>append()</code>, al seu torn també passa la referència a l'element que ha creat al següent mètode de la cadena.</p>
 
         <p><code>.text("Nou paràgraf!")</code> - <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-text"><code>text()</code></a> agafa una cadena i la inserta entre les etiquetes d'obertura i tancament de la selecció actual. Com que l'anterior mètode havia passat una referència al nou <code>p</code>, aquest codi inserta el nou text entre les etiquetes  <code>&lt;p&gt;</code> i <code>&lt;/p&gt;</code>. ( en el cas que ja hi haguès algun text entre ambdues etiquetes, es sobreescriuria) .</p>
 
@@ -108,15 +108,15 @@
 
         <h2>La transferència</h2>
 
-        <p>La majoria, però no tots, dels mètodes de D3 retornen una selecció, o més ben dit, la referència a aquesta selecció, la qual permet aquesta tècnica tant útil de l'encadenament de mètodes.</p>
+        <p>La majoria, però no tots, els mètodes de D3 retornen una selecció, o més ben dit, la referència a aquesta selecció, la qual permet aquesta tècnica tant útil de l'encadenament de mètodes.</p>
 
-        <p>Normalment, un mètode retorna una referencia a l'element sobr el que acaba d'actuar, però no sempre.</p>
+        <p>Normalment, un mètode retorna una referencia a l'element sobre el que acaba d'actuar, però no sempre.</p>
 
-        <p>Així que recorda. En l'encadeanment l'ordre dels mètodes és important. El retorn de un mètode ha de coincidir amb el que espera rebre el següent mètode de la cadena. </p>
+        <p>Així que recorda. En l'encadeanment l'ordre dels mètodes és important. El retorn d'un mètode ha de coincidir amb el que espera rebre el següent mètode de la cadena. </p>
 
-        <p>Si les entrades i sortides adjacents no coincideixen, la transferència es trencarà com si cau el pal en una carrera de relleus.</p>
+        <p>Si les entrades i sortides adjacents no coincideixen, la transferència es trencarà com si cau el testimoni en una carrera de relleus.</p>
 
-        <p>Quan vulguis saber que és el que espera cada funció i que és el que retorna, la referència a l'API és que t'ajudarà. Conté informació detallada sobre cada mètode, incloen-t'hi si torna o no una selecció.</p>
+        <p>Quan vulguis saber que és el que espera cada funció i que és el que retorna, la referència a l'API és qui t'ajudarà. Conté informació detallada sobre cada mètode, incloen-t'hi si torna o no una selecció.</p>
 
         <h2>Sense Encadenaments</h2>
 
@@ -130,10 +130,10 @@
           </code>
         </pre>
 
-        <p>Renoi!!!. Quin embolic. Però hi haurà vegades que hauràs de trencar l'encadenament, com ara quan estiguis cridant funcions que no s'entenen entre elles. O si vols organitzar el teu codi d'una manera que tingui més sentit per a tu.</p>
+        <p>Renoi!!!. Quin embolic. Potser si però hi haurà vegades que hauràs de trencar l'encadenament, com ara quan estiguis cridant funcions que no s'entenen entre elles. O si vols organitzar el teu codi d'una manera que tingui més sentit per a tu.</p>
 
         
-        <p><a href="https://joanprimpratrec2.github.io/asociar-dades.html">Següent: Asociar Dades –&gt;</a></p>
+        <p><a href="https://joanprimpratrec2.github.io/asociar-dades.html">Següent: Asociar Dades </a> &rarr;</p>
         </section>
 
       	<footer>

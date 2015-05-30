@@ -52,7 +52,7 @@
 
       <hr>
       <section id="main_content">
-        <h2 id="afegir-elements">Desplegar els divs</h2>
+        <h2>Desplegar els divs</h2>
 
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 25 de Maig de 2015</p>
@@ -69,7 +69,7 @@
 
         <p>El farem servir per generar un diagrama de barres.</p> 
 
-        <p>Els diagrames de barres, són bàsicament rectangles, i un <code>&lt;div&gt;</code> de HTML és la manera més senzilla de dibuixar un rectangle. (Bé, per a un navegador web tot és un rectangle, per tant podries adapar fácilment aquest exemple fent servir <code>spans</code> o qualsevol altre element que vulguesis.)</p>
+        <p>Els diagrames de barres, són bàsicament rectangles, i un <code>&lt;div&gt;</code> de HTML és la manera més senzilla de dibuixar un rectangle. (Bé, per a un navegador web tot és un rectangle, per tant podries adapar fácilment aquest exemple fent servir <code>spans</code> o qualsevol altre element que volguesis.)</p>
 
         <p>Aquest <code>div</code> el farem servir com la barra que representa una dada:</p>
 
@@ -87,9 +87,9 @@
           </code>
         </pre>
         
-        <p>(Entre la gent que fa els estandards webs, això es coneix com un "semantic no-no". Normalment, hom no pot fer servir un <code>div</code> buit per efectes purament visuals, encara que el codi del tutorials son una notable excepció.)</p>
+        <p>(Entre la gent que fa els estandards webs, això es coneix com un "semantic no-no". Normalment, hom no pot fer servir un <code>div</code> buit per efectes purament visuals, encara que el codi del tutorials són una notable excepció.)</p>
 
-        <p>Degut a que és un <code>div</code>, la seva amplada <code>widht</code> i la seva alçada <code>height</code> es defineixen amb estils CSS. Cada barra del nostre diagrama tindrà les mateixes característiques visuals ( excepte per l'alçada), així que posarem les característiques comuns en una classe que anomenarem <em>bar</em>:</p>
+        <p>Degut a que és un <code>div</code>, la seva amplada <code>width</code> i la seva alçada <code>height</code> es defineixen amb estils CSS. Cada barra del nostre diagrama tindrà les mateixes característiques visuals ( excepte per l'alçada), així que posarem les característiques comuns en una classe que anomenarem <em>bar</em>:</p>
 
         <pre>
           <code>
@@ -114,7 +114,7 @@
 
         <h2>Definint atributs</h2>
 
-        <p><a href="https://github.com/mbostock/d3/wiki/Selections#wiki-attr"><code>attr()</code></a> es fa servir per definir el valor que un atribut HTML tinrà per a un element. Un atribut HTML és qualsevol parell  clau/valor que puguis incloure entre els símbols <code>&lt;&gt;</code>. Per exemple, aquests elements HTML </p> 
+        <p><a href="https://github.com/mbostock/d3/wiki/Selections#wiki-attr"><code>attr()</code></a> es fa servir per definir el valor que un atribut HTML tinrà per a un element. Un atribut HTML és qualsevol parell  clau/valor que puguis incloure entre els símbols <code>&lt; &gt;</code>. Per exemple, aquests elements HTML </p> 
 
         <pre>
           <code>
@@ -124,7 +124,7 @@
           </code>
         </pre>
 
-        <p>un total de 5 atributs ( amb els seus corresponents valors), i tots ells poden ser assignats amb <code>attr()</code></p>
+        <p>tenen un total de 5 atributs ( amb els seus corresponents valors), i tots ells poden ser assignats amb <code>attr()</code></p>
 
         <pre>
           <code>
@@ -148,7 +148,7 @@
 
         <p>Tingues en compte que la classe d'un element HTML és guarda com un atribut. La classe, al seu torn, es fa servir com a referència per assignar les regles d'estil de CSS. Això pot provocar algun tipus de confusió perque hi ha una diferència entre assignar una classe ( a partir de la qual s'obtenen les regles d'estil) i aplicar un estil directament a un element. Pots fer ambdues coses amb D3. Fes servir el que millor s'adapti al resultat que vols aconseguir.</p>
 
-        <p>Com a regla general, et recomano fer servir les <em>classes</em> per les propietats que són compartides entre multiples elements, i apicar les regles d'<em>estils</em> directe, únicament als elements que es desviin de la norma. (De fet, això és el que farem d'aquí a uns instants).</p>
+        <p>Com a regla general, et recomano fer servir les <em>classes</em> per les propietats que són compartides entre multiples elements, i aplicar les regles d'<em>estil</em> directe únicament als elements que es desviin de la norma. (De fet, això és el que farem d'aquí a uns instants).</p>
 
         <p>També aprofito per a fer una petita menció d´un altre mètode de D3 <code>classed()</code>, que es pot fer servir per aplicar o treure de manera ràpida un element d'una classe. El codi anterior es podria haver escrit de la segënt manera:</p>
 
@@ -167,20 +167,20 @@
             var dataset = [ 5, 10, 15, 20, 25 ];
 
             d3.select("body").selectAll("div")
-                .data(dataset)
-                .enter()
-                .append("div")
-                .attr("class", "bar");
+                              .data(dataset)
+                              .enter()
+                              .append("div")
+                              .attr("class", "bar");
           </code>
         </pre>
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.png" title="Cinc divs que semblen un de sol" alt="Five divs masquerading as one" /></p>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.html">Mira el codi en aquesta pàgina de demostració.</a> Obre el codi font i l'inspector web del teu navegador per veure que està passant. Hauries de veure 5 barres verticals, una per cadascuna de les dades de la matriu, tot i que, sense espais entre elles i del mateix color, semblen més aviat un gran rectangle.</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/80-drawing-divs/1.html">Mira el codi en aquesta pàgina de demostració.</a> Obre el codi font i l'inspector web del teu navegador per veure què està passant. Hauries de veure 5 barres verticals, una per cadascuna de les dades de la matriu, tot i que, sense espais entre elles i del mateix color, semblen més aviat un gran rectangle.</p>
 
         <h2>Assignant Estils</h2>
 
-        El mètode  <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-style"><code>style()</code></a> es fa servir per aplicar directament a un element HTML una propietat de CSS o el seu valor. És equivalent a incloure regles CSS dins de l'atribut <em>style</em> directament a l'arxiu HTML, tal com això:
+        <p>El mètode  <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-style"><code>style()</code></a> es fa servir per aplicar directament una propietat de CSS o el seu valor a un element HTML . És equivalent a incloure regles CSS dins de l'atribut <em>style</em> directament a l'arxiu HTML, tal com això:</p>
 
         <pre>
           <code>
@@ -193,7 +193,7 @@
         <pre>
           <code>
             .style("height", function(d) {
-              return d + "px";
+                    return d + "px";
             });
           </code>
         </pre>
@@ -204,12 +204,12 @@
 
         <p>Cada passada que fa D3 pel bucle de la matriu de dades, el valor que s'assigna a <em>d</em>, és el que ocupa la posició del mateix ordinal, ( primera passada, primer valor,... quarta passada, quart valor). Per tant li estem assignant a la propietat <code>height</code> el valor de <code>d</code> (el de cada passada) i li afegim <code>px</code> ( per especificar que les unitats son píxels). L'alçada resultant és doncs: 5px, 10px, 15px, 20px i 25px.</p>
 
-        <p>Així sembla molt poca cosa. Podem fer les barres més altes.</p>
+        <p>Així sembla molt poca cosa. Fem les barres més altes.</p>
 
         <pre>
           <code>
             .style("height", function(d) {
-                var barHeight = d * 5;  //Scale up by factor of 5
+                var barHeight = d * 5;  //Escalem cinc vegades les barres
                 return barHeight + "px";
             });
           </code>
@@ -231,12 +231,12 @@
 
                    
         
-        <p><a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() –&gt;</a></p>
+        <p><a href="https://joanprimpratrec2.github.io/funcio-data.html">La funció data() </a> &rarr;</p>
         </section>
 
       	<footer>
       		Aquest tutorial ha sigut traduit per <a href="https://">Joan Prim</a><br>
-              Tot el contingut ha sigut desenvolupat i li pertany a <a href="http://alignedleft.com/">Scott Murray</a>
+              Tot el contin</a> &rarr;</p>gut ha sigut desenvolupat i li pertany a <a href="http://alignedleft.com/">Scott Murray</a>
         </footer>
 
 

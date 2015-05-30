@@ -56,14 +56,16 @@
 
       <hr>
       <section id="main_content">
-        <h2 id="fonaments">Fonaments</h2>
+
+        <h2>Fonaments</h2>
+
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 19 de Maig de 2015</p>
 
         <p>Per treballar amb D3 és indispensable tenir consolidats els coneixements sobre els següents conceptes:</p>
 
         
-        <h3 id="html">HTML</h3>
+        <h2>HTML</h2>
 
         <p>Acrònim d’Hyper Text Markup Language, en català, "llenguatge de marcat d'hipertext", es fa servir per organitzar el contingut que mostren els navegadors de internet ( mozilla firefox, chrome, ...)</p>
 
@@ -83,14 +85,17 @@
           </code>
         </pre>
 
-        <h3 id="html">DOM</h3>
+        <h2 id="html">DOM</h2>
 
-        <p>El "Document Object Model", en català, "Model d'Objectes de Document" és refereix a l'estructura jerarquica ( en forma d'arbre) d'HTML. Cada paraula tancada entre simbols &lt; &gt; es una etiqueta, i aquestes etiquetes es realacionen entre elles de la mateixa manera que les persones: poden ser pares, fills, germans, ancestres, descesdents. Al codi HTML anterior, <em>BODY</em> es l'etiqueta pare de <em>h1</em> i <em>p</em> ( que alhora són germans entre ells). Tots els elements de la pàgina són descendentes de <em>html</em> </p>
+        <p>El "Document Object Model", en català, "Model d'Objectes de Document" és refereix a l'estructura jerarquica ( en forma d'arbre) d'HTML. Cada paraula tancada entre simbols &lt; &gt; es una etiqueta, i aquestes etiquetes es realacionen entre elles de la mateixa manera que les persones: poden ser pares, fills, germans, ancestres, descesdents.</p> 
+
+        <p>Al codi HTML anterior, <em>BODY</em> es l'etiqueta pare de <em>h1</em> i <em>p</em> ( que alhora són germans entre ells). Tots els elements de la pàgina són descendents de <em>html</em>. </p>
+
         <p>Els navegadors web segueixen el <em>DOM</em> en ordre per donar sentit al contingut de la pàgina</p>
 
-        <h3 id="html">CSS</h3>
+        <h2 id="html">CSS</h2>
 
-        <p>"Cascading Style Sheets", català Fulles d'estil en cascada , es fan servir per definir la presentació, l'estil del contingut <em>HTML</em> de la plana web. Un arxiu senzill de CSS, tindria aquest aspecte:</p>
+        <p>"Cascading Style Sheets", en català Fulles d'estil en cascada , es fan servir per definir la presentació, l'estil del contingut <em>HTML</em> de la plana web. Un arxiu senzill de CSS, tindria aquest aspecte:</p>
 
         <pre>
           <code>
@@ -101,14 +106,14 @@
           </code>
         </pre>
 
-        <p>L'esti <em>CSS</em> consisteix en <em>selector</em> i <em>regles</em>. Els selectors identifiques elements específics sobre els quals s'aplicarà l'estil:</p>
+        <p>L'esti <em>CSS</em> consisteix en <em>selector</em> i <em>regles</em>. Els selectors identifiquen elements específics sobre els quals s'aplicarà l'estil:</p>
 
         <pre>
           <code>
-          h1          /* Selecciona los títulos de primer nivel  */
-          p           /* Selecciona párrafs                      */
-          .caption    /* Selecciona elementos de clase &quot;caption&quot; */
-          #subnav     /* Selecciona elemento con ID &quot;subnav&quot;     */
+          h1          /* Selecciona els títols del primer nivell */
+          p           /* Selecciona paràgrafs                      */
+          .caption    /* Selecciona elements de classe &quot;caption&quot; */
+          #subnav     /* Selecciona elements amb ID &quot;subnav&quot;     */
           </code>
         </pre>
 
@@ -137,7 +142,7 @@
 
         <p>D3 fa servir el mateix estil que els selectors CSS per identificar els elements als quals els hi aplicarà alguna operació, per tant és important entendre com es fan servir.</p>
 
-        <p>les regles CSS poden ser incloses directament al HTML, dins l'apartat <em>HEAD</em> del document, com per exemple:</p>
+        <p>Les regles CSS poden ser incloses directament al HTML, dins l'apartat <em>HEAD</em> del document, dins una etiqueta &lt;style &gt;, com per exemple:</p>
 
         <pre>
           <code>
@@ -162,7 +167,7 @@
           </code>
         </pre>
 
-        <h3 id="javascript">JAVASCRIPT</h3>
+        <h2>JAVASCRIPT</h2>
 
         <p>Javascript és un llenguatge de programació, que pot ordenar al navegador que faci canvis a la página web després que l'hagi carregat en memòria.</p>
 
@@ -189,19 +194,23 @@
           </code>
         </pre>
 
-        <h3 id="javascript">EINES PER A DESENVOLUPADORS</h3>
+        <h2>EINES PER A DESENVOLUPADORS</h2>
 
         <p>Estigues familiaritzat amb les eines per a desevolupadors del teu navegador. Al navegador <em>Safari</em> o <em>Chrome</em>, pots obrir l'<em>inspector web</em>, que s'assemblarà a això:</p>
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/20-fundamentals/web_inspector.png" title="Safari&rsquo;s web inspector" alt="Safari&rsquo;s web inspector" /></p>
 
-        <p>A on <em>Sources</em> et mostrarà l'arxiu HTML de la pàgina, el <em>web inspector</em> t'ensenyarà l'estat actual del <em>DOM</em>. Això es útil, perque el teu codi pot modificar dinàmicament els elements del DOM i al <em>web inspector</em> pots veure aquest elements mentre canvien. També faràs servir la <em>Javascript console</em> per depurar el codi. Pots ampliar la informació aquí: <a href="https://developer.chrome.com/devtools">debugging HTML, CSS, and JavaScript with the web inspector and console</a>.</p>
+        <p>A on <em>Sources</em> et mostrarà l'arxiu HTML de la pàgina, el <em>web inspector</em> t'ensenyarà l'estat actual del <em>DOM</em>.</p>
 
-        <h3 id="javascript">SVG</h3>
+        <p>Això es útil, perque el teu codi pot modificar dinàmicament els elements del DOM i al <em>web inspector</em> pots veure aquest elements mentre canvien. També faràs servir la <em>Javascript console</em> per depurar el codi.</p> 
 
-        <p>D3 treu el seu màxim rendiment quan s'utilitzen arxius <em>SVG</em> ("Scalable Vector Graphics")</p>
+        <p>Pots ampliar la informació aquí: <a href="https://developer.chrome.com/devtools">debugging HTML, CSS, and JavaScript with the web inspector and console</a>.</p>
 
-        <p><em>SVG</em> és un format per a imatges basat en text. Això vol dir que pots descriure una imatge escrivint codi en forma de text, tal com es fa amb les etiquetes<em>html</em>. De fet, el codi SVG pot ser inclòs directament en un document HTML.</p>
+        <h2>SVG</h2>
+
+        <p>La llibreria D3 treu el seu màxim rendiment quan s'utilitzen arxius <em>SVG</em> ("Scalable Vector Graphics")</p>
+
+        <p><em>SVG</em> és un format per a imatges basat en text. Això vol dir que pots descriure una imatge escrivint codi en forma de text, tal com es fa amb les etiquetes <em>html</em>. De fet, el codi SVG pot ser inclòs directament en un document HTML.</p>
 
         <p>Els navegadors web, fa anys que tenen suport pels arxius SVG ( excepte Internet explorer), però mai havien sigut gaire utilitzats, fins ara.</p>
 
@@ -212,13 +221,13 @@
              fill="blue" stroke="gray" stroke-width="2"/>
         </svg>
 
-        <p>Si hi cliques a sobre amb el ratolí, veuràs que no és una imatge raster. Fes zoom al teu navegador i veuràs que es comportar com un dibuix vectorial. No pert definició.</p>
+        <p>Si hi cliques a sobre amb el ratolí, veuràs que no és una imatge raster. Fes zoom al teu navegador i veuràs que es pot comportar com un dibuix vectorial. No perd definició.</p>
 
         <p>No es absolutament necessari fer servir el format SVG amb D3, però aviat veuràs que el format SVG, permet un ventall de possibilitats visuals que no són possibles amb els elements comuns d'HTML.</p>
 
 
         
-        <p><a href="https://joanprimpratrec2.github.io/instalacio.html">Següent: Instal·lació –&gt;</a></p>
+        <p><a href="https://joanprimpratrec2.github.io/instalacio.html">Següent: Instal·lació  </a> &rarr;</p>
         </section>
 
       	<footer>

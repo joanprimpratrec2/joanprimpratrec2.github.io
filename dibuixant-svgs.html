@@ -58,9 +58,9 @@
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 27 de Maig de 2015</p>
 
-        <p>Ara que estem familiaritzats amb l'estructura bàsica de un SVG i els seus elements, com podem començar a generar formes des de les nostres dades?</p>
+        <p>Ara que estem familiaritzats amb l'estructura bàsica d'un SVG i els seus elements, com podem començar a generar formes des de les nostres dades?</p>
 
-        <p>Te n'hauràs adonat que totes les propietats dels elements de l'SVG s'especifiquen com a <em>atrributs</em>. Així és, són incloses com a parelles propietat/valor entre les etiquetes de cada element, tal com això:</p>
+        <p>Te n'hauràs adonat que totes les propietats dels elements de l'SVG s'especifiquen com a (atributs) <em>attr</em>. Així és, són incloses com a parelles propietat/valor entre les etiquetes de cada element, tal com això:</p>
 
         <pre>
           <code>
@@ -68,7 +68,7 @@
           </code>
         </pre>
 
-        <p>Caram!! Això s'assembla molta codi HTML</p>
+        <p>Caram!! Això s'assembla molt a codi HTML</p>
 
         <pre>
           <code>
@@ -80,7 +80,7 @@
 
         <h2>Crear el SVG</h2>
 
-        <p>Primer, necessitem crear l'elemnet SVG a on col·locar els nostres dibuixos:</p>
+        <p>Primer, necessitem crear l'element SVG a on col·locar els nostres dibuixos:</p>
 
         <pre>
           <code>
@@ -96,7 +96,9 @@
           </code>
         </pre>
 
-        <p>Recordes que la majoria dels mètodes de D3 retornen una referència als elements del DOM sobre els que actues? Creant una nova variable <code>svg</code>, podrem utilitzar la referencia capturada pel mètode <code>append()</code>. Pensa amb <code>svg</code> no com una 'variable' sinó com la 'referència que apunta a l'objecte SVG que acabem de crear'. Aquesta referència ens estalviarà molt de codi posteriorment. Enlloc de buscar aquesta referència cada vegada — com a <code>d3.select("svg")</code> — , ja la tindrem a <em>svg</em>. </p>
+        <p>Recordes que la majoria dels mètodes de D3 retornen una referència als elements del DOM sobre els que actues? Creant una nova variable <code>svg</code>, podrem utilitzar la referencia capturada pel mètode <code>append()</code>.</p> 
+
+        <p>Pensa amb <code>svg</code> no com una 'variable' sinó com la 'referència que apunta a l'objecte SVG que acabem de crear'. Aquesta referència ens estalviarà molt de codi posteriorment. En lloc de buscar aquesta referència cada vegada — com a <code>d3.select("svg")</code> — , ja la tindrem a <em>svg</em>. </p>
 
         <pre>
           <code>
@@ -173,17 +175,17 @@
           </code>
         </pre>
 
-        <p>Perfecte, però tots aquests cercles necessiten una posció i una grandària. Estigues alerta, el codi que ve a continuació et pot tornar boig.</p>
+        <p>Perfecte, però tots aquests cercles necessiten una posició i una grandària. Estigues alerta, el codi que ve a continuació et pot tornar boig.</p>
 
         <pre>
           <code>
             circles.attr("cx", function(d, i) {
-                return (i * 50) + 25;
-              })
-              .attr("cy", h/2)
-              .attr("r", function(d) {
-                  return d;
-              });
+                        return (i * 50) + 25;
+                    })
+                    .attr("cy", h/2)
+                    .attr("r", function(d) {
+                        return d;
+                    });
           </code>
         </pre>
 
@@ -215,7 +217,7 @@
           </code>
         </pre>
 
-        <p>Per asseguran-te que <code>i</code> existeix i està disponible per a la teva funció, l'has d'incloure com a argument a la definició d'aquesta (<code>function(d, i)</code>).</p>
+        <p>Per assegurar-te que <code>i</code> existeix i està disponible per a la teva funció, l'has d'incloure com a argument a la definició d'aquesta (<code>function(d, i)</code>).</p>
 
         <p>També hi has d'incloure <code>d</code>, fins i tot encara que la facis servir després ( com per exemple en el cas anterior)</p>
 

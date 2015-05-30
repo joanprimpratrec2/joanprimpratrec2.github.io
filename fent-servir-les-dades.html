@@ -52,7 +52,7 @@
 
       <hr>
       <section id="main_content">
-        <h2 id="afegir-elements">Fent servir les dades</h2>
+        <h2>Fent servir les dades</h2>
 
         <p class="timestamp">última actualització 30 de Desembre de 2012</p>
         <p class="timestamp">traducció 23 de Maig de 2015</p>
@@ -66,17 +66,19 @@
             var dataset = [ 5, 10, 15, 20, 25 ];
 
             d3.select("body").selectAll("p")
-                .data(dataset)
-                .enter()
-                .append("p")
-                .text("New paragraph!");
+                              .data(dataset)
+                              .enter()
+                              .append("p")
+                              .text("Nou paràgraf!");
           </code>
         </pre>
 
         <p>Canviem la última línia per aquesta:</p>
 
         <pre>
-          <code>    .text(function(d) { return d; });
+          <code>    .text(function(d) { 
+                              return d; 
+                          });
           </code>
         </pre>
 
@@ -84,18 +86,18 @@
 
         <p>Carai!. Hem fet servir les nostres dades per donar contingut a cadascún dels paràgrafs. Tot gràcies a la màgia del mètode <code>data()</code>.</p>
 
-        <p>Ja veus, quan encadenem els mètodes, a tots els mètodes posteriors a <code>data()</code> pots crear una funció anòmina que accepta un argument com a entrada. En aquest cas fem servir la variable "d". El màgic mètode <code>data()</code> s'assegura que d agafi el  valor de la matriu de dades que ocupa la mateixa posició que l'element que esta tractant.</p>
+        <p>Ja veus, quan encadenem els mètodes, a tots els mètodes posteriors a <code>data()</code> pots crear una funció anòmina que accepta un argument com a entrada. En aquest cas fem servir la variable "d". El mètode màgic <code>data()</code> s'assegura que d agafi el  valor de la matriu de dades que ocupa la mateixa posició que l'element que esta tractant.</p>
 
         <p>El valor de "l'element actual" canvia cada passada que fa D3 sobre el bucle d'elements. Per exemple, quan el bucle està fent la tercera passada, el nostre codi crea el tercer element <code>p</code>, i la variable <code>d</code> conté el tercer valor de la matriu de dades. Per tant el tercer paràgraf contindrà el text "15". </p>
 
         <h2>Fent funcions</h2>
 
-        <p>Si ets novell escribint les teves pròpies funcions ( = mètodes), l'estructura bàsica de qualsevol d'elles és la següent:</p>
+        <p>Si ets novell escrivint les teves pròpies funcions ( = mètodes), l'estructura bàsica de qualsevol d'elles és la següent:</p>
 
         <pre>
           <code>
             function(input_value) {
-                //Calculate something here
+                //Calcula alguna cosa aquí
                 return output_value;
             }
           </code>
@@ -121,32 +123,33 @@
           </code>
         </pre>
 
-        <p>Però podem ( i ho farem) molt més interessant, perque pots fer servir qualsevol funció. Si, és el plaer i el perill d'escriure el teu propi codi javascript.</p>
+        <p>Però podem ( i ho farem) molt més interessant, perque pots fer servir qualsevol funció.</p> 
+
+        <p>Si, és el plaer i el perill d'escriure el teu propi codi javascript.</p>
 
         <p>Podem definir les nostres pròpies funcions. Potser t'agradaria afegir una part més de text, que donaria <a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/2.html">aquest resultat</a>.</p>
 
         <pre>
           <code>
             .text(function(d) {
-              return "I can count up to " + d;
+              return "Puc comptar fins a " + d;
             });
           </code>
         </pre>
 
-        <h2>Les dades demanen ser ben tractades</h2>
+        <h2>Les dades demanen ser protegides</h2>
 
-        <p>Potser t'estàs preguntant per què has d'escriure <code>function(d)</code>... enlloc de senzillament <code>d</code> directament. Per exemple, això no funcionaria:</p>
+        <p>Potser t'estàs preguntant per què has d'escriure <code>function(d)</code>... enl lloc de senzillament <code>d</code> directament. Per exemple, això no funcionaria:</p>
 
         <pre>
-          <code>.text(function(d) {
-            return "Puc comptar fins a " + d;
-          });
+          <code>
+            .text("Puc comptar fins a " + d);
           </code>
         </pre>
 
         <p>En aquest context, sense col·locar <code>d</code> dins una funció anònima, <code>d</code> no rep valors.</p>
 
-        <p>Pensa en <code>d</code> com un petita i solitaria variable que vol sentir-se acompanyada per la calurosa abraçada que li proporcionen els parèntesis. (Seguint amb la metàfora, si, és esgarrifós pensa que l'abraçada realment li fa un funció anònima -un estranger perillós - i que nomès fa les coses més confuses.)</p>
+        <p>Pensa en <code>d</code> com un petita i solitaria variable que vol sentir-se acompanyada per la calurosa abraçada que li proporcionen els parèntesis. (Seguint amb la metàfora, si, és esgarrifós pensar que l'abraçada realment li fa un funció anònima -un estranger perillós - i que nomès fa les coses més confuses.)</p>
 
         <p>Aquí <code>d</code> es troba suau i confortablement en poder d'una funció:</p>
 
@@ -179,7 +182,7 @@
         <pre>
           <code>
             .text(function(d) {
-            return d;
+                return d;
             })
           </code>
         </pre>
@@ -205,22 +208,22 @@
         <pre>
           <code>
             .style("color", function(d) {
-              if (d &gt; 15) {   //el límit és 15
-                return "red"; // color vermell
-              } else {
-                return "black"; // color negre
-              }
+                    if (d &gt; 15) {   //el límit és 15
+                         return "red"; // color vermell
+                    }else {
+                          return "black"; // color negre
+                    }
             });
           </code>
         </pre>
 
-        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/4.html">Mira aquest codi en funcionament</a>. Comprova com els primers tres paràgrafs son negres, però un cop <code>d</code> sobrepassa el valor de 15, el text és de color vermell.</p>
+        <p><a href="http://alignedleft.com/content/03-tutorials/01-d3/70-using-your-data/4.html">Mira aquest codi en funcionament</a>. Comprova com els tres primers paràgrafs son negres, però un cop <code>d</code> sobrepassa el valor de 15, el text és torna de color vermell.</p>
 
         <p>En el proper capítol, farem servir <code>attr()</code> i <code>style()</code> per manipular <code>divs</code></p>
 
            
         
-        <p><a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs –&gt;</a></p>
+        <p><a href="https://joanprimpratrec2.github.io/desplegar-divs.html">Desplegar els divs </a> &rarr;</p>
         </section>
 
       	<footer>

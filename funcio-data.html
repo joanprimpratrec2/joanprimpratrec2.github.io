@@ -67,7 +67,7 @@
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/1.png" title="Diagrama de barres senzill" alt="Diagrama de barres senzill" /></p>
 
-        <p>Això està bé, peró el mon real de les dades no s'assembla mai a això. Deixa'm <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/2.html">modificar les nostres dades</a>.</p>
+        <p>Això està bé, peró el mon real de les dades no s'assembla gairebé mai a això. Deixa'm <a href="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/2.html">modificar les nostres dades</a>.</p>
    
         <pre>
           <code>
@@ -95,14 +95,14 @@
         <pre>
           <code>
             d3.select("body").selectAll("div")
-              .data(dataset)  // &lt;-- The answer is here!
-              .enter()
-              .append("div")
-              .attr("class", "bar")
-              .style("height", function(d) {
-                  var barHeight = d * 5;
-                  return barHeight + "px";
-            });
+                              .data(dataset)  // &lt;-- Aquí tens la resposta!
+                              .enter()
+                              .append("div")
+                              .attr("class", "bar")
+                              .style("height", function(d) {
+                                  var barHeight = d * 5;
+                                  return barHeight + "px";
+                            });
           </code>
         </pre>
 
@@ -149,7 +149,7 @@
 
         <p><img src="http://alignedleft.com/content/03-tutorials/01-d3/90-the-power-of-data/7.png" title="Nombres aleatoris a la consola" alt=" Nombres aleatoris a la consola" /></p>
 
-        <p>Recorda que son nombre decimals de coma flotant (14.793717765714973), i no nombre sencers (14) com els que hem fet servir inicialment. Per aquest exemple, els nombre decimals estan bé, però si mai necessites arrodonir-los al sencer més pròxim , pots fer servir el mètode <code>Math.round()</code>. Per exemple, podríes voler fer-ho pel generador de nombres aleatoris d'aquesta línia</p>
+        <p>Recorda que son nombre decimals de coma flotant (14.793717765714973), i no nombres sencers (14) com els que hem fet servir inicialment. Per aquest exemple, els nombre decimals estan bé, però si mai necessites arrodonir-los al sencer més pròxim , pots fer servir el mètode <code>Math.round()</code>. Per exemple, podríes voler fer-ho pel generador de nombres aleatoris d'aquesta línia</p>
 
         <pre>
           <code>
