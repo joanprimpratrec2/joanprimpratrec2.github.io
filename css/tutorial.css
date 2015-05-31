@@ -97,6 +97,7 @@ nav {
 	display: block;
 	white-space: pre;
 	margin-bottom: 16px;
+	margin-left: -90px;
 }
 
 #text code {
