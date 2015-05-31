@@ -84,6 +84,20 @@ header h2 {
   line-height: 1.3;
 }
 
+.traduccio h2 {
+  letter-spacing: -1px;
+  font-size: 1rem;
+  color: #a00;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+.traduccio p {
+  font-weight: 300;
+  margin-bottom: 20px;
+  color: #a00;
+}
+
 #container {
   background: transparent url(../images/highlight-bg.jpg) 50% 0 no-repeat;
   min-height: 595px;
